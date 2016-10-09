@@ -6,7 +6,7 @@ public class CameraFollow : MonoBehaviour {
 
     private float followDistance = 30f;
     private float elevation = 25f;
-    private float followSpeed = 10f;
+    private float followSpeed = 10;
 
     void Update () {
         transform.LookAt(player.transform);
