@@ -1,0 +1,155 @@
+fileFormatVersion: 2
+guid: 389b5ef4d3ef6e04cb47454217458f5e
+timeCreated: 1476119542
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Body
+    100002: Firing Point
+    100004: Nose
+    100006: //RootNode
+    100008: Tread
+    100010: Turret
+    100012: Turret Barrel
+    100014: Turret Body
+    100016: Wheel
+    100018: Wheel 10
+    100020: Wheel 2
+    100022: Wheel 3
+    100024: Wheel 4
+    100026: Wheel 5
+    100028: Wheel 6
+    100030: Wheel 7
+    100032: Wheel 8
+    100034: Wheel 9
+    400000: Body
+    400002: Firing Point
+    400004: Nose
+    400006: //RootNode
+    400008: Tread
+    400010: Turret
+    400012: Turret Barrel
+    400014: Turret Body
+    400016: Wheel
+    400018: Wheel 10
+    400020: Wheel 2
+    400022: Wheel 3
+    400024: Wheel 4
+    400026: Wheel 5
+    400028: Wheel 6
+    400030: Wheel 7
+    400032: Wheel 8
+    400034: Wheel 9
+    2300000: Body
+    2300002: Firing Point
+    2300004: Nose
+    2300006: Tread
+    2300008: Turret Barrel
+    2300010: Turret Body
+    2300012: Wheel
+    2300014: Wheel 10
+    2300016: Wheel 2
+    2300018: Wheel 3
+    2300020: Wheel 4
+    2300022: Wheel 5
+    2300024: Wheel 6
+    2300026: Wheel 7
+    2300028: Wheel 8
+    2300030: Wheel 9
+    3300000: Body
+    3300002: Firing Point
+    3300004: Nose
+    3300006: Tread
+    3300008: Turret Barrel
+    3300010: Turret Body
+    3300012: Wheel
+    3300014: Wheel 10
+    3300016: Wheel 2
+    3300018: Wheel 3
+    3300020: Wheel 4
+    3300022: Wheel 5
+    3300024: Wheel 6
+    3300026: Wheel 7
+    3300028: Wheel 8
+    3300030: Wheel 9
+    4300000: Nose
+    4300002: Firing Point
+    4300004: Turret Barrel
+    4300006: Turret Body
+    4300008: Body
+    4300010: Wheel 9
+    4300012: Wheel
+    4300014: Wheel 2
+    4300016: Wheel 3
+    4300018: Wheel 4
+    4300020: Wheel 5
+    4300022: Wheel 6
+    4300024: Wheel 7
+    4300026: Wheel 8
+    4300028: Wheel 10
+    4300030: Tread
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

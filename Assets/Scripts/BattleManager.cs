@@ -79,6 +79,7 @@ public class BattleManager : Singleton<BattleManager> {
 
         GameObject tank = Instantiate(tankPrefab);
         tank.transform.position = spawnPoints[0].transform.position;
+        tank.tag = "Enemy";
 
         tanks.Add(tank);
 

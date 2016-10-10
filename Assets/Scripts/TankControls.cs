@@ -3,7 +3,7 @@
 public class TankControls : MonoBehaviour {
     private float turretSpeed = 50f;
     public bool controlsAreActive = true;
-    public GameObject turretObject;
+    private GameObject turretObject;
 
     public float m_Speed = 12f;                 // How fast the tank moves forward and back.
     public float m_TurnSpeed = 180f;            // How fast the tank turns in degrees per second.
@@ -12,14 +12,12 @@ public class TankControls : MonoBehaviour {
     public AudioClip m_EngineDriving;           // Audio to play when the tank is moving.
     public float m_PitchRange = 0.2f;           // The amount by which the pitch of the engine noises can vary.
 
-
     private string m_MovementAxisName;          // The name of the input axis for moving forward and back.
     private string m_TurnAxisName;              // The name of the input axis for turning.
     private Rigidbody m_Rigidbody;              // Reference used to move the tank.
     private float m_MovementInputValue;         // The current value of the movement input.
     private float m_TurnInputValue;             // The current value of the turn input.
     private float m_OriginalPitch;              // The pitch of the audio source at the start of the scene.
-
 
     private void Awake() {
         m_Rigidbody = GetComponent<Rigidbody>();
@@ -48,6 +46,8 @@ public class TankControls : MonoBehaviour {
 
         // Store the original pitch of the audio source.
         m_OriginalPitch = m_MovementAudio.pitch;
+
+        turretObject = transform.Find("Turret").gameObject;
     }
 
 
@@ -58,7 +58,7 @@ public class TankControls : MonoBehaviour {
             m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
 
             // Turn turret
-            turretObject.transform.Rotate(Vector3.forward * Input.GetAxis("Right Stick Horizontal") * turretSpeed * Time.deltaTime);
+            turretObject.transform.Rotate(Vector3.up * Input.GetAxis("Right Stick Horizontal") * turretSpeed * Time.deltaTime);
         }
 
         EngineAudio();
@@ -118,5 +118,11 @@ public class TankControls : MonoBehaviour {
         m_Rigidbody.angularVelocity = Vector3.zero;
         m_MovementInputValue = 0f;
         m_TurnInputValue = 0f;
+    }
+
+    public void AimAt(GameObject target) {
+        //Vector3 direction = target.transform.location;
+        //turretObject.transform.LookAt(target);
+        //turretObject.transform.rotation = turretObject.transform.rotation * Quaternion.Euler(0f)
     }
 }

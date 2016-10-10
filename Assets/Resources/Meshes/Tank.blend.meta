@@ -25,6 +25,7 @@ ModelImporter:
     100034: Turret_Body
     100036: Nose
     100038: Wheel_10
+    100040: Firing_Point
     400000: Barrel
     400002: Barrel_Ring
     400004: Body
@@ -45,6 +46,7 @@ ModelImporter:
     400034: Turret_Body
     400036: Nose
     400038: Wheel_10
+    400040: Firing_Point
     2300000: Barrel
     2300002: Barrel_Ring
     2300004: Body
@@ -64,6 +66,7 @@ ModelImporter:
     2300032: Turret_Body
     2300034: Nose
     2300036: Wheel_10
+    2300038: Firing_Point
     3300000: Barrel
     3300002: Barrel_Ring
     3300004: Body
@@ -83,6 +86,7 @@ ModelImporter:
     3300032: Turret_Body
     3300034: Nose
     3300036: Wheel_10
+    3300038: Firing_Point
     4300000: Barrel
     4300002: Turret
     4300004: Body
@@ -102,6 +106,7 @@ ModelImporter:
     4300032: Turret_Body
     4300034: Nose
     4300036: Wheel_10
+    4300038: Firing_Point
     7400000: Default Take
     9500000: //RootNode
   materials:
