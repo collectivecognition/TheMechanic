@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class TankGun : MonoBehaviour {
+    [HideInInspector]
+    public bool controllable = false;
+
     private float health = 100f;
     private float totalHealth = 100f;
 
@@ -18,11 +21,11 @@ public class TankGun : MonoBehaviour {
         
         // FIXME: Move to controls
 
-        if (name == "Player" && Input.GetKeyDown(KeyCode.Space)) {
+        if (controllable && name == "Player" && Input.GetKeyDown(KeyCode.Space)) {
             Fire();
         }
 
-        healthBar.fillAmount = health / totalHealth;
+        healthBar.fillAmount = health / totalHealth; // FIXME: Separate healthBar class
     }
 
     public void Fire () {
@@ -32,11 +35,12 @@ public class TankGun : MonoBehaviour {
         Debug.Log(firingPoint.position);
         Debug.DrawRay(pos, firingPoint.forward * 1000f, Color.red, 101f, true);
         if (Physics.Raycast(pos, firingPoint.forward, out hit, Mathf.Infinity)) {
-            if(hit.collider.tag == "Enemy") {
+            if(hit.collider.tag == "Enemy" || hit.collider.name == "Player") {
                 hit.collider.transform.GetComponent<TankGun>().Hit(15f);
             }
         }
 
+        controllable = false; // FIXME: Should be controlled elsewhere, gun should not know how many times it's allowed to shoot
     }
 
     public void Hit (float damage) {

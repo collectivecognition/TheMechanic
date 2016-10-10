@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 public class TankControls : MonoBehaviour {
-    private float turretSpeed = 50f;
-    public bool controlsAreActive = true;
-    private GameObject turretObject;
+    
+    [HideInInspector]
+    public bool controllable = true;
 
     public float m_Speed = 12f;                 // How fast the tank moves forward and back.
     public float m_TurnSpeed = 180f;            // How fast the tank turns in degrees per second.
@@ -46,19 +46,14 @@ public class TankControls : MonoBehaviour {
 
         // Store the original pitch of the audio source.
         m_OriginalPitch = m_MovementAudio.pitch;
-
-        turretObject = transform.Find("Turret").gameObject;
     }
 
 
     private void Update() {
-        if (controlsAreActive && name == "Player") {
+        if (controllable && name == "Player") {
             // Store the value of both input axes.
             m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
             m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
-
-            // Turn turret
-            turretObject.transform.Rotate(Vector3.up * Input.GetAxis("Right Stick Horizontal") * turretSpeed * Time.deltaTime);
         }
 
         EngineAudio();
@@ -88,7 +83,7 @@ public class TankControls : MonoBehaviour {
     
     private void FixedUpdate() {
         // Adjust the rigidbodies position and orientation in FixedUpdate.
-        if (controlsAreActive && name == "Player") {
+        if (controllable && name == "Player") {
             Move();
             Turn();
         }
@@ -118,11 +113,5 @@ public class TankControls : MonoBehaviour {
         m_Rigidbody.angularVelocity = Vector3.zero;
         m_MovementInputValue = 0f;
         m_TurnInputValue = 0f;
-    }
-
-    public void AimAt(GameObject target) {
-        //Vector3 direction = target.transform.location;
-        //turretObject.transform.LookAt(target);
-        //turretObject.transform.rotation = turretObject.transform.rotation * Quaternion.Euler(0f)
     }
 }
