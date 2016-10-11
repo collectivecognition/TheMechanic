@@ -13,12 +13,12 @@ public class BattleManager : Singleton<BattleManager> {
     private float distancePerTurn = 30f;
 
     private class Participant {
-        public Tank tank;
+        public GameObject tank;
         public bool isAlive;
         public int initiative;
         public bool isPlayer;
 
-        public Participant(Tank t, int i, bool p = false) {
+        public Participant(GameObject t, int i, bool p = false) {
             tank = t;
             isAlive = true;
             isPlayer = p;
@@ -41,7 +41,7 @@ public class BattleManager : Singleton<BattleManager> {
 
             // Return true if the fields match:
 
-            return a.tank.gameObject == b.tank.gameObject;
+            return a.tank == b.tank;
         }
 
         public static bool operator !=(Participant a, Participant b) {
@@ -51,7 +51,7 @@ public class BattleManager : Singleton<BattleManager> {
 
     void Start() {
         player = new Participant(
-            new Tank(GameObject.Find("Player")),
+            GameObject.Find("Player"),
             0,
             true
         );
@@ -71,11 +71,11 @@ public class BattleManager : Singleton<BattleManager> {
         }
 
         if (participants != null) {
-            TankDistanceCounter counter = currentParticipant.tank.distanceCounter;
+            TankDistanceCounter counter = currentParticipant.tank.GetComponent<TankDistanceCounter>();
             float totalDistance = counter.totalDistance;
 
             if (totalDistance > distancePerTurn) {
-                currentParticipant.tank.controls.controllable = false;
+                currentParticipant.tank.GetComponent<TankControls>().controllable = false;
             }
         }
     }
@@ -102,19 +102,19 @@ public class BattleManager : Singleton<BattleManager> {
         // Handle control state for player
 
         if(currentParticipant.isPlayer) {
-            player.tank.distanceCounter.Reset();
-            player.tank.controls.controllable = true;
-            player.tank.turret.controllable = true;
-            player.tank.gun.controllable = true;
+            player.tank.GetComponent<TankDistanceCounter>().Reset();
+            player.tank.GetComponent<TankControls>().controllable = true;
+            player.tank.GetComponent<TankTurret>().controllable = true;
+            player.tank.GetComponent<TankGun>().controllable = true;
         } else {
-            player.tank.controls.StopImmediately();
-            player.tank.controls.controllable = false;
-            player.tank.turret.controllable = false;
-            player.tank.gun.controllable = false;
+            player.tank.GetComponent<TankControls>().StopImmediately();
+            player.tank.GetComponent<TankControls>().controllable = false;
+            player.tank.GetComponent<TankTurret>().controllable = false;
+            player.tank.GetComponent<TankGun>().controllable = false;
 
             // FIXME: Placeholder for enemy AI
 
-            currentParticipant.tank.turret.AimAt(player.tank.gameObject);
+            currentParticipant.tank.GetComponent<TankTurret>().AimAt(player.tank.gameObject);
             // currentParticipant.tank.gun.Fire();
             NextTurn();
         }
@@ -125,12 +125,12 @@ public class BattleManager : Singleton<BattleManager> {
 
         // Save player transform
 
-        originalPlayerPosition = player.tank.gameObject.transform.position;
-        originalPlayerRotation = player.tank.gameObject.transform.rotation;
+        originalPlayerPosition = player.tank.transform.position;
+        originalPlayerRotation = player.tank.transform.rotation;
 
         // Reset player velocity
 
-        player.tank.controls.StopImmediately();
+        player.tank.GetComponent<TankControls>().StopImmediately();
 
         // Grab a list of spawn points
 
@@ -138,28 +138,35 @@ public class BattleManager : Singleton<BattleManager> {
 
         // Spawn player at a spawn point
 
-        player.tank.gameObject.transform.position = spawnPoints[1].transform.position;
-        player.tank.distanceCounter.Reset();
+        player.tank.transform.position = spawnPoints[1].transform.position;
+        player.tank.GetComponent<TankDistanceCounter>().Reset();
 
         participants.Add(player);
 
         // Spawn enemy
 
-        Tank tank = new Tank(spawnPoints[0].transform);
+        GameObject tankPrefab = Resources.Load<GameObject>("Prefabs/tank");
+        GameObject tank = GameObject.Instantiate(tankPrefab);
+        tank.transform.position = spawnPoints[0].transform.position;
+        tank.transform.rotation = spawnPoints[0].transform.rotation;
+        tank.tag = "Enemy";
         Participant participant = new Participant(tank, 1);
 
         participants.Add(participant);
 
-        tank.gun.OnDie += OnTankDie;
+        tank.GetComponent<TankGun>().OnDie += OnTankDie;
 
         // FIXME: Better way to spawn multiple enemies
 
-        tank = new Tank(spawnPoints[2].transform);
-        participant = new Participant(tank, 2);
+        tank = GameObject.Instantiate(tankPrefab);
+        tank.transform.position = spawnPoints[2].transform.position;
+        tank.transform.rotation = spawnPoints[2].transform.rotation;
+        tank.tag = "Enemy";
+        participant = new Participant(tank, 1);
 
         participants.Add(participant);
 
-        tank.gun.OnDie += OnTankDie;
+        tank.GetComponent<TankGun>().OnDie += OnTankDie;
 
         // Set initial turn
 
@@ -168,17 +175,23 @@ public class BattleManager : Singleton<BattleManager> {
     }
 
     private void OnTankDie(GameObject g) {
-        Participant participant = participants.Find(p => p.tank.gameObject == g);
+        Participant participant = participants.Find(p => p.tank == g);
         participant.isAlive = false;
         Debug.Log("Participant died: " + participant.initiative);
     }
 
     private void EndBattle() {
-        player.tank.gameObject.transform.position = originalPlayerPosition;
-        player.tank.gameObject.transform.rotation = originalPlayerRotation;
+        participants.ForEach(p => {
+            if (!p.isPlayer) {
+                GameObject.Destroy(p.tank);
+            }
+        }); 
 
-        player.tank.controls.controllable = true;
-        player.tank.turret.controllable = true;
-        player.tank.gun.controllable = true;
+        player.tank.transform.position = originalPlayerPosition;
+        player.tank.transform.rotation = originalPlayerRotation;
+
+        player.tank.GetComponent<TankControls>().controllable = true;
+        player.tank.GetComponent<TankTurret>().controllable = true;
+        player.tank.GetComponent<TankGun>().controllable = true;
     }
 }
