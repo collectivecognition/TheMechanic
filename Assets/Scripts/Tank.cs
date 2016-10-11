@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Tank : MonoBehaviour {
+public class Tank : ScriptableObject {
     public GameObject gameObject;
     public TankDistanceCounter distanceCounter;
     public TankControls controls;
@@ -29,5 +29,9 @@ public class Tank : MonoBehaviour {
         controls = gameObject.GetComponent<TankControls>();
         gun = gameObject.GetComponent<TankGun>();
         turret = gameObject.GetComponent<TankTurret>();
+    }
+
+    ~Tank() {
+        GameObject.Destroy(gameObject);
     }
 }
