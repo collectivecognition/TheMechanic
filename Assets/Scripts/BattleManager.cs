@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class BattleManager : Singleton<BattleManager> {
-    static GameObject battle;
-
     private Vector3 originalPlayerPosition;
     private Quaternion originalPlayerRotation;
     private List<Participant> participants;
@@ -49,13 +48,11 @@ public class BattleManager : Singleton<BattleManager> {
         }
     }
 
+    void Awake() {
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start() {
-        player = new Participant(
-            GameObject.Find("Player"),
-            0,
-            true
-        );
-        battle = GameObject.Find("Battle");
     }
 
     void Update() {
@@ -121,59 +118,71 @@ public class BattleManager : Singleton<BattleManager> {
     }
 
     public void StartBattle() {
-        participants = new List<Participant>();
 
-        // Save player transform
+        // Load the battle scene before initializing the battle
 
-        originalPlayerPosition = player.tank.transform.position;
-        originalPlayerRotation = player.tank.transform.rotation;
+        GameManager.Instance.LoadScene("TestBattle", () => {
+            participants = new List<Participant>();
 
-        // Reset player velocity
+            player = new Participant(
+                GameObject.Find("Player"),
+                0,
+                true
+            );
 
-        player.tank.GetComponent<TankControls>().StopImmediately();
+            // Save player transform
+            // FIXME: Need to preserve which scene the player came from as well
 
-        // Grab a list of spawn points
+            //originalPlayerPosition = player.tank.transform.position;
+            //originalPlayerRotation = player.tank.transform.rotation;
 
-        GameObject[] spawnPoints = battle.FindChildrenByName("SpawnPoint");
+            // Reset player velocity
 
-        // Spawn player at a spawn point
+            player.tank.GetComponent<TankControls>().StopImmediately();
 
-        player.tank.transform.position = spawnPoints[1].transform.position;
-        player.tank.GetComponent<TankDistanceCounter>().Reset();
+            // Grab a list of spawn points
 
-        participants.Add(player);
+            GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
 
-        // Spawn enemy
+            // Spawn player at a spawn point
 
-        GameObject tankPrefab = Resources.Load<GameObject>("Prefabs/tank");
-        GameObject tank = GameObject.Instantiate(tankPrefab);
-        tank.transform.position = spawnPoints[0].transform.position;
-        tank.transform.rotation = spawnPoints[0].transform.rotation;
-        tank.tag = "Enemy";
-        Participant participant = new Participant(tank, 1);
-        participant.initiative = 1;
+            player.tank.transform.position = spawnPoints[1].transform.position;
+            player.tank.GetComponent<TankDistanceCounter>().Reset();
 
-        participants.Add(participant);
+            participants.Add(player);
 
-        tank.GetComponent<TankGun>().OnDie += OnTankDie;
+            // Spawn enemy
 
-        // FIXME: Better way to spawn multiple enemies
+            GameObject tankPrefab = Resources.Load<GameObject>("Prefabs/tank");
+            GameObject tank = GameObject.Instantiate(tankPrefab);
+            tank.transform.position = spawnPoints[0].transform.position;
+            tank.transform.rotation = spawnPoints[0].transform.rotation;
+            tank.tag = "Enemy";
+            Participant participant = new Participant(tank, 1);
+            participant.initiative = 1;
 
-        GameObject tank2 = GameObject.Instantiate(tankPrefab);
-        tank2.transform.position = spawnPoints[2].transform.position;
-        tank2.transform.rotation = spawnPoints[2].transform.rotation;
-        tank2.tag = "Enemy";
-        Participant participant2 = new Participant(tank2, 1);
-        participant2.initiative = 2;
+            participants.Add(participant);
 
-        participants.Add(participant2);
+            tank.GetComponent<TankGun>().OnDie += OnTankDie;
 
-        tank2.GetComponent<TankGun>().OnDie += OnTankDie;
+            // FIXME: Better way to spawn multiple enemies
 
-        // Set initial turn
+            GameObject tank2 = GameObject.Instantiate(tankPrefab);
+            tank2.transform.position = spawnPoints[2].transform.position;
+            tank2.transform.rotation = spawnPoints[2].transform.rotation;
+            tank2.tag = "Enemy";
+            Participant participant2 = new Participant(tank2, 1);
+            participant2.initiative = 2;
 
-        participants.OrderBy(p => p.initiative); // Set initial order
-        currentParticipant = player;
+            participants.Add(participant2);
+
+            tank2.GetComponent<TankGun>().OnDie += OnTankDie;
+
+            // Set initial turn
+
+            participants.OrderBy(p => p.initiative); // Set initial order
+            currentParticipant = player;
+        });
     }
 
     private void OnTankDie(GameObject g) {

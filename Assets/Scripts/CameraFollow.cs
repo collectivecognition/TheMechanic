@@ -2,12 +2,16 @@
 using System.Collections;
 
 public class CameraFollow : MonoBehaviour {
-    public Transform player;
+    private GameObject player;
 
-    private float followDistance = 25f;
-    private float elevation = 15f;
-    private float followSpeed = 0.3f;
-    private Vector3 velocity = Vector3.zero;
+    //private float followDistance = 25f;
+    //private float elevation = 15f;
+    //private float followSpeed = 0.3f;
+    //private Vector3 velocity = Vector3.zero;
+
+    void Start () {
+        player = GameObject.Find("Player");
+    }
 
     void Update () {
         //transform.LookAt(player.transform);

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Interactable : MonoBehaviour {
     public string sayText;
+    public string levelToLoad;
 
     private GameObject player;
 
@@ -21,6 +22,10 @@ public class Interactable : MonoBehaviour {
             if(angle < maxAngle && distance < maxDistance) {
                 if (sayText != null) {
                     player.GetComponent<TankDialog>().Say(sayText);
+                }
+
+                if(levelToLoad != null) {
+                    GameManager.Instance.LoadScene("anotherTestLevel");
                 }
             }
         }

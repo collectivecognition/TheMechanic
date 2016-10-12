@@ -4,7 +4,7 @@ using System.Collections;
 public class FaceCamera : MonoBehaviour {
     Transform cameraTransform;
 
-    void Start() {
+    void Awake() {
         cameraTransform = GameObject.Find("Camera").transform;
     }
 
