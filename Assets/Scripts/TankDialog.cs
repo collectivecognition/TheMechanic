@@ -3,25 +3,45 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class TankDialog : MonoBehaviour {
-    Text textObject;
-    GameObject canvasObject;
+    private Text textObject;
+    private GameObject canvasObject;
+    private GameObject player;
+    private bool saying = false;
+    private bool done = false;
 
     void Start() {
         textObject = transform.Find("DialogCanvas/Text").GetComponent<Text>();
         canvasObject = transform.Find("DialogCanvas").gameObject;
-    }
-
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.P)) {
-            Say("You grabbed her by the WHAT?!");
-        }
+        player = GameObject.Find("Player");
     }
 
     public void Say(string what) {
+        if (saying) {
+            return;
+        }
+
+        saying = true;
+        done = false;
+
         canvasObject.transform.localScale = Vector3.zero;
         iTween.ScaleTo(canvasObject, iTween.Hash("scale", new Vector3(1, 1, 1), "time", 0.5f));
         textObject.text = "";
         StartCoroutine(TypeText(what));
+
+        player.GetComponent<TankControls>().controllable = false;
+        player.GetComponent<TankGun>().controllable = false;
+        player.GetComponent<TankTurret>().controllable = false;
+    }
+
+    void Update () {
+        if(saying && done && Input.GetKeyDown(KeyCode.Space)) {
+            saying = false;
+            iTween.ScaleTo(canvasObject, iTween.Hash("scale", Vector3.zero, "time", 0.5f));
+
+            player.GetComponent<TankControls>().controllable = true;
+            player.GetComponent<TankGun>().controllable = true;
+            player.GetComponent<TankTurret>().controllable = true;
+        }
     }
 
     IEnumerator TypeText(string what) {
@@ -32,5 +52,7 @@ public class TankDialog : MonoBehaviour {
             yield return 0;
             yield return new WaitForSeconds(0.02f);
         }
+
+        done = true;
     }
 }
