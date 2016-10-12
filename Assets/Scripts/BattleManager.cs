@@ -151,6 +151,7 @@ public class BattleManager : Singleton<BattleManager> {
         tank.transform.rotation = spawnPoints[0].transform.rotation;
         tank.tag = "Enemy";
         Participant participant = new Participant(tank, 1);
+        participant.initiative = 1;
 
         participants.Add(participant);
 
@@ -158,15 +159,16 @@ public class BattleManager : Singleton<BattleManager> {
 
         // FIXME: Better way to spawn multiple enemies
 
-        tank = GameObject.Instantiate(tankPrefab);
-        tank.transform.position = spawnPoints[2].transform.position;
-        tank.transform.rotation = spawnPoints[2].transform.rotation;
-        tank.tag = "Enemy";
-        participant = new Participant(tank, 1);
+        GameObject tank2 = GameObject.Instantiate(tankPrefab);
+        tank2.transform.position = spawnPoints[2].transform.position;
+        tank2.transform.rotation = spawnPoints[2].transform.rotation;
+        tank2.tag = "Enemy";
+        Participant participant2 = new Participant(tank2, 1);
+        participant2.initiative = 2;
 
-        participants.Add(participant);
+        participants.Add(participant2);
 
-        tank.GetComponent<TankGun>().OnDie += OnTankDie;
+        tank2.GetComponent<TankGun>().OnDie += OnTankDie;
 
         // Set initial turn
 
@@ -177,6 +179,7 @@ public class BattleManager : Singleton<BattleManager> {
     private void OnTankDie(GameObject g) {
         Participant participant = participants.Find(p => p.tank == g);
         participant.isAlive = false;
+        participant.tank.GetComponent<TankDialog>().Say("I have been destroyed! Woe is me!");
         Debug.Log("Participant died: " + participant.initiative);
     }
 
@@ -185,7 +188,9 @@ public class BattleManager : Singleton<BattleManager> {
             if (!p.isPlayer) {
                 GameObject.Destroy(p.tank);
             }
-        }); 
+        });
+
+        participants = null;
 
         player.tank.transform.position = originalPlayerPosition;
         player.tank.transform.rotation = originalPlayerRotation;

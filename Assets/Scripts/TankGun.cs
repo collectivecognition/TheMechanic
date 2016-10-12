@@ -34,7 +34,9 @@ public class TankGun : MonoBehaviour {
     public void Fire () {
         RaycastHit hit;
         Vector3 pos = firingPoint.position;
-        Debug.DrawRay(pos, firingPoint.forward * 1000f, Color.red, 101f, true);
+
+        // Debug.DrawRay(pos, firingPoint.forward * 1000f, Color.red, 101f, true);
+
         if (Physics.Raycast(pos, firingPoint.forward, out hit, Mathf.Infinity)) {
             if(hit.collider.tag == "Enemy" || hit.collider.name == "Player") {
                 hit.collider.transform.GetComponent<TankGun>().Hit(50f);
