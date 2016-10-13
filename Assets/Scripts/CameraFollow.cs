@@ -11,6 +11,10 @@ public class CameraFollow : MonoBehaviour {
 
     void Start () {
         player = GameObject.Find("Player");
+
+        // Keep this in memory between scene loads
+
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update () {

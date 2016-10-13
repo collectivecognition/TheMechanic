@@ -12,7 +12,7 @@ public class GameManager : Singleton<GameManager> {
     private int drawDepth = -1000;
     private float alpha = 0f;
     private Camera camera;
-    
+
     void Awake() {
 
         // Whenever a scene loads
@@ -23,12 +23,9 @@ public class GameManager : Singleton<GameManager> {
 
             fadeDirection = -1;
 
-
              // Grab a reference to the camera in the new scene
 
             camera = GameObject.Find("Camera").GetComponent<Camera>();
-
-            Debug.Log("Storing reference to camera");
         };
         
         // Keep this in memory between scene loads
@@ -100,5 +97,6 @@ public class GameManager : Singleton<GameManager> {
         // Load the requested scene
 
         SceneManager.LoadScene(sceneName);
+        
     }
 }
