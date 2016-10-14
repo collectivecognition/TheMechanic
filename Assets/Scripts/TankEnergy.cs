@@ -18,10 +18,10 @@ public class TankEnergy : MonoBehaviour {
         energyBar.fillAmount = energy / totalEnergy;
 
         energy += rechargeRate * Time.deltaTime;
+        energy = Mathf.Clamp(energy, 0, 100);
     }
 
     public void UseEnergy(float amount) {
         energy -= amount;
-        energy = Mathf.Clamp(energy, 0, 100);
     }
 }

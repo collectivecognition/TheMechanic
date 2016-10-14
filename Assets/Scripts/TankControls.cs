@@ -5,8 +5,15 @@ public class TankControls : MonoBehaviour {
     [HideInInspector]
     public bool controllable = true;
 
-    public float m_Speed = 12f;                 // How fast the tank moves forward and back.
-    public float m_TurnSpeed = 180f;            // How fast the tank turns in degrees per second.
+    private TankEnergy energy;
+    private float energyUsePerSecond = 20f;
+    private float m_Speed = 12f;                 // How fast the tank moves forward and back.
+    private float m_TurnSpeed = 180f;            // How fast the tank turns in degrees per second.
+    private float normalSpeed = 12f;
+    private float normalTurnSpeed = 180f;
+    private float slowSpeed = 3f;
+    private float slowTurnSpeed = 30f;
+
     public AudioSource m_MovementAudio;         // Reference to the audio source used to play engine sounds. NB: different to the shooting audio source.
     public AudioClip m_EngineIdling;            // Audio to play when the tank isn't moving.
     public AudioClip m_EngineDriving;           // Audio to play when the tank is moving.
@@ -21,6 +28,8 @@ public class TankControls : MonoBehaviour {
 
     private void Awake() {
         m_Rigidbody = GetComponent<Rigidbody>();
+
+        energy = GetComponent<TankEnergy>();
     }
     
     private void OnEnable() {
@@ -50,10 +59,28 @@ public class TankControls : MonoBehaviour {
 
 
     private void Update() {
+        float energyUsed = energyUsePerSecond * Time.deltaTime;
+
         if (controllable && name == "Player") {
-            // Store the value of both input axes.
-            m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
-            m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
+            if (energy.Energy >= energyUsed) {
+                m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
+                m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
+
+                if (m_MovementInputValue != 0) {
+                    energy.UseEnergy(energyUsed);
+
+                    if(energy.Energy > 0.5) {
+                        m_Speed = normalSpeed;
+                        m_TurnSpeed = normalTurnSpeed;
+                    }else {
+                        m_Speed = slowSpeed;
+                        m_TurnSpeed = slowTurnSpeed;
+                    }
+                }
+            }else {
+                m_Speed = slowSpeed;
+                m_TurnSpeed = slowTurnSpeed;
+            }
         }
 
         EngineAudio();
