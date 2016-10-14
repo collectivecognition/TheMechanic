@@ -5,6 +5,8 @@ using System.Collections;
 public class TankHealth : MonoBehaviour {
     private float health = 100f;
     private float totalHealth = 100f;
+
+    private GameObject healthCanvas;
     private Image healthBar;
     private GameObject damageNumberPrefab;
 
@@ -12,12 +14,15 @@ public class TankHealth : MonoBehaviour {
     public event OnDieEvent OnDie;
 
     void Start() {
+        healthCanvas = transform.Find("HealthCanvas").gameObject;
         healthBar = transform.Find("HealthCanvas/Health").GetComponent<Image>();
         damageNumberPrefab = Resources.Load<GameObject>("Prefabs/DamageNumber");
     }
 
     void Update() {
         healthBar.fillAmount = health / totalHealth;
+
+        healthCanvas.SetActive(BattleManager.Instance.BattleActive); // Only show in battle mode
     }
 
     public void Hit(float damage) {

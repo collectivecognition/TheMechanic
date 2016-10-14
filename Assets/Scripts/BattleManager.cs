@@ -11,6 +11,9 @@ public class BattleManager : Singleton<BattleManager> {
     private Participant currentParticipant;
     private float distancePerTurn = 30f;
 
+    public bool BattleActive { get { return battleActive; } }
+    private bool battleActive = false;
+
     private class Participant {
         public GameObject tank;
         public bool isAlive;
@@ -61,6 +64,7 @@ public class BattleManager : Singleton<BattleManager> {
     }
 
     public void StartBattle() {
+        battleActive = true;
 
         // Load the battle scene before initializing the battle
 
@@ -138,6 +142,8 @@ public class BattleManager : Singleton<BattleManager> {
     }
 
     private void EndBattle() {
+        battleActive = false;
+
         participants.ForEach(p => {
             if (!p.isPlayer) {
                 GameObject.Destroy(p.tank);
