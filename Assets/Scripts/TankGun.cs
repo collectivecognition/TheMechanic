@@ -42,26 +42,22 @@ public class TankGun : MonoBehaviour {
     }
 
     public void Fire () {
-        RaycastHit hit;
+        //RaycastHit hit;
         Vector3 pos = firingPoint.position;
 
         // Debug.DrawRay(pos, firingPoint.forward * 1000f, Color.red, 101f, true);
 
-        if (Physics.Raycast(pos, firingPoint.forward, out hit, Mathf.Infinity)) {
-            if(hit.collider.tag == "Enemy" || hit.collider.name == "Player") {
-                hit.collider.transform.GetComponent<TankGun>().Hit(50f);
-            }
-        }
+        //if (Physics.Raycast(pos, firingPoint.forward, out hit, Mathf.Infinity)) {
+        //    if(hit.collider.tag == "Enemy" || hit.collider.name == "Player") {
+        //        hit.collider.transform.GetComponent<TankGun>().Hit(50f);
+        //    }
+        //}
 
         GameObject projectile = GameObject.Instantiate(projectilePrefab);
-        projectile.transform.position = firingPoint.position;
+        projectile.transform.position = pos;
         projectile.transform.rotation = turret.rotation;
 
         projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * 30f, ForceMode.Impulse);
-
-        //projectile.GetComponent<Rigidbody>().AddForce(transform.up * 5f, ForceMode.Impulse);
-
-        // controllable = false; // FIXME: Should be controlled elsewhere, gun should not know how many times it's allowed to shoot
     }
 
     // FIXME: Should be handled in it's own class, maybe TankHealth?

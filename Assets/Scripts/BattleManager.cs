@@ -108,7 +108,7 @@ public class BattleManager : Singleton<BattleManager> {
             // FIXME: Placeholder for enemy AI
 
             currentParticipant.tank.GetComponent<TankTurret>().AimAt(player.tank.gameObject);
-            // currentParticipant.tank.gun.Fire();
+            currentParticipant.tank.GetComponent<TankGun>().Fire();
             NextTurn();
         }
     }
@@ -117,7 +117,7 @@ public class BattleManager : Singleton<BattleManager> {
 
         // Load the battle scene before initializing the battle
 
-        GameManager.Instance.LoadScene("TestBattle", () => {
+        GameManager.Instance.LoadScene("BulletBallField", () => {
             participants = new List<Participant>();
 
             player = new Participant(
