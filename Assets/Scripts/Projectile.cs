@@ -24,7 +24,7 @@ public class Projectile : MonoBehaviour {
             dead = true;
 
             if (collision.collider.tag == "Enemy" || collision.collider.name == "Player") {
-                collision.collider.transform.GetComponent<TankGun>().Hit(50f);
+                collision.collider.transform.GetComponent<TankHealth>().Hit(50f);
             }
         }
     }

@@ -33,7 +33,7 @@ public class TankTurret : MonoBehaviour {
             if (playerPlane.Raycast(ray, out hitdist)) {
                 Vector3 targetPoint = ray.GetPoint(hitdist);
                 Quaternion targetRotation = Quaternion.LookRotation(targetPoint - turretTransform.position);
-                turretTransform.rotation = Quaternion.Slerp(turretTransform.rotation, targetRotation, 30f * Time.deltaTime);
+                turretTransform.rotation = Quaternion.Slerp(turretTransform.rotation, targetRotation, 5f * Time.deltaTime);
                 Vector3 rayPos = turretTransform.position + Vector3.up * 5f;
             }
         }

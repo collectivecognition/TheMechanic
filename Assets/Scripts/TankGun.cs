@@ -6,10 +6,6 @@ public class TankGun : MonoBehaviour {
     [HideInInspector]
     public bool controllable = false;
 
-    private float health = 100f;
-    private float totalHealth = 100f;
-
-    private Image healthBar;
     private Transform firingPoint;
     private GameObject projectilePrefab;
     private Transform turret;
@@ -18,7 +14,6 @@ public class TankGun : MonoBehaviour {
     public event OnDieEvent OnDie;
 
     void Start () {
-        healthBar = transform.Find("Health Canvas/Health").GetComponent<Image>();
         firingPoint = transform.Find("Turret/FiringPoint");
         projectilePrefab = Resources.Load<GameObject>("Prefabs/Projectile");
         turret = transform.Find("Turret");
@@ -37,8 +32,6 @@ public class TankGun : MonoBehaviour {
                 Fire();
             }
         }
-
-        healthBar.fillAmount = health / totalHealth; // FIXME: Separate healthBar class
     }
 
     public void Fire () {
@@ -58,15 +51,5 @@ public class TankGun : MonoBehaviour {
         projectile.transform.rotation = turret.rotation;
 
         projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * 30f, ForceMode.Impulse);
-    }
-
-    // FIXME: Should be handled in it's own class, maybe TankHealth?
-
-    public void Hit (float damage) {
-        health -= damage;
-        if(health <= 0f) {
-            // GameObject.Destroy(gameObject);
-            OnDie(gameObject);
-        }
     }
 }
