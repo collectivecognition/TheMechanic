@@ -101,6 +101,7 @@ public class BattleManager : Singleton<BattleManager> {
             tank.transform.position = spawnPoints[0].transform.position;
             tank.transform.rotation = spawnPoints[0].transform.rotation;
             tank.tag = "Enemy";
+            tank.name = "TANK1";
             Participant participant = new Participant(tank, 1);
             participant.initiative = 1;
 
@@ -114,6 +115,7 @@ public class BattleManager : Singleton<BattleManager> {
             tank2.transform.position = spawnPoints[2].transform.position;
             tank2.transform.rotation = spawnPoints[2].transform.rotation;
             tank2.tag = "Enemy";
+            tank2.name = "TANK2";
             Participant participant2 = new Participant(tank2, 1);
             participant2.initiative = 2;
 
