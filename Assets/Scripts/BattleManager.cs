@@ -58,59 +58,6 @@ public class BattleManager : Singleton<BattleManager> {
         if (Input.GetKeyDown(KeyCode.Z)) { // Start battle
             StartBattle();
         }
-
-        if (Input.GetKeyDown(KeyCode.N)) { // Next turn
-            NextTurn();
-        }
-
-        if (participants != null) {
-            TankDistanceCounter counter = currentParticipant.tank.GetComponent<TankDistanceCounter>();
-            float totalDistance = counter.totalDistance;
-
-            if (totalDistance > distancePerTurn) {
-                currentParticipant.tank.GetComponent<TankControls>().controllable = false;
-            }
-        }
-    }
-
-    void NextTurn() {
-
-        // participants.ForEach(p => Debug.Log("Participant: " + p.initiative + " " + p.isAlive + " " + p.isPlayer));
-
-        Participant nextParticipant = participants.Find(p => p.isAlive && p.initiative > currentParticipant.initiative);
-
-        if (nextParticipant == null) {
-            nextParticipant = participants.First();
-        }
-
-        if(currentParticipant == nextParticipant) {
-
-            // Current participant won, as we looped through the entire array
-            Debug.Log("Game over man, game over!");
-            EndBattle();
-        }
-
-        currentParticipant = nextParticipant;
-        
-        // Handle control state for player
-
-        if(currentParticipant.isPlayer) {
-            player.tank.GetComponent<TankDistanceCounter>().Reset();
-            player.tank.GetComponent<TankControls>().controllable = true;
-            player.tank.GetComponent<TankTurret>().controllable = true;
-            player.tank.GetComponent<TankGun>().controllable = true;
-        } else {
-            player.tank.GetComponent<TankControls>().StopImmediately();
-            player.tank.GetComponent<TankControls>().controllable = false;
-            player.tank.GetComponent<TankTurret>().controllable = false;
-            player.tank.GetComponent<TankGun>().controllable = false;
-
-            // FIXME: Placeholder for enemy AI
-
-            currentParticipant.tank.GetComponent<TankTurret>().AimAt(player.tank.gameObject);
-            currentParticipant.tank.GetComponent<TankGun>().Fire();
-            NextTurn();
-        }
     }
 
     public void StartBattle() {
