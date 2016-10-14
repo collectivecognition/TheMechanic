@@ -25,12 +25,8 @@ public class GameManager : Singleton<GameManager> {
 
              // Grab a reference to the camera in the new scene
 
-            camera = GameObject.Find("Camera").GetComponent<Camera>();
+            camera = GameObject.Find("Shared/Camera/Camera").GetComponent<Camera>();
         };
-        
-        // Keep this in memory between scene loads
-
-        DontDestroyOnLoad(gameObject);
     }
 
     void OnGUI() {

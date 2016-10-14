@@ -5,7 +5,7 @@ public class FaceCamera : MonoBehaviour {
     Transform cameraTransform;
 
     void Awake() {
-        cameraTransform = GameObject.Find("Camera").transform;
+        cameraTransform = GameObject.Find("Shared/Camera").transform;
     }
 
     void Update() {

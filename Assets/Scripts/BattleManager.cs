@@ -48,10 +48,6 @@ public class BattleManager : Singleton<BattleManager> {
         }
     }
 
-    void Awake() {
-        DontDestroyOnLoad(gameObject);
-    }
-
     void Start() {
     }
 
@@ -125,7 +121,7 @@ public class BattleManager : Singleton<BattleManager> {
             participants = new List<Participant>();
 
             player = new Participant(
-                GameObject.Find("Player"),
+                GameObject.Find("Shared/Player"),
                 0,
                 true
             );

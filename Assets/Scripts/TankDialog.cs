@@ -12,7 +12,7 @@ public class TankDialog : MonoBehaviour {
     void Start() {
         textObject = transform.Find("DialogCanvas/Text").GetComponent<Text>();
         canvasObject = transform.Find("DialogCanvas").gameObject;
-        player = GameObject.Find("Player");
+        player = GameObject.Find("Shared/Player");
     }
 
     public void Say(string what) {

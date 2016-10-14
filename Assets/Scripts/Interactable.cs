@@ -13,7 +13,7 @@ public class Interactable : MonoBehaviour {
     private float maxAngle = 30f;
 
 	void Awake () {
-        player = GameObject.Find("Player");
+        player = GameObject.Find("Shared/Player");
 	}
 	
 	void Update () {

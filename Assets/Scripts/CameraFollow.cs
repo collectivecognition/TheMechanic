@@ -7,11 +7,7 @@ public class CameraFollow : MonoBehaviour {
     private float followDistance = 80f;
 
     void Start () {
-        player = GameObject.Find("Player");
-
-        // Keep this in memory between scene loads
-
-        DontDestroyOnLoad(gameObject);
+        player = GameObject.Find("Shared/Player");
     }
 
     void Update () {
