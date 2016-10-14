@@ -24,7 +24,7 @@ public class TankGun : MonoBehaviour {
         
         // FIXME: Move to controls
 
-        if (GameManager.Instance.gameActive && name == "Player") {
+        if (GameManager.Instance.gameActive && BattleManager.Instance.BattleActive && name == "Player") {
             if (Input.GetKeyDown(KeyCode.Space)) {
                 Fire();
             }

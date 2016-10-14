@@ -23,7 +23,7 @@ public class TankTurret : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (GameManager.Instance.gameActive && name == "Player") {
+        if (GameManager.Instance.gameActive && BattleManager.Instance.BattleActive && name == "Player") {
             Plane playerPlane = new Plane(Vector3.up, turretTransform.position);
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             float hitdist = 0.0f;

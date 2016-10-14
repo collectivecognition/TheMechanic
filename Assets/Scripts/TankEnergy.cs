@@ -27,6 +27,8 @@ public class TankEnergy : MonoBehaviour {
     }
 
     public void UseEnergy(float amount) {
-        energy -= amount;
+        if (BattleManager.Instance.BattleActive) { 
+            energy -= amount;
+        }
     }
 }
