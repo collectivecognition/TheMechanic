@@ -2,9 +2,6 @@
 using System.Collections;
 
 public class TankTurret : MonoBehaviour {
-    [HideInInspector]
-    public bool controllable = true;
-
     private Camera camera;
     private float turnSpeed = 50f;
     private Transform turretTransform;
@@ -15,7 +12,7 @@ public class TankTurret : MonoBehaviour {
     }
 
     private void Update() {
-        if (controllable && name == "Player") {
+        if (GameManager.Instance.gameActive && name == "Player") {
             // turretTransform.Rotate(Vector3.up * Input.GetAxis("Right Stick Horizontal") * turnSpeed * Time.deltaTime);
             //Vector3 mouseWorldPosition = camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, turretTransform.position.z));
             //mouseWorldPosition.z = turretTransform.position.z;
@@ -26,7 +23,7 @@ public class TankTurret : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (controllable && name == "Player") {
+        if (GameManager.Instance.gameActive && name == "Player") {
             Plane playerPlane = new Plane(Vector3.up, turretTransform.position);
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             float hitdist = 0.0f;

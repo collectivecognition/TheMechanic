@@ -28,9 +28,7 @@ public class TankDialog : MonoBehaviour {
         textObject.text = "";
         StartCoroutine(TypeText(what));
 
-        player.GetComponent<TankControls>().controllable = false;
-        player.GetComponent<TankGun>().controllable = false;
-        player.GetComponent<TankTurret>().controllable = false;
+        GameManager.Instance.gameActive = false;
     }
 
     void Update () {
@@ -38,9 +36,7 @@ public class TankDialog : MonoBehaviour {
             saying = false;
             iTween.ScaleTo(canvasObject, iTween.Hash("scale", Vector3.zero, "time", 0.5f));
 
-            player.GetComponent<TankControls>().controllable = true;
-            player.GetComponent<TankGun>().controllable = true;
-            player.GetComponent<TankTurret>().controllable = true;
+            GameManager.Instance.gameActive = true;
         }
     }
 

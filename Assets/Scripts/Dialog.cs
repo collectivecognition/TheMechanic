@@ -24,6 +24,8 @@ public class Dialog : MonoBehaviour {
             return;
         }
 
+        GameManager.Instance.gameActive = false;
+
         Debug.Log("Saying");
 
         saying = true;
@@ -39,6 +41,7 @@ public class Dialog : MonoBehaviour {
         if (saying && done && Input.GetKeyDown(KeyCode.Space)) {
             saying = false;
             iTween.ScaleTo(canvasObject, iTween.Hash("scale", Vector3.zero, "time", 0.5f));
+            GameManager.Instance.gameActive = true;
         }
 
         if (Input.GetKeyDown(KeyCode.P)) {

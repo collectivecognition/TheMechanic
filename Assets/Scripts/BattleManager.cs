@@ -155,8 +155,6 @@ public class BattleManager : Singleton<BattleManager> {
         player.tank.transform.position = originalPlayerPosition;
         player.tank.transform.rotation = originalPlayerRotation;
 
-        player.tank.GetComponent<TankControls>().controllable = true;
-        player.tank.GetComponent<TankTurret>().controllable = true;
-        player.tank.GetComponent<TankGun>().controllable = true;
+        GameManager.Instance.gameActive = true;
     }
 }

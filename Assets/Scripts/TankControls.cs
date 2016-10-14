@@ -1,10 +1,6 @@
 ﻿using UnityEngine;
 
 public class TankControls : MonoBehaviour {
-    
-    [HideInInspector]
-    public bool controllable = true;
-
     private TankEnergy energy;
     private float energyUsePerSecond = 20f;
     private float m_Speed = 12f;                 // How fast the tank moves forward and back.
@@ -61,7 +57,7 @@ public class TankControls : MonoBehaviour {
     private void Update() {
         float energyUsed = energyUsePerSecond * Time.deltaTime;
 
-        if (controllable && name == "Player") {
+        if (GameManager.Instance.gameActive && name == "Player") {
             if (energy.Energy >= energyUsed) {
                 m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
                 m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
@@ -110,7 +106,7 @@ public class TankControls : MonoBehaviour {
     
     private void FixedUpdate() {
         // Adjust the rigidbodies position and orientation in FixedUpdate.
-        if (controllable && name == "Player") {
+        if (GameManager.Instance.gameActive && name == "Player") {
             Move();
             Turn();
         }

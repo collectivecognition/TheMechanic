@@ -20,9 +20,7 @@ public class NameEntry : MonoBehaviour {
         nameText = transform.Find("NameText").GetComponent<Text>();
         player = GameObject.Find("Shared/Player");
 
-        player.GetComponent<TankControls>().controllable = false;
-        player.GetComponent<TankGun>().controllable = false;
-        player.GetComponent<TankTurret>().controllable = false;
+        GameManager.Instance.gameActive = false;
     }
     
 	void Update () {
@@ -36,9 +34,7 @@ public class NameEntry : MonoBehaviour {
             switch (currentButton) {
                 case "Done":
                     gameObject.active = false;
-                    player.GetComponent<TankControls>().controllable = true;
-                    player.GetComponent<TankGun>().controllable = true;
-                    player.GetComponent<TankTurret>().controllable = true;
+                    GameManager.Instance.gameActive = true;
                     GameManager.Instance.LoadScene("Classroom", "SpawnPoint@Middle");
                     break;
 

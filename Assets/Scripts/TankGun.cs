@@ -4,7 +4,6 @@ using System.Collections;
 
 public class TankGun : MonoBehaviour {
     [HideInInspector]
-    public bool controllable = false;
 
     private float energyUsePerShot = 30f;
 
@@ -25,7 +24,7 @@ public class TankGun : MonoBehaviour {
         
         // FIXME: Move to controls
 
-        if (controllable && name == "Player") {
+        if (GameManager.Instance.gameActive && name == "Player") {
             if (Input.GetKeyDown(KeyCode.Space)) {
                 Fire();
             }

@@ -12,6 +12,8 @@ public class GameManager : Singleton<GameManager> {
     private int drawDepth = -1000;
     private float alpha = 0f;
     private Camera camera;
+    
+    public bool gameActive = true;
 
     public GameObject player;
 
