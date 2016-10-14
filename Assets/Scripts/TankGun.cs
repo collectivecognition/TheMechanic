@@ -11,6 +11,8 @@ public class TankGun : MonoBehaviour {
 
     private Image healthBar;
     private Transform firingPoint;
+    private GameObject projectilePrefab;
+    private Transform turret;
 
     public delegate void OnDieEvent(GameObject gameObject);
     public event OnDieEvent OnDie;
@@ -18,14 +20,22 @@ public class TankGun : MonoBehaviour {
     void Start () {
         healthBar = transform.Find("Health Canvas/Health").GetComponent<Image>();
         firingPoint = transform.Find("Turret/FiringPoint");
+        projectilePrefab = Resources.Load<GameObject>("Prefabs/Projectile");
+        turret = transform.Find("Turret");
     }
 
 	void Update () {
         
         // FIXME: Move to controls
 
-        if (controllable && name == "Player" && Input.GetKeyDown(KeyCode.Space)) {
-            Fire();
+        if (controllable && name == "Player") {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                Fire();
+            }
+
+            if (Input.GetMouseButtonDown(0)) {
+                Fire();
+            }
         }
 
         healthBar.fillAmount = health / totalHealth; // FIXME: Separate healthBar class
@@ -43,7 +53,15 @@ public class TankGun : MonoBehaviour {
             }
         }
 
-        controllable = false; // FIXME: Should be controlled elsewhere, gun should not know how many times it's allowed to shoot
+        GameObject projectile = GameObject.Instantiate(projectilePrefab);
+        projectile.transform.position = firingPoint.position;
+        projectile.transform.rotation = turret.rotation;
+
+        projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * 30f, ForceMode.Impulse);
+
+        //projectile.GetComponent<Rigidbody>().AddForce(transform.up * 5f, ForceMode.Impulse);
+
+        // controllable = false; // FIXME: Should be controlled elsewhere, gun should not know how many times it's allowed to shoot
     }
 
     // FIXME: Should be handled in it's own class, maybe TankHealth?
