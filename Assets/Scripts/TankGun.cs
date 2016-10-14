@@ -6,6 +6,8 @@ public class TankGun : MonoBehaviour {
     [HideInInspector]
     public bool controllable = false;
 
+    private float energyUsePerShot = 30f;
+
     private Transform firingPoint;
     private GameObject projectilePrefab;
     private Transform turret;
@@ -46,7 +48,7 @@ public class TankGun : MonoBehaviour {
 
             projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * 30f, ForceMode.Impulse);
 
-            energy.UseEnergy(40f);
+            energy.UseEnergy(energyUsePerShot);
         }
     }
 }

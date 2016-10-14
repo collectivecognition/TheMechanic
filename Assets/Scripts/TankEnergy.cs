@@ -7,7 +7,7 @@ public class TankEnergy : MonoBehaviour {
 
     private float energy = 100f;
     private float totalEnergy = 100f;
-    private float rechargeRate = 10f;
+    private float rechargeRate = 15f;
     private Image energyBar;
 
     void Start() {

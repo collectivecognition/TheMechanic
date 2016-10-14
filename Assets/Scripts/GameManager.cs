@@ -13,6 +13,8 @@ public class GameManager : Singleton<GameManager> {
     private float alpha = 0f;
     private Camera camera;
 
+    public GameObject player;
+
     void Awake() {
 
         // Whenever a scene loads
@@ -27,6 +29,8 @@ public class GameManager : Singleton<GameManager> {
 
             camera = GameObject.Find("Shared/Camera/Camera").GetComponent<Camera>();
         };
+
+        player = GameObject.Find("Player");
     }
 
     void OnGUI() {
@@ -46,11 +50,11 @@ public class GameManager : Singleton<GameManager> {
 
     // Public method for changing between scenes
 
-    public void LoadScene(string sceneName, Action callback=null) {
-        StartCoroutine(PerformSceneLoad(sceneName, callback));
+    public void LoadScene(string sceneName, string spawnPoint = null, Action callback=null) {
+        StartCoroutine(PerformSceneLoad(sceneName, spawnPoint, callback));
     }
 
-    private IEnumerator PerformSceneLoad(string sceneName, Action callback) {
+    private IEnumerator PerformSceneLoad(string sceneName, string spawnPoint, Action callback) {
         
         // This method needs to be a coroutine as we need to wait for the frame to finish rendering
         // before we make a copy of it for our fading animation
@@ -83,6 +87,11 @@ public class GameManager : Singleton<GameManager> {
 
         handler = (Scene scene, LoadSceneMode loadSceneMode) => {
             SceneManager.sceneLoaded -= handler; // Unregister handler, only needs call the callback once
+            
+            if (spawnPoint != null && spawnPoint.Length > 0) {
+                GameObject.Find(spawnPoint).GetComponent<SpawnPoint>().Spawn(player);
+            }
+
             if (callback != null) {
                 callback();
             }

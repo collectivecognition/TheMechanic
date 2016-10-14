@@ -10,7 +10,7 @@ public class TankControls : MonoBehaviour {
     private float m_Speed = 12f;                 // How fast the tank moves forward and back.
     private float m_TurnSpeed = 180f;            // How fast the tank turns in degrees per second.
     private float normalSpeed = 12f;
-    private float normalTurnSpeed = 180f;
+    private float normalTurnSpeed = 90f;
     private float slowSpeed = 3f;
     private float slowTurnSpeed = 30f;
 

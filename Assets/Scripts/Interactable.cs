@@ -39,11 +39,7 @@ public class Interactable : MonoBehaviour {
         }
 
         if (sceneToLoad != null) {
-            GameManager.Instance.LoadScene(sceneToLoad, () => {
-                if (spawnPoint != null && spawnPoint.Length > 0) {
-                    GameObject.Find(spawnPoint).GetComponent<SpawnPoint>().Spawn(player);
-                }
-            });
+            GameManager.Instance.LoadScene(sceneToLoad, spawnPoint);
         }
     }
 }

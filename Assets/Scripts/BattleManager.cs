@@ -64,7 +64,7 @@ public class BattleManager : Singleton<BattleManager> {
 
         // Load the battle scene before initializing the battle
 
-        GameManager.Instance.LoadScene("BulletBallField", () => {
+        GameManager.Instance.LoadScene("BulletBallField", null, () => {
             participants = new List<Participant>();
 
             player = new Participant(
