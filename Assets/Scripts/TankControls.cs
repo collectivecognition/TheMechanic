@@ -66,7 +66,7 @@ public class TankControls : MonoBehaviour {
                 m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
                 m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
 
-                if (m_MovementInputValue != 0) {
+                if (m_MovementInputValue != 0 || m_TurnInputValue != 0) {
                     energy.UseEnergy(energyUsed);
 
                     if(energy.Energy > 0.5) {
