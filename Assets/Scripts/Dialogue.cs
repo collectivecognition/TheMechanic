@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 
-public class Dialog : MonoBehaviour {
+public class Dialogue : MonoBehaviour {
     private Text textObject;
     private GameObject canvasObject;
     private bool saying = false;
     private bool done = false;
+    private Action callback;
 
     private AudioSource audio;
     private AudioClip sound;
@@ -19,15 +21,15 @@ public class Dialog : MonoBehaviour {
         canvasObject = gameObject;
     }
 
-    public void Say(string what) {
+    public void Say(string what, Action cb) {
         if (saying) {
             return;
         }
 
+        callback = cb;
+
         GameManager.Instance.gameActive = false;
-
-        Debug.Log("Saying");
-
+        
         saying = true;
         done = false;
 
@@ -41,11 +43,9 @@ public class Dialog : MonoBehaviour {
         if (saying && done && Input.GetKeyDown(KeyCode.Space)) {
             saying = false;
             iTween.ScaleTo(canvasObject, iTween.Hash("scale", Vector3.zero, "time", 0.5f));
-            GameManager.Instance.gameActive = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.P)) {
-            Say("Be not afraid of greatness: some are born great, some achieve greatness, and some have greatness thrust upon them.\n\nTo thine own self be true.");
+            if(callback != null) {
+                callback();
+            }
         }
     }
 
