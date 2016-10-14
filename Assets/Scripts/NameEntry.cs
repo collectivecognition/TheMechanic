@@ -34,6 +34,7 @@ public class NameEntry : MonoBehaviour {
             switch (currentButton) {
                 case "Done":
                     gameObject.active = false;
+                    GameManager.Instance.playerName = text;
                     GameManager.Instance.gameActive = true;
                     GameManager.Instance.LoadScene("Classroom", "SpawnPoint@Middle");
                     break;

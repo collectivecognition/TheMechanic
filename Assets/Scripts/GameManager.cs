@@ -14,6 +14,7 @@ public class GameManager : Singleton<GameManager> {
     private Camera camera;
     
     public bool gameActive = true;
+    public string playerName;
 
     public GameObject player;
 
