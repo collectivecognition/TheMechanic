@@ -58,24 +58,13 @@ public class TankControls : MonoBehaviour {
         float energyUsed = energyUsePerSecond * Time.deltaTime;
 
         if (GameManager.Instance.gameActive && name == "Player") {
-            if (energy.Energy >= energyUsed || !BattleManager.Instance.BattleActive) {
-                m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
-                m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
+            m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
+            m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
 
-                if (m_MovementInputValue != 0 || m_TurnInputValue != 0) {
-                    energy.UseEnergy(energyUsed);
-
-                    if(energy.Energy > 0.5) {
-                        m_Speed = normalSpeed;
-                        m_TurnSpeed = normalTurnSpeed;
-                    }else {
-                        m_Speed = slowSpeed;
-                        m_TurnSpeed = slowTurnSpeed;
-                    }
-                }
-            }else {
-                m_Speed = slowSpeed;
-                m_TurnSpeed = slowTurnSpeed;
+            if (m_MovementInputValue != 0 || m_TurnInputValue != 0) {
+                m_Speed = normalSpeed;
+                m_TurnSpeed = normalTurnSpeed;
+      
             }
         }
 
