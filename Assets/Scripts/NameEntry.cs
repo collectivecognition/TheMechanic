@@ -36,7 +36,7 @@ public class NameEntry : MonoBehaviour {
                     gameObject.active = false;
                     GameManager.Instance.playerName = text;
                     GameManager.Instance.gameActive = true;
-                    GameManager.Instance.LoadScene("Classroom", "SpawnPoint@Middle");
+                    GameManager.Instance.LoadScene("Desert", "SpawnPoint");
                     break;
 
                 case "Back":

@@ -33,8 +33,8 @@ public class TankHealth : MonoBehaviour {
         damageNumber.transform.position = transform.position + Vector3.up * 5f;
 
         if (health <= 0f) {
-            // GameObject.Destroy(gameObject);
-            // OnDie(gameObject);
+            GameObject.Destroy(gameObject);
+            OnDie(gameObject);
         }
     }
 }
