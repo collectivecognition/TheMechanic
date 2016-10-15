@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TankTurret : MonoBehaviour {
     private Camera camera;
-    private float turnSpeed = 1f;
+    private float turnSpeed = 100f;
     private Transform turretTransform;
 
     private void Start() {

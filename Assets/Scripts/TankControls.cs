@@ -58,13 +58,13 @@ public class TankControls : MonoBehaviour {
         float energyUsed = energyUsePerSecond * Time.deltaTime;
 
         if (GameManager.Instance.gameActive && name == "Player") {
-            m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
-            m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
-
-            if (m_MovementInputValue != 0 || m_TurnInputValue != 0) {
-                m_Speed = normalSpeed;
-                m_TurnSpeed = normalTurnSpeed;
-      
+            float x = Input.GetAxis("Horizontal");
+            float y = Input.GetAxis("Vertical");
+            if (x != 0 || y != 0) {
+                Vector3 xzDirection = new Vector3(y, 0, -x);
+                Quaternion targetRotation = Quaternion.LookRotation(xzDirection);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 360 * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, 10f * Time.deltaTime);
             }
         }
 
