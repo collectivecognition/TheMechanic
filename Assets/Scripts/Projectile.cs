@@ -25,7 +25,8 @@ public class Projectile : MonoBehaviour {
     void OnTriggerEnter(Collider collider) {
         if (!dead) {
             if (collider.tag == "Enemy" || collider.name == "Player") {
-                collider.transform.GetComponent<TankHealth>().Hit(Random.Range(1f, 10f));
+                Debug.Log("Hit enemy");
+                collider.transform.GetComponent<Health>().Hit(Random.Range(1f, 10f));
             }
             Die();
         }

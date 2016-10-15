@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class TankHealth : MonoBehaviour {
+public class Health : MonoBehaviour {
     private float health = 100f;
     private float totalHealth = 100f;
 
@@ -36,5 +36,12 @@ public class TankHealth : MonoBehaviour {
             GameObject.Destroy(gameObject);
             OnDie(gameObject);
         }
+
+        iTween.FadeTo(gameObject, iTween.Hash("alpha", 0f, "time", 0.1f));
+        iTween.FadeTo(gameObject, iTween.Hash("alpha", 1f, "time", 0.1f, "delay", 0.1));
+        iTween.FadeTo(gameObject, iTween.Hash("alpha", 0f, "time", 0.1f, "delay", 0.2));
+        iTween.FadeTo(gameObject, iTween.Hash("alpha", 1f, "time", 0.1f, "delay", 0.3));
+        iTween.FadeTo(gameObject, iTween.Hash("alpha", 0f, "time", 0.1f, "delay", 0.4));
+        iTween.FadeTo(gameObject, iTween.Hash("alpha", 1f, "time", 0.1f, "delay", 0.5));
     }
 }

@@ -13,16 +13,21 @@ public class EnemyRotator : Enemy {
     void Start() {
         projectilePrefab = Resources.Load<GameObject>("Prefabs/Projectile");
 
-        iTween.MoveAdd(gameObject, iTween.Hash("amount", gameObject.transform.up * 2f, "time", 1, "loopType", "pingPong", "delay", 0, "easetype", iTween.EaseType.easeInOutQuad));
+        iTween.MoveAdd(gameObject, iTween.Hash("amount", gameObject.transform.up * 2f, "time", 1, "loopType", iTween.LoopType.pingPong, "delay", 0, "easetype", iTween.EaseType.easeInOutQuad));
         iTween.RotateAdd(gameObject, iTween.Hash("y", 360f, "time", (360f / projectileAngleInterval) * projectileInterval, "delay", 0, "loopType", "loop", "easeType", iTween.EaseType.linear));
 
         lastProjectileTime = Time.fixedTime;
+    }
+
+    void TestMe() {
+        Debug.Log("Complete");
     }
 
     void Update() {
         if(Time.fixedTime - lastProjectileTime >= projectileInterval) {
             GameObject projectileObject = (GameObject)Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             Projectile projectile = projectileObject.GetComponent<Projectile>();
+            projectileObject.layer = LayerMask.NameToLayer("EnemyProjectiles");
             projectile.direction = Quaternion.AngleAxis(projectileAngle, Vector3.up) * Vector3.forward;
             projectile.speed = projectileSpeed;
 
