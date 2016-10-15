@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TankTurret : MonoBehaviour {
     private Camera camera;
-    private float turnSpeed = 50f;
+    private float turnSpeed = 1f;
     private Transform turretTransform;
 
     private void Start() {
@@ -29,16 +29,18 @@ public class TankTurret : MonoBehaviour {
             float hitdist = 0.0f;
             if (playerPlane.Raycast(ray, out hitdist)) {
                 Vector3 targetPoint = ray.GetPoint(hitdist);
-                Quaternion targetRotation = Quaternion.LookRotation(targetPoint - turretTransform.position);
-                turretTransform.rotation = Quaternion.Slerp(turretTransform.rotation, targetRotation, 5f * Time.deltaTime);
-                Vector3 rayPos = turretTransform.position + Vector3.up * 5f;
+                AimAt(targetPoint);
             }
         }
     }
 
-    public void AimAt(GameObject target) {
-        Vector3 direction = (target.transform.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        turretTransform.rotation = lookRotation;
+    public void AimAt(Vector3 target) {
+        Quaternion targetRotation = Quaternion.LookRotation(target - turretTransform.position);
+        turretTransform.rotation = Quaternion.Slerp(turretTransform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+    }
+
+    public bool IsAimingAt(Vector3 target) {
+        float angle = Vector3.Angle(turretTransform.transform.forward, turretTransform.position - target);
+        return angle > 180 - 10 && angle < 180 + 10;
     }
 }

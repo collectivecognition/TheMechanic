@@ -33,6 +33,10 @@ public class Dialogue : MonoBehaviour {
         StartCoroutine(TypeText(what));
     }
 
+    public void Choose(string what, string[] choices, Action<int> cb) {
+
+    }
+
     void Update() {
 
         // Finishg dialogue

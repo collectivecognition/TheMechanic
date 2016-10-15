@@ -6,6 +6,7 @@ public class TankGun : MonoBehaviour {
     [HideInInspector]
 
     private float energyUsePerShot = 30f;
+    private float projectileForce = 10f;
 
     private Transform firingPoint;
     private GameObject projectilePrefab;
@@ -38,14 +39,14 @@ public class TankGun : MonoBehaviour {
     public void Fire () {
         TankEnergy energy = GetComponent<TankEnergy>();
 
-        if (energy.Energy >= 40f) {
+        if (energy.Energy >= energyUsePerShot) {
             Vector3 pos = firingPoint.position;
 
             GameObject projectile = GameObject.Instantiate(projectilePrefab);
             projectile.transform.position = pos;
             projectile.transform.rotation = turret.rotation;
 
-            projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * 30f, ForceMode.Impulse);
+            projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * projectileForce, ForceMode.Impulse);
 
             energy.UseEnergy(energyUsePerShot);
         }

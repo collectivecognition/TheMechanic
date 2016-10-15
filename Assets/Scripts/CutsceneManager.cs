@@ -14,22 +14,19 @@ public class CutsceneManager : Singleton<CutsceneManager> {
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.C)) {
-            CutsceneEvent[] cutscene = new CutsceneEvent[] {
+            CutsceneEvent[] c = new CutsceneEvent[] {
                 new CutsceneDialogEvent("Teacher: Today we’ll be learning about the great Human War, in which our people definitively crushed our human oppressors and ushered 500 years of glorious, perpetual war."),
                 new CutsceneDialogEvent(GameManager.Instance.playerName + ", please write the answer to A QUESTION on the BLACKBOARD")
             };
 
-            cutscene[0].Play(() => {
-                cutscene[1].Play(() => {
-                    GameManager.Instance.gameActive = true;
-                });
-            });
+            Play(c);
         }
     }
 
-    public void Play(CutsceneEvent[] cutscene, Action callback = null) {
+    public void Play(CutsceneEvent[] c, Action callback = null) {
         GameManager.Instance.gameActive = false;
 
+        cutscene = c;
         currentEventIndex = 0;
         NextEvent();
     }
