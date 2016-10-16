@@ -51,11 +51,16 @@ public class BattleManager : Singleton<BattleManager> {
 
     private void EndBattle() {
         battleActive = false;
-        
-        GameManager.Instance.LoadScene(originalPlayerScene, null, () => {
-            GameManager.Instance.player.transform.position = originalPlayerPosition;
-            GameManager.Instance.player.transform.rotation = originalPlayerRotation;
-        });
+
+        GameObject loot = Resources.Load<GameObject>("Prefabs/Powerup");
+        GameObject.Instantiate(loot, new Vector3(0, 10, 0), Quaternion.identity);
+        GameObject.Instantiate(loot, new Vector3(10, 7, 0), Quaternion.identity);
+        GameObject.Instantiate(loot, new Vector3(-10, 11, 0), Quaternion.identity);
+
+        //GameManager.Instance.LoadScene(originalPlayerScene, null, () => {
+        //    GameManager.Instance.player.transform.position = originalPlayerPosition;
+        //    GameManager.Instance.player.transform.rotation = originalPlayerRotation;
+        //});
 
         GameManager.Instance.gameActive = true;
     }
