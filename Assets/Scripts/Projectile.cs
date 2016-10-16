@@ -15,10 +15,12 @@ public class Projectile : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.position += direction * speed * Time.deltaTime;
+        if (!dead) {
+            transform.position += direction * speed * Time.deltaTime;
 
-        if(Vector3.Distance(startPosition, transform.position) >= maxDistance) {
-            Die();
+            if (Vector3.Distance(startPosition, transform.position) >= maxDistance) {
+                Die();
+            }
         }
 	}
 

@@ -21,7 +21,7 @@ public class Dialogue : MonoBehaviour {
         canvasObject = gameObject;
     }
 
-    public void Say(string what, Action cb) {
+    public void Say(string what, Action cb=null) {
         callback = cb;
         text = what;
         done = false;
