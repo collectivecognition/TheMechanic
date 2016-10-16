@@ -36,7 +36,6 @@ public class NameEntry : MonoBehaviour {
                     gameObject.active = false;
                     GameManager.Instance.playerName = text;
                     GameManager.Instance.gameActive = true;
-                    GameManager.Instance.LoadScene("Desert", "SpawnPoint");
                     break;
 
                 case "Back":
@@ -109,6 +108,5 @@ public class NameEntry : MonoBehaviour {
         currentButton = buttons[currentRow, currentCol];
 
         transform.Find(currentButton).GetComponent<Text>().color = Color.yellow;
-
     }
 }

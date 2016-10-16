@@ -3,8 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class TankGun : MonoBehaviour {
-    private float energyUsePerShot = 10f;
-    private float projectileSpeed = 50f;
+    private float energyUsePerShot = 5f;
+    private float projectileSpeed = 65f;
 
     private Transform firingPoint;
     private GameObject projectilePrefab;

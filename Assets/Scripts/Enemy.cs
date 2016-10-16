@@ -14,6 +14,6 @@ public class Enemy : MonoBehaviour {
     IEnumerator Spawn() {
         yield return new WaitForSeconds(spawnDelay);
         gameObject.SetActive(true);
-        // spawned = true;
+        spawned = true;
     }
 }
