@@ -2,14 +2,18 @@
 using System.Collections;
 
 public class Enemy : MonoBehaviour {
+    public float spawnDelay = 0;
 
-	// Use this for initialization
-	void Start () {
-	
+    protected bool spawned = false;
+
+	protected void Start () {
+        StartCoroutine(Spawn());
+        // gameObject.SetActive(false);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    IEnumerator Spawn() {
+        yield return new WaitForSeconds(spawnDelay);
+        gameObject.SetActive(true);
+        // spawned = true;
+    }
 }
