@@ -10,7 +10,9 @@ public class Powerup : MonoBehaviour {
         if(collision.collider.name == "Player") {
             GetComponent<ParticleSystem>().Play();
             GetComponent<Renderer>().enabled = false;
-            GameObject.Destroy(gameObject, 0.5f);
+            GetComponent<Light>().intensity = 10f;
+            GetComponent<Light>().range = 10f;
+            GameObject.Destroy(gameObject, 0.3f);
         }
     }
 }
