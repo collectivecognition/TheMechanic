@@ -3,13 +3,17 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour {
     private bool dead = false;
-    public Vector3 direction;
-    public float speed;
     private Vector3 startPosition;
     private float maxDistance = 150f;
 
-	// Use this for initialization
-	void Start () {
+    [HideInInspector]
+    public Vector3 direction;
+
+    [HideInInspector]
+    public float speed;
+
+    // Use this for initialization
+    void Start () {
         startPosition = transform.position;
     }
 	

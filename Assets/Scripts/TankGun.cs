@@ -74,6 +74,7 @@ public void Fire () {
             for(int ii = 0; ii < projectilesPerShot; ii++) {
                 GameObject projectile = GameObject.Instantiate(projectilePrefab);
                 projectile.transform.position = firingPoint.position;
+                //projectile.transform.rotation = turret.rotation;
 
                 // Spread shots
 
@@ -92,7 +93,7 @@ public void Fire () {
                 // Set shot attributes
 
                 projectile.GetComponent<Renderer>().material.SetColor("_TintColor", projectileColor);
-                projectile.GetComponent<Light>().color = projectileColor;
+                //projectile.GetComponent<Light>().color = projectileColor;
                 projectile.GetComponent<Projectile>().speed = projectileSpeed;
                 projectile.transform.localScale *= projectileSize;
             }

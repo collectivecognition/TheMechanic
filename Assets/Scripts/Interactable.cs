@@ -2,24 +2,30 @@
 using System.Collections;
 
 public class Interactable : MonoBehaviour {
-    public string sayText;
-    public string sceneToLoad;
-    public string spawnPoint;
+    public string[] sayText;
+    public string playCutscene;
+    public string loadScene;
+    public string sceneSpawnPoint;
+    public bool oneShot = true;
     public bool triggerOnCollide = false;
-
-    private GameObject player;
+    public bool triggerOnLoad = false;
+    public bool triggerOnInteract = false;
+    public bool startBattle = false;
 
     private float maxDistance = 7.5f;
     private float maxAngle = 30f;
+    private int triggerCount = 0;
 
-	void Awake () {
-        player = GameObject.Find("Shared/Player");
-	}
+    void Start() {
+        if (triggerOnLoad) {
+            TriggerInteraction();
+        }
+    }
 	
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            float angle = Vector3.Angle(player.transform.forward, transform.position - player.transform.position);
-            float distance = Vector3.Distance(player.transform.position, transform.position);
+        if (Input.GetKeyDown(KeyCode.Space) && triggerOnInteract) {
+            float angle = Vector3.Angle(GameManager.Instance.player.transform.forward, transform.position - GameManager.Instance.player.transform.position);
+            float distance = Vector3.Distance(GameManager.Instance.player.transform.position, transform.position);
 
             if(angle < maxAngle && distance < maxDistance) {
                 TriggerInteraction();
@@ -34,12 +40,26 @@ public class Interactable : MonoBehaviour {
     }
 
     private void TriggerInteraction() {
-        if (sayText != null && sayText.Length > 0) {
-            player.GetComponent<TankDialog>().Say(sayText);
+        if (oneShot && triggerCount > 0) {
+            return;
         }
 
-        if (sceneToLoad != null) {
-            GameManager.Instance.LoadScene(sceneToLoad, spawnPoint);
+        triggerCount++;
+
+        if (sayText != null && sayText.Length > 0) {
+            CutsceneEvent[] cutscene = new CutsceneEvent[sayText.Length];
+            for (int ii = 0; ii < sayText.Length; ii++){
+                cutscene[ii] = new CutsceneDialogEvent(sayText[ii]);
+            };
+            CutsceneManager.Instance.Play(cutscene);
+        }
+
+        if (loadScene != null) {
+            GameManager.Instance.LoadScene(loadScene, sceneSpawnPoint);
+        }
+
+        if (startBattle) {
+            BattleManager.Instance.StartBattle();
         }
     }
 }

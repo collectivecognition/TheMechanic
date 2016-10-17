@@ -13,7 +13,7 @@ public class Dialogue : MonoBehaviour {
     private bool done = false;
     private Action callback;
 
-    void Start() {
+    void Awake() {
         textObject = transform.Find("Text").GetComponent<Text>();
         audio = GetComponent<AudioSource>();
         sound = Resources.Load<AudioClip>("Sounds/TextBeep");

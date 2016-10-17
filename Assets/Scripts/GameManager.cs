@@ -105,6 +105,5 @@ public class GameManager : Singleton<GameManager> {
         // Load the requested scene
 
         SceneManager.LoadScene(sceneName);
-        
     }
 }
