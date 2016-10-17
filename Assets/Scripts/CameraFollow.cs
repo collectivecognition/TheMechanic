@@ -8,6 +8,5 @@ public class CameraFollow : MonoBehaviour {
         if (GameManager.Instance.player != null) {
             transform.position = GameManager.Instance.player.transform.position + Vector3.up * followDistance - Vector3.right * (followDistance + 20f) - Vector3.forward * (followDistance + 20f);
         }
-        Debug.Log(GameManager.Instance.player.name);
     }
 }

@@ -11,7 +11,6 @@ public class GameManager : Singleton<GameManager> {
     private float fadeSpeed = 1f;
     private int drawDepth = -1000;
     private float alpha = 0f;
-    private string defaultScene = "ShipCryoChamber";
     
     public bool gameActive = true;
     public string playerName;
@@ -21,7 +20,6 @@ public class GameManager : Singleton<GameManager> {
     public GameObject player;
 
     void Awake() {
-        LoadScene(defaultScene, "SpawnPoint");
 
         // Whenever a scene loads
 
@@ -87,9 +85,11 @@ public class GameManager : Singleton<GameManager> {
 
         handler = (Scene scene, LoadSceneMode loadSceneMode) => {
             SceneManager.sceneLoaded -= handler; // Unregister handler, only needs call the callback once
-            
+
             if (spawnPoint != null && spawnPoint.Length > 0) {
                 GameObject.Find(spawnPoint).GetComponent<SpawnPoint>().Spawn();
+            } else {
+                GameObject.FindObjectOfType<SpawnPoint>().Spawn(); // Use the first one by default
             }
 
             if (callback != null) {
