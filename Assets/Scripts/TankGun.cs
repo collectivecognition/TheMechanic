@@ -13,10 +13,10 @@ public class TankGun : MonoBehaviour {
     private float projectileSpeed = 50f;
     private float projectileSize = 1f;
     private Color projectileColor = new Color(1f, 0.5f, 0f, 1f);
-    private int projectilesPerShot = 14;
-    private bool projectileSpread = true;
+    private int projectilesPerShot = 1;
+    private bool projectileSpread = false;
     private float projectileSpreadAngle = 5f;
-    private float fireRate = 0.25f;
+    private float fireRate = 0.5f;
 
     private float lastShotTime = 0;
 

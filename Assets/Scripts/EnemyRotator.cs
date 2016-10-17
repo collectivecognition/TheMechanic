@@ -22,19 +22,17 @@ public class EnemyRotator : Enemy {
     }
 
     void Update() {
-        if (spawned) {
-            if (Time.fixedTime - lastProjectileTime >= projectileInterval) {
-                GameObject projectileObject = (GameObject)Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-                Projectile projectile = projectileObject.GetComponent<Projectile>();
-                projectileObject.layer = LayerMask.NameToLayer("EnemyProjectiles");
-                projectile.direction = Quaternion.AngleAxis(projectileAngle, Vector3.up) * Vector3.forward;
-                projectile.speed = projectileSpeed;
+        if (Time.fixedTime - lastProjectileTime >= projectileInterval) {
+            GameObject projectileObject = (GameObject)Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            Projectile projectile = projectileObject.GetComponent<Projectile>();
+            projectileObject.layer = LayerMask.NameToLayer("EnemyProjectiles");
+            projectile.direction = Quaternion.AngleAxis(projectileAngle, Vector3.up) * Vector3.forward;
+            projectile.speed = projectileSpeed;
 
-                lastProjectileTime = Time.fixedTime;
-                projectileAngle += projectileAngleInterval;
-                if (projectileAngleInterval > 360f) {
-                    projectileAngleInterval = 0f;
-                }
+            lastProjectileTime = Time.fixedTime;
+            projectileAngle += projectileAngleInterval;
+            if (projectileAngleInterval > 360f) {
+                projectileAngleInterval = 0f;
             }
         }
     }

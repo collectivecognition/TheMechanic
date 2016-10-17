@@ -44,7 +44,7 @@ public class BattleManager : Singleton<BattleManager> {
         if (battleActive) {
             int activeEnemies = GameObject.FindGameObjectsWithTag("Enemy").Count<GameObject>();
             if (activeEnemies == 0) {
-                EndBattle();
+               // EndBattle();
             }
         }
     }
