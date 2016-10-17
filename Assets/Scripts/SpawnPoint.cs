@@ -3,6 +3,7 @@ using System.Collections;
 
 public class SpawnPoint : MonoBehaviour {
     public bool useRotation = false;
+    public string playerPrefabName = "PlayerTank";
 
 	void Start() {
         
@@ -12,7 +13,7 @@ public class SpawnPoint : MonoBehaviour {
     }
 
     public void Spawn() {
-        GameObject playerPrefab = (GameObject)Resources.Load("Prefabs/PlayerTank");
+        GameObject playerPrefab = (GameObject)Resources.Load("Prefabs/" + playerPrefabName);
         GameObject player = GameObject.Instantiate(playerPrefab);
 
         player.transform.position = transform.position;
