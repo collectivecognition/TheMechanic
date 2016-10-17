@@ -9,6 +9,7 @@ public class Dialogue : MonoBehaviour {
     private AudioSource audio;
     private AudioClip sound;
 
+    private int charsPerLine = 16;
     private string text;
     private bool done = false;
     private Action callback;
@@ -26,20 +27,43 @@ public class Dialogue : MonoBehaviour {
         text = what;
         done = false;
 
+        // Inject line breaks into text
+
+        string[] words = what.Split(' ');
+        string formattedText = "";
+        string currentLine = "";
+
+        for(int ii = 0; ii < words.Length; ii++) {
+            string word = words[ii];
+
+            if(currentLine.Length + word.Length <= charsPerLine) {
+                currentLine += currentLine.Length > 0 ? " " + word : word;
+            }else {
+                formattedText += currentLine + "\n";
+                currentLine = word;
+            }
+
+            if(ii == words.Length - 1) {
+                formattedText += currentLine;
+            }
+        }
+
+        text = formattedText;
+
         // Zoom in
         // canvasObject.transform.localScale = Vector3.zero;
         iTween.ScaleTo(canvasObject, iTween.Hash("scale", new Vector3(1, 1, 1), "time", 0.5f));
         textObject.text = "";
-        StartCoroutine(TypeText(what));
+        StartCoroutine(TypeText(text));
     }
 
     public void Choose(string what, string[] choices, Action<int> cb) {
-
+        // TODO
     }
 
     void Update() {
 
-        // Finishg dialogue
+        // Finishing dialogue
 
         if (done && Input.GetKeyDown(KeyCode.Space)) {
             iTween.ScaleTo(canvasObject, iTween.Hash("scale", Vector3.zero, "time", 0.5f));
