@@ -14,11 +14,9 @@ public class NameEntry : MonoBehaviour {
     private float lastMove;
     private float moveDelay = 0.3f;
     private Text nameText;
-    private GameObject player;
 
     void Start() {
         nameText = transform.Find("NameText").GetComponent<Text>();
-        player = GameObject.Find("Shared/Player");
 
         GameManager.Instance.gameActive = false;
     }

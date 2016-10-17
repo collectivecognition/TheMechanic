@@ -13,9 +13,9 @@ public class CutsceneDialogEvent : CutsceneEvent {
 
     override public void Play(Action callback = null) {
         if (choices == null) {
-            CutsceneManager.Instance.dialogue.Say(text, callback);
+            GameManager.Instance.dialogue.Say(text, callback);
         } else {
-            CutsceneManager.Instance.dialogue.Choose(text, choices, (int choice) => {
+            GameManager.Instance.dialogue.Choose(text, choices, (int choice) => {
                 if(callback != null) {
 
                 }

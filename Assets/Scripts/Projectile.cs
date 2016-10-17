@@ -30,7 +30,7 @@ public class Projectile : MonoBehaviour {
 
     void OnTriggerEnter(Collider collider) {
         if (!dead) {
-            if (collider.tag == "Enemy" || collider.name == "Player") {
+            if (collider.tag == "Enemy" || collider.tag == "Player") {
                 collider.transform.GetComponent<Health>().Hit(Random.Range(1f, 10f));
             }
             Die();

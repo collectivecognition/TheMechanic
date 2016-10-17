@@ -11,14 +11,17 @@ public class GameManager : Singleton<GameManager> {
     private float fadeSpeed = 1f;
     private int drawDepth = -1000;
     private float alpha = 0f;
-    private Camera camera;
+    private string defaultScene = "ShipCryoChamber";
     
     public bool gameActive = true;
     public string playerName;
 
+    public Camera cam;
+    public Dialogue dialogue;
     public GameObject player;
 
     void Awake() {
+        LoadScene(defaultScene, "SpawnPoint");
 
         // Whenever a scene loads
 
@@ -27,13 +30,7 @@ public class GameManager : Singleton<GameManager> {
             // Initiate fade animation
 
             fadeDirection = -1;
-
-             // Grab a reference to the camera in the new scene
-
-            camera = GameObject.Find("Shared/Camera/Camera").GetComponent<Camera>();
         };
-
-        player = GameObject.Find("Player");
     }
 
     void OnGUI() {
@@ -70,13 +67,13 @@ public class GameManager : Singleton<GameManager> {
         int h = Screen.height;
 
         RenderTexture rt = new RenderTexture(w, h, 24);
-        camera.targetTexture = rt;
+        cam.targetTexture = rt;
         transitionTexture = new Texture2D(w, h, TextureFormat.RGB24, false);
-        camera.Render();
+        cam.Render();
         RenderTexture.active = rt;
         transitionTexture.ReadPixels(new Rect(0, 0, w, h), 0, 0);
         transitionTexture.Apply();
-        camera.targetTexture = null;
+        cam.targetTexture = null;
         RenderTexture.active = null;
         Destroy(rt);
 
@@ -92,7 +89,7 @@ public class GameManager : Singleton<GameManager> {
             SceneManager.sceneLoaded -= handler; // Unregister handler, only needs call the callback once
             
             if (spawnPoint != null && spawnPoint.Length > 0) {
-                GameObject.Find(spawnPoint).GetComponent<SpawnPoint>().Spawn(player);
+                GameObject.Find(spawnPoint).GetComponent<SpawnPoint>().Spawn();
             }
 
             if (callback != null) {
@@ -103,7 +100,7 @@ public class GameManager : Singleton<GameManager> {
         SceneManager.sceneLoaded += handler;
 
         // Load the requested scene
-
+        Debug.Log("Loading scene: " + sceneName);
         SceneManager.LoadScene(sceneName);
     }
 }

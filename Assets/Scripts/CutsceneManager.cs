@@ -3,15 +3,9 @@ using System.Collections;
 using System;
 
 public class CutsceneManager : Singleton<CutsceneManager> {
-    public Dialogue dialogue;
-
     private CutsceneEvent[] cutscene;
     private int currentEventIndex;
 
-    void Awake() {
-        dialogue = GameObject.Find("Shared/Camera/Dialogue").GetComponent<Dialogue>();
-    }
-    
     public void Play(CutsceneEvent[] c, Action callback = null) {
         GameManager.Instance.gameActive = false;
 

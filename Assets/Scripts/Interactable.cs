@@ -34,7 +34,7 @@ public class Interactable : MonoBehaviour {
 	}
 
     void OnTriggerEnter(Collider other) {
-        if(triggerOnCollide && other.name == "Player") {
+        if(triggerOnCollide && other.tag == "Player") {
             TriggerInteraction();
         }
     }
@@ -54,7 +54,7 @@ public class Interactable : MonoBehaviour {
             CutsceneManager.Instance.Play(cutscene);
         }
 
-        if (loadScene != null) {
+        if (loadScene != null && loadScene.Length > 0) {
             GameManager.Instance.LoadScene(loadScene, sceneSpawnPoint);
         }
 

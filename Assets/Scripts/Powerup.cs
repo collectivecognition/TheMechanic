@@ -7,7 +7,7 @@ public class Powerup : MonoBehaviour {
 	}
 
     void OnCollisionEnter(Collision collision) {
-        if(collision.collider.name == "Player") {
+        if(collision.collider.tag == "Player") {
             GetComponent<ParticleSystem>().Play();
             GetComponent<Renderer>().enabled = false;
             GetComponent<Light>().intensity = 10f;

@@ -35,7 +35,7 @@ public class TankGun : MonoBehaviour {
     }
 
 	void Update () {
-        if (GameManager.Instance.gameActive && BattleManager.Instance.BattleActive && name == "Player") {
+        if (GameManager.Instance.gameActive && BattleManager.Instance.BattleActive && tag == "Player") {
             if (Input.GetAxis("Fire1") != 0) {
                 Fire();
             }

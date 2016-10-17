@@ -11,11 +11,15 @@ public class SpawnPoint : MonoBehaviour {
         transform.localScale = new Vector3(0, 0, 0);
     }
 
-    public void Spawn(GameObject g) {
-        g.transform.position = transform.position;
+    public void Spawn() {
+        GameObject playerPrefab = (GameObject)Resources.Load("Prefabs/PlayerTank");
+        GameObject player = GameObject.Instantiate(playerPrefab);
 
-        if (useRotation) { 
-            g.transform.rotation = transform.rotation;
+        player.transform.position = transform.position;
+        GameManager.Instance.player = player;
+
+        if (useRotation) {
+            player.transform.rotation = transform.rotation;
         }
     }
 }

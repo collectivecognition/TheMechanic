@@ -13,8 +13,8 @@ public class TankControls : MonoBehaviour {
   
     private void Update() {
         float energyUsed = boostEnergyPerSecond * Time.deltaTime;
-
-        if (GameManager.Instance.gameActive && name == "Player") {
+        Debug.Log("Active: " + GameManager.Instance.gameActive + " tag: " + tag);
+        if (GameManager.Instance.gameActive && tag == "Player") {
             float x = Input.GetAxis("Horizontal");
             float y = Input.GetAxis("Vertical");
             if (x != 0 || y != 0) {
