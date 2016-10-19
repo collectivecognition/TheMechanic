@@ -12,14 +12,14 @@ public class CutsceneDialogEvent : CutsceneEvent {
     }
 
     override public void Play(Action callback = null) {
-        if (choices == null) {
-            GameManager.Instance.dialogue.Say(text, callback);
-        } else {
-            GameManager.Instance.dialogue.Choose(text, choices, (int choice) => {
-                if(callback != null) {
+        //if (choices == null) {
+        //    GameManager.Instance.dialogue.Say(text, callback);
+        //} else {
+        //    GameManager.Instance.dialogue.Choose(text, choices, (int choice) => {
+        //        if(callback != null) {
 
-                }
-            });
-        }
+        //        }
+        //    });
+        //}
     }
 }
