@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -23,11 +24,11 @@ public class UIManager : Singleton<UIManager> {
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.N)) {
-            OpenUI(uis["NameEntry"]);
+            OpenUI(uis["NameEntry"], null);
         }
     }
 
-    public void OpenUI(Animator anim) {
+    public void OpenUI(Animator anim, Action callback=null) {
         if(currentUI == anim) {
             return;
         }
@@ -47,11 +48,8 @@ public class UIManager : Singleton<UIManager> {
         }
 
         currentUI.SetBool(openParameter, false);
-
         StartCoroutine(DisablePanelDeleyed(currentUI));
-
         currentUI = null;
-
         GameManager.instance.gameActive = true;
     }
 

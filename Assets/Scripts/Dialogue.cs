@@ -52,7 +52,7 @@ public class Dialogue : MonoBehaviour {
 
         // Zoom in
 
-        UIManager.Instance.OpenUI(GetComponent<Animator>());
+        UIManager.Instance.OpenUI(UIManager.Instance.uis["Dialogue"]);
         textObject.text = "";
         StartCoroutine(TypeText(text));
     }
