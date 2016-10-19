@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class UIManager : Singleton<UIManager> {
     private Animator currentUI;
+    private Action currentCallback;
     private int openParameter = Animator.StringToHash("Open");
 
     public Dictionary<string, Animator> uis = new Dictionary<string, Animator>();
@@ -23,8 +24,13 @@ public class UIManager : Singleton<UIManager> {
     }
 
     void Update() {
+
+        // FIXME: Debug
+
         if (Input.GetKeyDown(KeyCode.N)) {
-            OpenUI(uis["NameEntry"], null);
+            OpenUI(uis["NameEntry"], () => {
+                Debug.Log("Closed name entry");
+            });
         }
     }
 
@@ -36,6 +42,7 @@ public class UIManager : Singleton<UIManager> {
         CloseCurrentUI();
 
         currentUI = anim;
+        currentCallback = callback;
         currentUI.gameObject.SetActive(true);
         currentUI.SetBool(openParameter, true);
 
@@ -47,9 +54,15 @@ public class UIManager : Singleton<UIManager> {
             return;
         }
 
+
+        if (currentCallback != null) {
+            currentCallback();
+        }
+
         currentUI.SetBool(openParameter, false);
         StartCoroutine(DisablePanelDeleyed(currentUI));
         currentUI = null;
+        currentCallback = null;
         GameManager.instance.gameActive = true;
     }
 
