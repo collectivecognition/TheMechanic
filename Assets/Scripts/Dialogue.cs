@@ -15,7 +15,7 @@ public class Dialogue : MonoBehaviour {
     private Action callback;
 
     void Awake() {
-        textObject = transform.Find("Text").GetComponent<Text>();
+        textObject = transform.Find("Canvas/Text").GetComponent<Text>();
         audio = GetComponent<AudioSource>();
         sound = Resources.Load<AudioClip>("Sounds/TextBeep");
 
@@ -51,8 +51,8 @@ public class Dialogue : MonoBehaviour {
         text = formattedText;
 
         // Zoom in
-        // canvasObject.transform.localScale = Vector3.zero;
-        iTween.ScaleTo(canvasObject, iTween.Hash("scale", new Vector3(1, 1, 1), "time", 0.5f));
+
+        UIManager.Instance.OpenUI(GetComponent<Animator>());
         textObject.text = "";
         StartCoroutine(TypeText(text));
     }
@@ -66,8 +66,8 @@ public class Dialogue : MonoBehaviour {
         // Finishing dialogue
 
         if (done && Input.GetKeyDown(KeyCode.Space)) {
-            iTween.ScaleTo(canvasObject, iTween.Hash("scale", Vector3.zero, "time", 0.5f));
-            if(callback != null) {
+            UIManager.Instance.CloseCurrentUI();
+            if (callback != null) {
                 callback();
             }
         } else {
