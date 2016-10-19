@@ -31,6 +31,7 @@ public class Shared : Singleton<Shared> {
             gameObject.AddComponent<EnemyManager>();
             gameObject.AddComponent<GameManager>();
             gameObject.AddComponent<UIManager>();
+            gameObject.AddComponent<PostBattleManager>();
 
             // Setup camera
 

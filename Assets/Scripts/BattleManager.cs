@@ -32,7 +32,6 @@ public class BattleManager : Singleton<BattleManager> {
         originalPlayerPosition = t.position;
         originalPlayerRotation = t.rotation;
         originalPlayerScene = SceneManager.GetActiveScene().name;
-        Debug.Log("Scene: " + originalPlayerScene);
 
         // Load the battle scene before initializing the battle
 
@@ -42,9 +41,9 @@ public class BattleManager : Singleton<BattleManager> {
 
     private void CheckForEndOfBattle() {
         if (battleActive) {
-            int activeEnemies = GameObject.FindGameObjectsWithTag("Enemy").Count<GameObject>();
+            int activeEnemies = EnemyManager.Instance.enemies.Count;
             if (activeEnemies == 0) {
-               // EndBattle();
+                EndBattle();
             }
         }
     }
@@ -52,10 +51,15 @@ public class BattleManager : Singleton<BattleManager> {
     private void EndBattle() {
         battleActive = false;
 
-        GameObject loot = Resources.Load<GameObject>("Prefabs/Powerup");
-        GameObject.Instantiate(loot, new Vector3(0, 10, 0), Quaternion.identity);
-        GameObject.Instantiate(loot, new Vector3(10, 7, 0), Quaternion.identity);
-        GameObject.Instantiate(loot, new Vector3(-10, 11, 0), Quaternion.identity);
+        PostBattleManager.Instance.Do(100, new InventoryItem[] {
+            new InventoryItem("Armored Bung"),
+            new InventoryItem("Flamethrower")
+        });
+
+        //GameObject loot = Resources.Load<GameObject>("Prefabs/Powerup");
+        //GameObject.Instantiate(loot, new Vector3(0, 10, 0), Quaternion.identity);
+        //GameObject.Instantiate(loot, new Vector3(10, 7, 0), Quaternion.identity);
+        //GameObject.Instantiate(loot, new Vector3(-10, 11, 0), Quaternion.identity);
 
         //GameManager.Instance.LoadScene(originalPlayerScene, null, () => {
         //    GameManager.Instance.player.transform.position = originalPlayerPosition;

@@ -7,11 +7,12 @@ public class UIManager : Singleton<UIManager> {
     private Animator currentUI;
     private int openParameter = Animator.StringToHash("Open");
 
-    public static Dictionary<string, Animator> uis = new Dictionary<string, Animator>();
+    public Dictionary<string, Animator> uis = new Dictionary<string, Animator>();
 
     void Start() {
-        uis.Add("Dialogue", GameManager.Instance.cam.transform.parent.Find("UI/Dialogue").GetComponent<Animator>());
-        uis.Add("NameEntry", GameManager.Instance.cam.transform.parent.Find("UI/NameEntry").GetComponent<Animator>());
+        Instance.uis.Add("Dialogue", GameManager.Instance.cam.transform.parent.Find("UI/Dialogue").GetComponent<Animator>());
+        Instance.uis.Add("NameEntry", GameManager.Instance.cam.transform.parent.Find("UI/NameEntry").GetComponent<Animator>());
+        Instance.uis.Add("PostBattle", GameManager.Instance.cam.transform.parent.Find("UI/PostBattle").GetComponent<Animator>());
 
         // Disable all UIs at startup
 
