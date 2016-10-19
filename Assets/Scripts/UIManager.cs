@@ -10,8 +10,8 @@ public class UIManager : Singleton<UIManager> {
     public static Dictionary<string, Animator> uis = new Dictionary<string, Animator>();
 
     void Start() {
-        uis.Add("Dialogue", GameManager.Instance.cam.transform.parent.Find("Dialogue").GetComponent<Animator>());
-        uis.Add("NameEntry", GameManager.Instance.cam.transform.parent.Find("NameEntry").GetComponent<Animator>());
+        uis.Add("Dialogue", GameManager.Instance.cam.transform.parent.Find("UI/Dialogue").GetComponent<Animator>());
+        uis.Add("NameEntry", GameManager.Instance.cam.transform.parent.Find("UI/NameEntry").GetComponent<Animator>());
 
         // Disable all UIs at startup
 
