@@ -1,23 +1,28 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class UIManager : Singleton<UIManager> {
     private Animator currentUI;
     private int openParameter = Animator.StringToHash("Open");
 
-    void Awake() {
+    public static Dictionary<string, Animator> uis = new Dictionary<string, Animator>();
 
+    void Start() {
+        uis.Add("Dialogue", GameManager.Instance.cam.transform.parent.Find("Dialogue").GetComponent<Animator>());
+        uis.Add("NameEntry", GameManager.Instance.cam.transform.parent.Find("NameEntry").GetComponent<Animator>());
+
+        // Disable all UIs at startup
+
+        foreach (KeyValuePair<string, Animator> entry in uis) {
+            entry.Value.gameObject.SetActive(false);
+        }
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.M)) {
-            Animator testAnim = GameManager.Instance.cam.transform.parent.Find("TestUI").GetComponent<Animator>();
-            OpenUI(testAnim);
-        }
-
         if (Input.GetKeyDown(KeyCode.N)) {
-            CloseCurrentUI();
+            OpenUI(uis["NameEntry"]);
         }
     }
 
@@ -29,8 +34,10 @@ public class UIManager : Singleton<UIManager> {
         CloseCurrentUI();
 
         currentUI = anim;
-        currentUI.SetBool(openParameter, true);
         currentUI.gameObject.SetActive(true);
+        currentUI.SetBool(openParameter, true);
+
+        GameManager.instance.gameActive = false;
     }
 
     public void CloseCurrentUI() {
@@ -43,6 +50,8 @@ public class UIManager : Singleton<UIManager> {
         StartCoroutine(DisablePanelDeleyed(currentUI));
 
         currentUI = null;
+
+        GameManager.instance.gameActive = true;
     }
 
     IEnumerator DisablePanelDeleyed(Animator anim) {

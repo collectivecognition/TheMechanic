@@ -15,25 +15,22 @@ public class NameEntry : MonoBehaviour {
     private float moveDelay = 0.3f;
     private Text nameText;
 
-    void Start() {
-        nameText = transform.Find("NameText").GetComponent<Text>();
-
-        GameManager.Instance.gameActive = false;
+    void Awake() {
+        nameText = transform.GetComponentInChildren<Text>();
     }
     
 	void Update () {
         nameText.text = text;
 
-        transform.Find(buttons[currentRow, currentCol]).GetComponent<Text>().color = Color.white;
+        transform.Find("Canvas/" + buttons[currentRow, currentCol]).GetComponent<Text>().color = Color.white;
 
         string currentButton = buttons[currentRow, currentCol];
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             switch (currentButton) {
                 case "Done":
-                    gameObject.active = false;
                     GameManager.Instance.playerName = text;
-                    GameManager.Instance.gameActive = true;
+                    UIManager.Instance.CloseCurrentUI();
                     break;
 
                 case "Back":
@@ -105,6 +102,6 @@ public class NameEntry : MonoBehaviour {
 
         currentButton = buttons[currentRow, currentCol];
 
-        transform.Find(currentButton).GetComponent<Text>().color = Color.yellow;
+        transform.Find("Canvas/" + currentButton).GetComponent<Text>().color = Color.yellow;
     }
 }
