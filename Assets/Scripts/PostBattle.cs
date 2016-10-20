@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 
 public class PostBattleManager : Singleton<PostBattleManager> {
@@ -9,7 +10,7 @@ public class PostBattleManager : Singleton<PostBattleManager> {
         textObject = GameManager.Instance.cam.transform.parent.Find("UI/PostBattle/Canvas/Text").GetComponent<Text>();
     }
 
-    public void Do(int exp, params InventoryItem[] loot) {
+    public void Do(int exp, InventoryItem[] loot, Action callback=null) {
         textObject.text =  "BATTLE COMPLETE\n\n";
         textObject.text += "You got:\n";
         textObject.text += exp + " exp\n";
@@ -18,6 +19,6 @@ public class PostBattleManager : Singleton<PostBattleManager> {
             textObject.text += "1x " + i.name + "\n";
         }
 
-        UIManager.Instance.OpenUI(UIManager.Instance.uis["PostBattle"]);
+        UIManager.Instance.OpenUI(UIManager.Instance.uis["PostBattle"], callback);
     }
 }
