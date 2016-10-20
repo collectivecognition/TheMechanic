@@ -30,9 +30,9 @@ public class Shared : Singleton<Shared> {
             gameObject.AddComponent<CutsceneManager>();
             gameObject.AddComponent<EnemyManager>();
             gameObject.AddComponent<GameManager>();
-            gameObject.AddComponent<InventoryManager>();
             gameObject.AddComponent<UIManager>();
             gameObject.AddComponent<PostBattleManager>();
+            gameObject.AddComponent<InventoryManager>();
 
             // Setup camera
 

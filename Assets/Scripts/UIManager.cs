@@ -13,6 +13,7 @@ public class UIManager : Singleton<UIManager> {
 
     void Start() {
         Instance.uis.Add("Dialogue", GameManager.Instance.cam.transform.parent.Find("UI/Dialogue").GetComponent<Animator>());
+        Instance.uis.Add("Inventory", GameManager.Instance.cam.transform.parent.Find("UI/Inventory").GetComponent<Animator>());
         Instance.uis.Add("NameEntry", GameManager.Instance.cam.transform.parent.Find("UI/NameEntry").GetComponent<Animator>());
         Instance.uis.Add("PostBattle", GameManager.Instance.cam.transform.parent.Find("UI/PostBattle").GetComponent<Animator>());
 
@@ -20,6 +21,12 @@ public class UIManager : Singleton<UIManager> {
 
         foreach (KeyValuePair<string, Animator> entry in uis) {
             entry.Value.gameObject.SetActive(false);
+        }
+    }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.I)) {
+            UIManager.Instance.OpenUI(UIManager.Instance.uis["Inventory"]);
         }
     }
 
