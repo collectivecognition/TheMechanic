@@ -8,8 +8,6 @@ public class Shared : Singleton<Shared> {
 
     void Awake() {
         if (!initialized) {
-            Debug.Log("Initializing");
-
             initialized = true;
 
             // Keep this in memory between scene loads
