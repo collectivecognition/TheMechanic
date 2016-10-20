@@ -12,6 +12,12 @@ public class Projectile : MonoBehaviour {
     [HideInInspector]
     public float speed;
 
+    [HideInInspector]
+    public float minDamage;
+
+    [HideInInspector]
+    public float maxDamage;
+
     // Use this for initialization
     void Start () {
         startPosition = transform.position;
@@ -31,7 +37,7 @@ public class Projectile : MonoBehaviour {
     void OnTriggerEnter(Collider collider) {
         if (!dead) {
             if (collider.tag == "Enemy" || collider.tag == "Player") {
-                collider.transform.GetComponent<Health>().Hit(Random.Range(1f, 10f));
+                collider.transform.GetComponent<Health>().Hit(Random.Range(minDamage, maxDamage));
             }
             Die();
         }

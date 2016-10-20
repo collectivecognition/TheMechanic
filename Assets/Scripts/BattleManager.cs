@@ -52,14 +52,15 @@ public class BattleManager : Singleton<BattleManager> {
         battleActive = false;
 
         PostBattleManager.Instance.Do(100, new InventoryItem[] {
-            new InventoryItem("Armored Bung"),
-            new InventoryItem("Flamethrower")
+            new MachineGunItem()
         }, () => {
             GameManager.Instance.LoadScene(originalPlayerScene, null, () => {
                 GameManager.Instance.player.transform.position = originalPlayerPosition;
                 GameManager.Instance.player.transform.rotation = originalPlayerRotation;
             });
         });
+
+        InventoryManager.Instance.AddItem(new MachineGunItem());
 
         //GameObject loot = Resources.Load<GameObject>("Prefabs/Powerup");
         //GameObject.Instantiate(loot, new Vector3(0, 10, 0), Quaternion.identity);

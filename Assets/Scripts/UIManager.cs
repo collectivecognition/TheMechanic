@@ -23,17 +23,6 @@ public class UIManager : Singleton<UIManager> {
         }
     }
 
-    void Update() {
-
-        // FIXME: Debug
-
-        if (Input.GetKeyDown(KeyCode.N)) {
-            OpenUI(uis["NameEntry"], () => {
-                Debug.Log("Closed name entry");
-            });
-        }
-    }
-
     public void OpenUI(Animator anim, Action callback=null) {
         if(currentUI == anim) {
             return;
