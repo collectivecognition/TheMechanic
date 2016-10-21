@@ -31,7 +31,7 @@ public class TankGun : MonoBehaviour {
     }
 
     public void Fire () {
-        GunItem gun = InventoryManager.Instance.currentGun;
+        GunItem gun = InventoryManager.Instance.inventory.currentGun;
 
         // Rate limit shots
 

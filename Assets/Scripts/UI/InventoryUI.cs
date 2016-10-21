@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Inventory : MonoBehaviour {
+public class InventoryUI : MonoBehaviour {
     private int currentItem = 0;
     private int numPerPage = 7;
     private Transform[] items;
