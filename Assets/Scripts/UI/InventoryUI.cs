@@ -10,10 +10,16 @@ public class InventoryUI : MonoBehaviour {
     private Transform[] items;
 
     private GameObject inventoryItemPrefab;
+    private Text descriptionText;
+    private ScrollRect scrollRect;
+    private Transform itemContainer;
 
     void Awake() {
         inventoryItemPrefab = Resources.Load<GameObject>("Prefabs/InventoryItem");
         inventory = InventoryManager.Instance.inventory;
+        descriptionText = transform.Find("Canvas/Description").GetComponent<Text>();
+        scrollRect = transform.Find("Canvas/ScrollView").GetComponent<ScrollRect>();
+        itemContainer = transform.Find("Canvas/ScrollView/Viewport/Content");
     }
 
     void Update() {
@@ -22,7 +28,11 @@ public class InventoryUI : MonoBehaviour {
             inventory.updated = false;
         }
 
+        // Disable current selection
+
         items[currentItem].GetComponent<Image>().enabled = false;
+
+        // Navigate up / down with buttons
 
         if (UIButtons.up) {
             currentItem--;
@@ -40,12 +50,32 @@ public class InventoryUI : MonoBehaviour {
             }
         }
 
+        // Update description text
+
+        InventoryItem item = inventory.items[currentItem];
+        if (item.type == InventoryItem.Type.Gun) {
+            GunItem gun = (GunItem)item;
+            string text = "";
+            text += "  SPEED:  " + gun.speed + "\n";
+            text += "MIN DMG:  " + gun.minDamage + "\n";
+            text += "MAX DMG:  " + gun.maxDamage + "\n";
+            text += " ENERGY:  " + gun.energyUsePerShot + "\n";
+            text += "   RATE:  " + gun.fireRate + "/s\n";
+            descriptionText.text = text;
+        }
+
+        // Handle pagination scrolling
+
         int page = Mathf.FloorToInt((float)currentItem / (float)numPerPage);
         int totalPages = Mathf.CeilToInt((float)items.Length / (float)numPerPage) - 1;
         float verticalPos = 1f - ((float)page / (float)totalPages);
-        transform.Find("Canvas/ScrollView").GetComponent<ScrollRect>().verticalNormalizedPosition = verticalPos;
+        scrollRect.verticalNormalizedPosition = verticalPos;
+
+        // Set highlight on current item
 
         items[currentItem].GetComponent<Image>().enabled = true;
+
+        // Select item
 
         if (Input.GetAxisRaw("Action") != 0) {
             if(inventory.items[currentItem].type == InventoryItem.Type.Gun) {
@@ -57,9 +87,7 @@ public class InventoryUI : MonoBehaviour {
     }
 
     public void Refresh() {
-        Transform container = transform.Find("Canvas/ScrollView/Viewport/Content");
-
-        foreach (Transform child in container) {
+        foreach (Transform child in itemContainer) {
             GameObject.Destroy(child.gameObject);
         }
 
@@ -67,7 +95,7 @@ public class InventoryUI : MonoBehaviour {
 
         for (int ii = 0; ii < inventory.items.Count; ii++) {
             InventoryItem item = inventory.items[ii];
-            GameObject o = (GameObject)Instantiate(inventoryItemPrefab, container, false);
+            GameObject o = (GameObject)Instantiate(inventoryItemPrefab, itemContainer, false);
             o.transform.GetComponentInChildren<Text>().text = item.name;
             if (Object.ReferenceEquals(inventory.items[ii], inventory.currentGun)) {
                 o.transform.GetComponentInChildren<Text>().text += " (E)";
@@ -77,7 +105,7 @@ public class InventoryUI : MonoBehaviour {
 
         int extras = numPerPage - items.Length % numPerPage;
         for(int ii = 0; ii < extras; ii++) {
-            GameObject o = (GameObject)Instantiate(inventoryItemPrefab, container, false);
+            GameObject o = (GameObject)Instantiate(inventoryItemPrefab, itemContainer, false);
         }
 
         items[currentItem].GetComponent<Image>().enabled = true;

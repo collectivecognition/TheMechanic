@@ -37,7 +37,7 @@ public class TankGun : MonoBehaviour {
 
         // Rate limit shots
 
-        if (lastShotTime != 0 && Time.fixedTime - lastShotTime < gun.fireRate) {
+        if (lastShotTime != 0 && Time.fixedTime - lastShotTime < 1 / gun.fireRate) {
             return;
         }
 

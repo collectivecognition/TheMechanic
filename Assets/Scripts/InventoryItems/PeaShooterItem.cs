@@ -5,7 +5,7 @@ public class PeaShooterItem : GunItem {
     public PeaShooterItem() : base() {
         color = new Color(0f, 5f, 0f, 1f);
         energyUsePerShot = 5f;
-        fireRate = 0.5f;
+        fireRate = 2f;
         name = "Pea Shooter";
         minDamage = 10f;
         maxDamage = 14f;

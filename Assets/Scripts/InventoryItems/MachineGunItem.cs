@@ -5,7 +5,7 @@ public class MachineGunItem : GunItem {
     public MachineGunItem() : base() {
         color = new Color(0f, 5f, 0f, 1f);
         energyUsePerShot = 2f;
-        fireRate = 0.075f;
+        fireRate = 14f;
         name = "Machine Gun";
         minDamage = 2f;
         maxDamage = 4f;
