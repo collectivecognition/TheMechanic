@@ -67,8 +67,7 @@ public class TankGun : MonoBehaviour {
 
                 // Set shot attributes
 
-                projectile.GetComponent<Renderer>().material.SetColor("_TintColor", gun.color);
-                //projectile.GetComponent<Light>().color = projectileColor;
+                projectile.GetComponent<Renderer>().material.SetColor("_EmissionColor", gun.color);
                 projectile.transform.localScale *= gun.scale;
                 projectile.GetComponent<Projectile>().speed = gun.speed; // FIXME: Only need one reference to <Projectile>
                 projectile.GetComponent<Projectile>().minDamage = gun.minDamage;

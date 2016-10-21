@@ -36,7 +36,7 @@ public class TankControls : MonoBehaviour {
                 targetRotation *= Quaternion.Euler(0, -45, 0);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 
-                if (Quaternion.Angle(transform.rotation, targetRotation) < 0.05f) {
+                if (Quaternion.Angle(transform.rotation, targetRotation) < 1f) {
                     transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, speed * Time.deltaTime);
                 }
             }
