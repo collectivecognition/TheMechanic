@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 
 public class TankControls : MonoBehaviour {
-    private TankEnergy energy;
+    private Energy energy;
     private float boostEnergyPerSecond = 20f;
     private float normalSpeed = 10f;
     private float turnSpeed = 360f; // Degrees per second
     private float boostSpeed = 20f;
     
     private void Awake() {
-        energy = GetComponent<TankEnergy>();
+        energy = PlayerManager.Instance.energy;
     }
   
     private void Update() {
@@ -20,10 +20,10 @@ public class TankControls : MonoBehaviour {
             if (x != 0 || y != 0) {
                 float speed = normalSpeed;
 
-                if (Input.GetKey(KeyCode.LeftShift) && energy.Energy >= energyUsed) {
-                    energy.UseEnergy(energyUsed);
+                if (Input.GetKey(KeyCode.LeftShift) && energy.current >= energyUsed) {
+                    energy.Use(energyUsed);
 
-                    if(energy.Energy > 1f) { // We need a small buffer to prevent stuttering
+                    if(energy.current > 1f) { // We need a small buffer to prevent stuttering
                         speed = boostSpeed;
                     }
                 }

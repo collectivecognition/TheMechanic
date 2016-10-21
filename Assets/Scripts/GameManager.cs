@@ -100,7 +100,6 @@ public class GameManager : Singleton<GameManager> {
         SceneManager.sceneLoaded += handler;
 
         // Load the requested scene
-        Debug.Log("Loading scene: " + sceneName);
         SceneManager.LoadScene(sceneName);
     }
 }

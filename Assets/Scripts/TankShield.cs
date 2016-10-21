@@ -7,11 +7,11 @@ public class TankShield : MonoBehaviour {
     private float energyUsePerSecond = 50f;
 
     private Material material;
-    private TankEnergy energy;
+    private Energy energy;
 
     void Awake() {
         material = transform.Find("Shield").GetComponent<Renderer>().material;
-        energy = transform.GetComponentInParent<TankEnergy>();
+        energy = PlayerManager.Instance.energy;
 
         Disable();
     }
@@ -23,7 +23,7 @@ public class TankShield : MonoBehaviour {
         animateTime += Time.deltaTime * animateSpeed;
         material.SetFloat("_Offset", Mathf.Repeat(animateTime, 1f));
 
-        if (energy.Energy < 1f) {
+        if (energy.current < 1f) {
             Disable();
         } else {
             if (Input.GetMouseButtonDown(1)) {
@@ -35,7 +35,7 @@ public class TankShield : MonoBehaviour {
             }
 
             if (Input.GetMouseButton(1)) {
-                energy.UseEnergy(energyUsePerSecond * Time.deltaTime);
+                energy.Use(energyUsePerSecond * Time.deltaTime);
             }
         }
     }

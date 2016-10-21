@@ -7,7 +7,7 @@ public class EnemyManager : Singleton<EnemyManager> {
 
     public void ReactivateAfterDelay(GameObject g, float delay) {
         enemies.Add(g);
-        g.GetComponent<Health>().OnDie += HandleDeath;
+        g.GetComponent<HealthBar>().OnDie += HandleDeath;
 
         g.SetActive(false);
         StartCoroutine(DoReactivate(g, delay));

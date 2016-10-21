@@ -28,6 +28,8 @@ public class EnemyRotator : Enemy {
             projectileObject.layer = LayerMask.NameToLayer("EnemyProjectiles");
             projectile.direction = Quaternion.AngleAxis(projectileAngle, Vector3.up) * Vector3.forward;
             projectile.speed = projectileSpeed;
+            projectile.minDamage = 20f;
+            projectile.maxDamage = 50f;
 
             lastProjectileTime = Time.fixedTime;
             projectileAngle += projectileAngleInterval;

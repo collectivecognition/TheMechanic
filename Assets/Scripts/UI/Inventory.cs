@@ -52,7 +52,7 @@ public class Inventory : MonoBehaviour {
         for (int ii = 0; ii < InventoryManager.Instance.items.Count; ii++) {
             InventoryItem item = InventoryManager.Instance.items[ii];
             GameObject o = (GameObject)Instantiate(inventoryItemPrefab, container, false);
-            o.transform.GetComponentInChildren<Text>().text = item.name + ii;
+            o.transform.GetComponentInChildren<Text>().text = item.name;
             items[ii] = o.transform;
         }
 

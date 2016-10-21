@@ -9,13 +9,13 @@ public class TankGun : MonoBehaviour {
     private Transform firingPoint;
     private GameObject projectilePrefab;
     private Transform turret;
-    private TankEnergy energy;
+    private Energy energy;
 
     void Awake () {
         firingPoint = transform.Find("Turret/FiringPoint");
         projectilePrefab = Resources.Load<GameObject>("Prefabs/Projectile");
         turret = transform.Find("Turret");
-        energy = GetComponent<TankEnergy>();
+        energy = PlayerManager.Instance.energy;
     }
 
 	void Update () {
@@ -43,7 +43,7 @@ public class TankGun : MonoBehaviour {
 
         // Make sure we have enough energy
 
-        if (energy.Energy >= gun.energyUsePerShot) {
+        if (energy.current >= gun.energyUsePerShot) {
             for(int ii = 0; ii < gun.projectilesPerShot; ii++) {
                 GameObject projectile = GameObject.Instantiate(projectilePrefab);
                 projectile.transform.position = firingPoint.position;
@@ -73,7 +73,7 @@ public class TankGun : MonoBehaviour {
                 projectile.GetComponent<Projectile>().maxDamage = gun.maxDamage;
             }
 
-            energy.UseEnergy(gun.energyUsePerShot); // Consume energy
+            energy.Use(gun.energyUsePerShot); // Consume energy
         }
     }
 }

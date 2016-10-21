@@ -8,19 +8,7 @@ public class InventoryManager : Singleton<InventoryManager> {
     public GunItem currentGun;
 
     void Start() {
-        AddItem(new PeaShooterItem());
-        AddItem(new PeaShooterItem());
-        AddItem(new PeaShooterItem());
-        AddItem(new PeaShooterItem());
-        AddItem(new PeaShooterItem());
-        AddItem(new PeaShooterItem());
-        AddItem(new PeaShooterItem());
-
-        AddItem(new PeaShooterItem());
-        AddItem(new PeaShooterItem());
-        AddItem(new PeaShooterItem());
-        AddItem(new PeaShooterItem());
-        AddItem(new PeaShooterItem());
+        AddItem(new PeaShooterItem()); // Add a default gun
 
         currentGun = (GunItem)items[0];
     }

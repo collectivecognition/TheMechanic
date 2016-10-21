@@ -23,7 +23,9 @@ public class Shared : Singleton<Shared> {
             }
 
             // Instantiate managers
+            // WARNING: Order matters here
 
+            gameObject.AddComponent<PlayerManager>();
             gameObject.AddComponent<BattleManager>();
             gameObject.AddComponent<CutsceneManager>();
             gameObject.AddComponent<EnemyManager>();
