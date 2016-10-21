@@ -6,6 +6,7 @@ using System.Linq;
 public class Inventory {
     public List<InventoryItem> items = new List<InventoryItem>();
     public GunItem currentGun;
+    public bool updated = false;
 
     public Inventory() {
         AddItem(new PeaShooterItem()); // Add a default gun
@@ -24,6 +25,6 @@ public class Inventory {
 
     public void AddItem(InventoryItem item) {
         items.Add(item);
-        UIManager.Instance.uis["Inventory"].GetComponent<InventoryUI>().Refresh();
+        updated = true;
     }
 }

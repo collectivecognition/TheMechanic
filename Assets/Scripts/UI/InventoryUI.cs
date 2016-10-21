@@ -5,15 +5,23 @@ using System.Collections;
 public class InventoryUI : MonoBehaviour {
     private int currentItem = 0;
     private int numPerPage = 7;
+    private Inventory inventory;
+
     private Transform[] items;
 
     private GameObject inventoryItemPrefab;
 
     void Awake() {
         inventoryItemPrefab = Resources.Load<GameObject>("Prefabs/InventoryItem");
+        inventory = InventoryManager.Instance.inventory;
     }
 
     void Update() {
+        if (inventory.updated) {
+            Refresh();
+            inventory.updated = false;
+        }
+
         items[currentItem].GetComponent<Image>().enabled = false;
 
         if (UIButtons.up) {
@@ -47,12 +55,15 @@ public class InventoryUI : MonoBehaviour {
             GameObject.Destroy(child.gameObject);
         }
 
-        items = new Transform[InventoryManager.Instance.items.Count];
+        items = new Transform[inventory.items.Count];
 
-        for (int ii = 0; ii < InventoryManager.Instance.items.Count; ii++) {
-            InventoryItem item = InventoryManager.Instance.items[ii];
+        for (int ii = 0; ii < inventory.items.Count; ii++) {
+            InventoryItem item = inventory.items[ii];
             GameObject o = (GameObject)Instantiate(inventoryItemPrefab, container, false);
             o.transform.GetComponentInChildren<Text>().text = item.name;
+            if (Object.ReferenceEquals(inventory.items[ii], inventory.currentGun)) {
+                o.transform.GetComponentInChildren<Text>().text += " (E)";
+            }
             items[ii] = o.transform;
         }
 

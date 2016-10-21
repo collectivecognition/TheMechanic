@@ -42,7 +42,7 @@ public class UIManager : Singleton<UIManager> {
         currentUI.gameObject.SetActive(true);
         currentUI.SetBool(openParameter, true);
 
-        GameManager.instance.gameActive = false;
+        GameManager.Instance.gameActive = false;
     }
 
     public void CloseCurrentUI() {
@@ -59,7 +59,7 @@ public class UIManager : Singleton<UIManager> {
         StartCoroutine(DisablePanelDeleyed(currentUI));
         currentUI = null;
         currentCallback = null;
-        GameManager.instance.gameActive = true;
+        GameManager.Instance.gameActive = true;
     }
 
     IEnumerator DisablePanelDeleyed(Animator anim) {
