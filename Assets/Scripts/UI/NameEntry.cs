@@ -11,8 +11,6 @@ public class NameEntry : MonoBehaviour {
     private string text = "BILL";
     private int currentRow = 2;
     private int currentCol = 9;
-    private float lastMove;
-    private float moveDelay = 0.3f;
     private Text nameText;
 
     void Awake() {
@@ -47,56 +45,41 @@ public class NameEntry : MonoBehaviour {
             }
         }
 
-        
-
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
-
-        if (x == 0 && y == 0) {
-            lastMove = Time.deltaTime - moveDelay;
+        if (UIButtons.right) {
+            if (currentCol < 9) {
+                if(currentButton == "Back") {
+                    currentCol = 8;
+                }else {
+                    currentCol++;
+                }
+            }
         }
 
-        if (Time.fixedTime - lastMove >= moveDelay) {
-            if (x > 0) {
-                if (currentCol < 9) {
-                    if(currentButton == "Back") {
-                        currentCol = 8;
-                    }else {
-                        currentCol++;
-                    }
-                    lastMove = Time.fixedTime;
+        if (UIButtons.left) {
+            if (currentCol > 0) {
+                switch (currentButton) {
+                    case "Done":
+                        currentCol = 7;
+                        break;
+                    case "Back":
+                        currentCol = 5;
+                        break;
+                    default:
+                        currentCol--;
+                        break;
                 }
             }
+        }
 
-            if (x < 0) {
-                if (currentCol > 0) {
-                    switch (currentButton) {
-                        case "Done":
-                            currentCol = 7;
-                            break;
-                        case "Back":
-                            currentCol = 5;
-                            break;
-                        default:
-                            currentCol--;
-                            break;
-                    }
-                    lastMove = Time.fixedTime;
-                }
+        if (UIButtons.down) {
+            if (currentRow < 2) {
+                currentRow++;
             }
+        }
 
-            if (y < 0) {
-                if (currentRow < 2) {
-                    currentRow++;
-                    lastMove = Time.fixedTime;
-                }
-            }
-
-            if (y > 0) {
-                if (currentRow > 0) {
-                    currentRow--;
-                    lastMove = Time.fixedTime;
-                }
+        if (UIButtons.up) {
+            if (currentRow > 0) {
+                currentRow--;
             }
         }
 

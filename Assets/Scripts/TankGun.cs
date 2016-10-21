@@ -26,7 +26,7 @@ public class TankGun : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.N)) {
-            InventoryManager.Instance.NextGun();
+            UIManager.Instance.OpenUI(UIManager.Instance.uis["NameEntry"]);
         }
     }
 
