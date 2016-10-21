@@ -19,13 +19,14 @@ public class TankControls : MonoBehaviour {
         if (tag == "Player") {
             float x = Input.GetAxis("Horizontal");
             float y = Input.GetAxis("Vertical");
+
             if (x != 0 || y != 0) {
                 float speed = normalSpeed;
 
                 if (Input.GetKey(KeyCode.LeftShift) && energy.current >= energyUsed) {
                     energy.Use(energyUsed);
 
-                    if(energy.current > 1f) { // We need a small buffer to prevent stuttering
+                    if (energy.current > 1f) { // We need a small buffer to prevent stuttering
                         speed = boostSpeed;
                     }
                 }
@@ -34,7 +35,10 @@ public class TankControls : MonoBehaviour {
                 Quaternion targetRotation = Quaternion.LookRotation(xzDirection);
                 targetRotation *= Quaternion.Euler(0, -45, 0);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
-                transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, speed * Time.deltaTime);
+
+                if (Quaternion.Angle(transform.rotation, targetRotation) < 0.05f) {
+                    transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, speed * Time.deltaTime);
+                }
             }
         }
     }
