@@ -49,8 +49,7 @@ public class UIManager : Singleton<UIManager> {
         if(currentUI == null) {
             return;
         }
-
-
+        
         if (currentCallback != null) {
             currentCallback();
         }
@@ -64,18 +63,17 @@ public class UIManager : Singleton<UIManager> {
 
     IEnumerator DisablePanelDeleyed(Animator anim) {
         bool closedStateReached = false;
-        bool wantToClose = true;
-        while (!closedStateReached && wantToClose) {
+        //bool wantToClose = true;
+        while (!closedStateReached) {
             if (!anim.IsInTransition(0))
                 closedStateReached = anim.GetCurrentAnimatorStateInfo(0).IsName("Closed");
 
-            wantToClose = !anim.GetBool(openParameter);
+            //wantToClose = !anim.GetBool(openParameter);
 
             yield return new WaitForEndOfFrame();
         }
-
-        if (wantToClose) { 
+        //if (wantToClose) { 
             anim.gameObject.SetActive(false);
-        }
+        //}
     }
 }

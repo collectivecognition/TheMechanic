@@ -46,6 +46,14 @@ public class InventoryUI : MonoBehaviour {
         transform.Find("Canvas/ScrollView").GetComponent<ScrollRect>().verticalNormalizedPosition = verticalPos;
 
         items[currentItem].GetComponent<Image>().enabled = true;
+
+        if (Input.GetAxisRaw("Action") != 0) {
+            if(inventory.items[currentItem].type == InventoryItem.Type.Gun) {
+                inventory.currentGun = (GunItem)inventory.items[currentItem];
+                inventory.updated = true;
+                UIManager.Instance.CloseCurrentUI();
+            }
+        }
     }
 
     public void Refresh() {
