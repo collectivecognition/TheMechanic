@@ -25,6 +25,8 @@ public class Projectile : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (!GameManager.Instance.gameActive) return;
+
         if (!dead) {
             transform.position += direction * speed * Time.deltaTime;
 

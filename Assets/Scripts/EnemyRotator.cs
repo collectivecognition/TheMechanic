@@ -22,6 +22,8 @@ public class EnemyRotator : Enemy {
     }
 
     void Update() {
+        if (!GameManager.Instance.gameActive) return;
+
         if (Time.fixedTime - lastProjectileTime >= projectileInterval) {
             GameObject projectileObject = (GameObject)Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             Projectile projectile = projectileObject.GetComponent<Projectile>();

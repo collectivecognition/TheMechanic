@@ -10,7 +10,9 @@ public class TankTurret : MonoBehaviour {
     }
 
     private void Update() {
-        if (GameManager.Instance.gameActive && tag == "Player") {
+        if (!GameManager.Instance.gameActive) return;
+
+        if (tag == "Player") {
             // turretTransform.Rotate(Vector3.up * Input.GetAxis("Right Stick Horizontal") * turnSpeed * Time.deltaTime);
             //Vector3 mouseWorldPosition = camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, turretTransform.position.z));
             //mouseWorldPosition.z = turretTransform.position.z;
@@ -21,7 +23,9 @@ public class TankTurret : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (GameManager.Instance.gameActive && BattleManager.Instance.BattleActive && tag == "Player") {
+        if (!GameManager.Instance.gameActive) return;
+
+        if (BattleManager.Instance.BattleActive && tag == "Player") {
             Plane playerPlane = new Plane(Vector3.up, turretTransform.position);
             Ray ray = GameManager.Instance.cam.ScreenPointToRay(Input.mousePosition);
             float hitdist = 0.0f;
