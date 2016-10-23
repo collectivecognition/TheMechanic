@@ -21,8 +21,13 @@ public class HumanControls : MonoBehaviour {
             if (x != 0 || y != 0) {
                 float speed = normalSpeed;
 
+                animator.SetBool(Animator.StringToHash("isWalking"), true);
+                animator.SetBool(Animator.StringToHash("isRunning"), false);
+
                 if (Input.GetKey(KeyCode.LeftShift)) {
                     speed = boostSpeed;
+                    animator.SetBool(Animator.StringToHash("isWalking"), false);
+                    animator.SetBool(Animator.StringToHash("isRunning"), true);
                 }
 
                 Vector3 xzDirection = new Vector3(y, 0, -x);
@@ -33,10 +38,9 @@ public class HumanControls : MonoBehaviour {
                 if (Quaternion.Angle(transform.rotation, targetRotation) < 1f) {
                     transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, speed * Time.deltaTime);
                 }
-
-                animator.SetBool(Animator.StringToHash("isWalking"), true);
             } else {
                 animator.SetBool(Animator.StringToHash("isWalking"), false);
+                animator.SetBool(Animator.StringToHash("isRunning"), false);
             }
         }
     }
