@@ -35,7 +35,7 @@ public class BattleManager : Singleton<BattleManager> {
 
         // Load the battle scene before initializing the battle
 
-        GameManager.Instance.LoadScene("TestBattle", null, () => {
+        GameManager.Instance.LoadScene("DesertBattle", null, () => {
         });
     }
 

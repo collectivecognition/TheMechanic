@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 public class Powerup : MonoBehaviour {
+    public string inventoryItemName;
+
 	void Start (){
         iTween.RotateAdd(gameObject, iTween.Hash("y", 180f, "time", 1.5f, "loopType", iTween.LoopType.loop, "easeType", iTween.EaseType.linear));
 	}
@@ -13,6 +16,10 @@ public class Powerup : MonoBehaviour {
             GetComponent<Light>().intensity = 10f;
             GetComponent<Light>().range = 10f;
             GameObject.Destroy(gameObject, 0.3f);
+
+            Type type = Type.GetType(inventoryItemName);
+            InventoryItem inventoryItem = (InventoryItem)Activator.CreateInstance(type);
+            InventoryManager.Instance.inventory.AddItem(inventoryItem);
         }
     }
 }
