@@ -31,6 +31,8 @@ public class Interactable : MonoBehaviour {
     }
 	
 	void Update () {
+        if (!GameManager.Instance.gameActive) return;
+
         if (triggerOnInteract) {
             float angle = Vector3.Angle(GameManager.Instance.player.transform.forward, transform.position - GameManager.Instance.player.transform.position);
             Vector3 closestPoint = col.ClosestPointOnBounds(GameManager.Instance.player.transform.position);

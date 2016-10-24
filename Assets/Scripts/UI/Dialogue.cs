@@ -64,9 +64,10 @@ public class Dialogue : MonoBehaviour {
     void Update() {
 
         // Finishing dialogue
-
-        if (done && Input.GetKeyDown(KeyCode.Space)) {
+        Debug.Log((done ? "Done" : "") + " : " + (UIButtons.action ? "Action" : ""));
+        if (done && UIButtons.action) {
             UIManager.Instance.CloseCurrentUI();
+            Debug.Log("Closing");
             if (callback != null) {
                 callback();
             }
@@ -74,7 +75,7 @@ public class Dialogue : MonoBehaviour {
 
             // Rush text
 
-            if (!done && Input.GetKeyDown(KeyCode.Space)) {
+            if (!done && UIButtons.action) {
                 done = true;
                 textObject.text = text;
             }

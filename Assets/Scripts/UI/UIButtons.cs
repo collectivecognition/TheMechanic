@@ -6,6 +6,7 @@ public class UIButtons : MonoBehaviour {
     public static bool down;
     public static bool left;
     public static bool right;
+    public static bool action;
 
     private float repeatRate = 0.1f;
     private float repeatRateHeld = 0.35f;
@@ -19,6 +20,7 @@ public class UIButtons : MonoBehaviour {
     private bool downHeld = false;
     private bool leftHeld = false;
     private bool rightHeld = false;
+    private bool actionHeld = false;
 
     void Update() {
         float x = Input.GetAxisRaw("Horizontal");
@@ -112,6 +114,18 @@ public class UIButtons : MonoBehaviour {
             }
 
             upHeld = true;
+        }
+
+        if(Input.GetAxisRaw("Action") != 0 && !actionHeld) {
+            action = true;
+            actionHeld = true;
+        }else {
+            action = false;
+        }
+
+        if(Input.GetAxisRaw("Action") == 0) {
+            actionHeld = false;
+            action = false;
         }
     }
 }
