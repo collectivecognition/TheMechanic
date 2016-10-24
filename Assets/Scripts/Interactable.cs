@@ -12,23 +12,52 @@ public class Interactable : MonoBehaviour {
     public bool triggerOnInteract = false;
     public bool startBattle = false;
 
-    private float maxDistance = 7.5f;
-    private float maxAngle = 30f;
+    private float maxDistance = 5f;
+    private float maxAngle = 45f;
     private int triggerCount = 0;
+    private bool triggered = false;
+    private Color[] childEmissionColors;
 
+    private Collider col;
+    
     void Start() {
         if (triggerOnLoad) {
             TriggerInteraction();
         }
+
+        childEmissionColors = new Color[transform.childCount];
+
+        col = GetComponent<Collider>();
     }
 	
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.Space) && triggerOnInteract) {
+        if (triggerOnInteract) {
             float angle = Vector3.Angle(GameManager.Instance.player.transform.forward, transform.position - GameManager.Instance.player.transform.position);
-            float distance = Vector3.Distance(GameManager.Instance.player.transform.position, transform.position);
+            Vector3 closestPoint = col.ClosestPointOnBounds(GameManager.Instance.player.transform.position);
+            float distance = Vector3.Distance(closestPoint, GameManager.Instance.player.transform.position);
 
             if(angle < maxAngle && distance < maxDistance) {
-                TriggerInteraction();
+                if (!triggered) {
+                    for(int ii = 0; ii < transform.childCount; ii++) {
+                        Renderer childRenderer = transform.GetChild(ii).GetComponent<Renderer>();
+                        Color childColor = childRenderer.material.GetColor("_Color");
+                        childEmissionColors[ii] = childColor;
+                        childRenderer.material.SetColor("_Color", new Color(5f, 5f, 5f, 1f));
+                    }
+                    triggered = true;
+                }
+
+                if (Input.GetKeyDown(KeyCode.Space)) {
+                    TriggerInteraction();
+                }
+            }else {
+                if (triggered) {
+                    triggered = false;
+                    for (int ii = 0; ii < transform.childCount; ii++) {
+                        Renderer childRenderer = transform.GetChild(ii).GetComponent<Renderer>();
+                        childRenderer.material.SetColor("_Color", childEmissionColors[ii]);
+                    }
+                }
             }
         }
 	}
