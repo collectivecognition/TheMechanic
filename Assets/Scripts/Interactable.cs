@@ -13,7 +13,7 @@ public class Interactable : MonoBehaviour {
     public bool startBattle = false;
 
     private float maxDistance = 5f;
-    private float maxAngle = 45f;
+    private float maxAngle = 90f;
     private int triggerCount = 0;
     private bool triggered = false;
     private Color[] childEmissionColors;

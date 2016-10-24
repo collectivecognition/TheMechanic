@@ -16,6 +16,7 @@ public class UIManager : Singleton<UIManager> {
         Instance.uis.Add("Inventory", GameManager.Instance.cam.transform.parent.Find("UI/Inventory").GetComponent<Animator>());
         Instance.uis.Add("NameEntry", GameManager.Instance.cam.transform.parent.Find("UI/NameEntry").GetComponent<Animator>());
         Instance.uis.Add("PostBattle", GameManager.Instance.cam.transform.parent.Find("UI/PostBattle").GetComponent<Animator>());
+        Instance.uis.Add("Computer", GameManager.Instance.cam.transform.parent.Find("UI/Computer").GetComponent<Animator>());
 
         // Disable all UIs at startup
 
@@ -27,6 +28,10 @@ public class UIManager : Singleton<UIManager> {
     void Update() {
         if (Input.GetKeyDown(KeyCode.I)) {
             UIManager.Instance.OpenUI(UIManager.Instance.uis["Inventory"]);
+        }
+
+        if (Input.GetKeyDown(KeyCode.C)) {
+            UIManager.Instance.OpenUI(UIManager.Instance.uis["Computer"]);
         }
     }
 
