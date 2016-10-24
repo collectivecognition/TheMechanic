@@ -11,7 +11,7 @@ public class GameManager : Singleton<GameManager> {
     private float fadeSpeed = 1f;
     private int drawDepth = -1000;
     private float alpha = 0f;
-    
+
     public bool gameActive = true;
     public string playerName;
 
@@ -48,12 +48,12 @@ public class GameManager : Singleton<GameManager> {
 
     // Public method for changing between scenes
 
-    public void LoadScene(string sceneName, string spawnPoint = null, Action callback=null) {
+    public void LoadScene(string sceneName, string spawnPoint = null, Action callback = null) {
         StartCoroutine(PerformSceneLoad(sceneName, spawnPoint, callback));
     }
 
     private IEnumerator PerformSceneLoad(string sceneName, string spawnPoint, Action callback) {
-        
+
         // This method needs to be a coroutine as we need to wait for the frame to finish rendering
         // before we make a copy of it for our fading animation
 
@@ -79,27 +79,52 @@ public class GameManager : Singleton<GameManager> {
 
         alpha = 1f;
 
-        // Register a handler so we can notify the caller when the scene has finished loading
+        // Save reference to old scene
 
-        UnityAction<Scene, LoadSceneMode> handler = null;
+        Scene oldScene = SceneManager.GetActiveScene();
+        
+        // Load the requested scene, wait for async loading to complete
 
-        handler = (Scene scene, LoadSceneMode loadSceneMode) => {
-            SceneManager.sceneLoaded -= handler; // Unregister handler, only needs call the callback once
+        AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        async.allowSceneActivation = false;
 
-            if (spawnPoint != null && spawnPoint.Length > 0) {
-                GameObject.Find(spawnPoint).GetComponent<SpawnPoint>().Spawn();
-            } else {
-                GameObject.FindObjectOfType<SpawnPoint>().Spawn(); // Use the first one by default
-            }
+        do {
+            yield return 0;
+        } while (async.progress < 0.9f);
 
-            if (callback != null) {
-                callback();
-            }
-        };
+        async.allowSceneActivation = true;
+        yield return 0; // Wait for one frame
 
-        SceneManager.sceneLoaded += handler;
+        // Make new scene active
 
-        // Load the requested scene
-        SceneManager.LoadScene(sceneName);
+        Scene newScene = SceneManager.GetSceneByName(sceneName);
+        SceneManager.SetActiveScene(newScene);
+        yield return 0;
+
+        // Clean up old scene
+
+        SceneManager.UnloadScene(oldScene);
+        yield return 0;
+        
+        // Spawn player
+
+        if (spawnPoint != null && spawnPoint.Length > 0) {
+            GameObject.Find(spawnPoint).GetComponent<SpawnPoint>().Spawn();
+        } else {
+            GameObject.FindObjectOfType<SpawnPoint>().Spawn(); // Use the first one by default
+        }
+
+        // Handle callback
+
+        if (callback != null) {
+            callback();
+        }
+    }
+
+    public IEnumerator WaitForLoad(Scene scene) {
+        while (scene.isLoaded == false) {
+            yield return new WaitForEndOfFrame();
+        }
+        yield return new WaitForEndOfFrame();
     }
 }

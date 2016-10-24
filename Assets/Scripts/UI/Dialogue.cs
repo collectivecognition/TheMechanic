@@ -64,10 +64,10 @@ public class Dialogue : MonoBehaviour {
     void Update() {
 
         // Finishing dialogue
-        Debug.Log((done ? "Done" : "") + " : " + (UIButtons.action ? "Action" : ""));
+
         if (done && UIButtons.action) {
             UIManager.Instance.CloseCurrentUI();
-            Debug.Log("Closing");
+
             if (callback != null) {
                 callback();
             }
