@@ -23,7 +23,6 @@ public class Door : MonoBehaviour {
 
                 CutsceneManager.Instance.Play(cutscene, () => {
                     if (!locked) {
-                        Debug.Log("Loading scene");
                         GameManager.Instance.LoadScene(loadScene, sceneSpawnPoint);
                     }
                 });
