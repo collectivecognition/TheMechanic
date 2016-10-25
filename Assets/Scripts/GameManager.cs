@@ -8,8 +8,7 @@ using System.Linq;
 
 public class GameManager : Singleton<GameManager> {
     private Texture2D transitionTexture;
-    private int fadeDirection = -1;
-    private float fadeSpeed = 1f;
+    private float fadeSpeed = 0.5f;
     private int drawDepth = -1000;
     private float alpha = 0f;
 
@@ -33,22 +32,14 @@ public class GameManager : Singleton<GameManager> {
 
         SceneManager.sceneLoaded += (Scene scene, LoadSceneMode loadSceneMode) => {
             currentSceneName = scene.name;
-
-            // Initiate fade animation
-
-            fadeDirection = -1;
         };
     }
 
     void OnGUI() {
 
         // Fade out screenshot from previous scene
-        // TODO: Clean up screenshot when no longer needed
 
-        if (alpha > 0) {
-            alpha += fadeSpeed * fadeDirection * Time.deltaTime;
-            alpha = Mathf.Clamp01(alpha);
-
+        if(alpha > 0f && transitionTexture != null) { 
             GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, alpha);
             GUI.depth = drawDepth;
             GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), transitionTexture);
@@ -86,7 +77,7 @@ public class GameManager : Singleton<GameManager> {
 
         // Make the GUI opaque
 
-        alpha = 1f;
+        alpha = 1;
 
         // Pause the game
 
@@ -128,6 +119,11 @@ public class GameManager : Singleton<GameManager> {
         // Resume the game
 
         gameActive = true;
+
+        do {
+            alpha -= Time.deltaTime / fadeSpeed;
+            yield return 0;
+        } while (alpha > 0f);
 
         // Handle callback
 
