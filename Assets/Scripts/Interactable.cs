@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,8 +7,6 @@ public class Interactable : MonoBehaviour {
     public List<string> sayText = new List<string>();
     public List<string> inventoryItems = new List<string>();
     public string playCutscene;
-    public string loadScene;
-    public string sceneSpawnPoint;
     public bool oneShot = true;
     public bool triggerOnCollide = false;
     public bool triggerOnLoad = false;
@@ -105,9 +102,7 @@ public class Interactable : MonoBehaviour {
         if (GameManager.Instance.interactableTriggerCounts[id] == 0 && inventoryItems.Count > 0) { // Items can only be picked up once
             string eventText = "You picked up:";
             foreach (string itemName in inventoryItems) {
-                Type type = Type.GetType(itemName);
-                InventoryItem inventoryItem = (InventoryItem)Activator.CreateInstance(type);
-                InventoryManager.Instance.inventory.AddItem(inventoryItem);
+                InventoryItem inventoryItem = InventoryManager.Instance.inventory.AddItemByName(itemName);
                 eventText += "\n" + inventoryItem.name;
             }
             cutsceneEvents.Add(new CutsceneDialogEvent(eventText));
@@ -121,12 +116,6 @@ public class Interactable : MonoBehaviour {
 
         if (cutsceneEvents.Count > 0) {
             CutsceneManager.Instance.Play(cutsceneEvents.ToArray());
-        }
-
-        // Load next scene if specified
-
-        if (loadScene != null && loadScene.Length > 0) {
-            GameManager.Instance.LoadScene(loadScene, sceneSpawnPoint);
         }
 
         // Start battle

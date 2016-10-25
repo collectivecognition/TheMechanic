@@ -16,10 +16,8 @@ public class Powerup : MonoBehaviour {
             GetComponent<Light>().intensity = 10f;
             GetComponent<Light>().range = 10f;
             GameObject.Destroy(gameObject, 0.3f);
-
-            Type type = Type.GetType(inventoryItemName);
-            InventoryItem inventoryItem = (InventoryItem)Activator.CreateInstance(type);
-            InventoryManager.Instance.inventory.AddItem(inventoryItem);
+            
+            InventoryManager.Instance.inventory.AddItemByName(inventoryItemName);
         }
     }
 }

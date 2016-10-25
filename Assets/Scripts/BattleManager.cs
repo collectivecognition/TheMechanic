@@ -60,7 +60,7 @@ public class BattleManager : Singleton<BattleManager> {
             });
         });
 
-        InventoryManager.Instance.inventory.AddItem(new MachineGunItem());
+        InventoryManager.Instance.inventory.AddItemByName("MachineGunItem");
 
         //GameObject loot = Resources.Load<GameObject>("Prefabs/Powerup");
         //GameObject.Instantiate(loot, new Vector3(0, 10, 0), Quaternion.identity);

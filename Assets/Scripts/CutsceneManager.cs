@@ -11,15 +11,19 @@ public class CutsceneManager : Singleton<CutsceneManager> {
 
         cutscene = c;
         currentEventIndex = 0;
-        NextEvent();
+        NextEvent(callback);
     }
 
-    private void NextEvent() {
+    private void NextEvent(Action callback = null) {
         cutscene[currentEventIndex].Play(() => {
             if (currentEventIndex < cutscene.Length - 1) {
                 currentEventIndex++;
-                NextEvent();
+                NextEvent(callback);
             } else {
+                if (callback != null) {
+                    callback();
+                }
+
                 GameManager.Instance.gameActive = true;
             }
         });
