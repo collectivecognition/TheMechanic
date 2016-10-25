@@ -100,10 +100,10 @@ public class Interactable : MonoBehaviour {
         // Handle handing out inventory items and creating a cutscene event to let the player know they picked something up
 
         if (GameManager.Instance.interactableTriggerCounts[id] == 0 && inventoryItems.Count > 0) { // Items can only be picked up once
-            string eventText = "You picked up:";
+            string eventText = "You picked up:\n";
             foreach (string itemName in inventoryItems) {
                 InventoryItem inventoryItem = InventoryManager.Instance.inventory.AddItemByName(itemName);
-                eventText += "\n" + inventoryItem.name;
+                eventText += "\n " + inventoryItem.name;
             }
             cutsceneEvents.Add(new CutsceneDialogEvent(eventText));
         }

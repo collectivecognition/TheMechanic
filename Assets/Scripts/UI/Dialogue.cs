@@ -38,6 +38,11 @@ public class Dialogue : MonoBehaviour {
 
             if(currentLine.Length + word.Length <= charsPerLine) {
                 currentLine += currentLine.Length > 0 ? " " + word : word;
+
+                if(currentLine.Substring(currentLine.Length - 1, 1) == "\n") {
+                    formattedText += currentLine;
+                    currentLine = "";
+                }
             }else {
                 formattedText += currentLine + "\n";
                 currentLine = word;
