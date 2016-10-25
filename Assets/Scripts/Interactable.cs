@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 public class Interactable : MonoBehaviour {
-    public string[] sayText;
+    public List<string> sayText = new List<string>();
+    public List<string> inventoryItems = new List<string>();
     public string playCutscene;
     public string loadScene;
     public string sceneSpawnPoint;
@@ -79,23 +81,56 @@ public class Interactable : MonoBehaviour {
     }
 
     private void TriggerInteraction() {
+
+        // Make sure one-shot interactions only happen once
+
         if (oneShot && GameManager.Instance.interactableTriggerCounts[id] > 0) {
             return;
         }
 
+        // Create an empty list of cutscene events
+
+        List<CutsceneEvent> cutsceneEvents = new List<CutsceneEvent>();
+
+        // Handle dialogue events
+
+        if (sayText != null && sayText.Count > 0) {
+            for (int ii = 0; ii < sayText.Count; ii++) {
+                cutsceneEvents.Add(new CutsceneDialogEvent(sayText[ii]));
+            };
+        }
+
+        // Handle handing out inventory items and creating a cutscene event to let the player know they picked something up
+
+        if (GameManager.Instance.interactableTriggerCounts[id] == 0 && inventoryItems.Count > 0) { // Items can only be picked up once
+            string eventText = "You picked up:";
+            foreach (string itemName in inventoryItems) {
+                Type type = Type.GetType(itemName);
+                InventoryItem inventoryItem = (InventoryItem)Activator.CreateInstance(type);
+                InventoryManager.Instance.inventory.AddItem(inventoryItem);
+                eventText += "\n" + inventoryItem.name;
+            }
+            cutsceneEvents.Add(new CutsceneDialogEvent(eventText));
+        }
+
+        // Increment trigger count
+
         GameManager.Instance.interactableTriggerCounts[id]++;
 
-        if (sayText != null && sayText.Length > 0) {
-            CutsceneEvent[] cutscene = new CutsceneEvent[sayText.Length];
-            for (int ii = 0; ii < sayText.Length; ii++){
-                cutscene[ii] = new CutsceneDialogEvent(sayText[ii]);
-            };
-            CutsceneManager.Instance.Play(cutscene);
+        // Play cutscene
+
+        if (cutsceneEvents.Count > 0) {
+            CutsceneManager.Instance.Play(cutsceneEvents.ToArray());
         }
+
+        // Load next scene if specified
 
         if (loadScene != null && loadScene.Length > 0) {
             GameManager.Instance.LoadScene(loadScene, sceneSpawnPoint);
         }
+
+        // Start battle
+        // FIXME: Battle name should be configurable
 
         if (startBattle) {
             BattleManager.Instance.StartBattle();

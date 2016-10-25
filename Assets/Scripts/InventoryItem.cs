@@ -3,7 +3,8 @@ using System.Collections;
 
 public class InventoryItem {
     public enum Type {
-        Gun
+        Gun,
+        Misc
     }
 
     public Color color;

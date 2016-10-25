@@ -93,21 +93,21 @@ public class GameManager : Singleton<GameManager> {
         async.allowSceneActivation = false;
 
         do {
-            yield return 0;
+            yield return new WaitForEndOfFrame();
         } while (async.progress < 0.9f); // What the actual fuck, Unity?
 
         async.allowSceneActivation = true;
-        yield return 0; // Wait for one frame
-        
+        yield return new WaitForEndOfFrame();
+
         Scene newScene = SceneManager.GetSceneByName(sceneName);
         SceneManager.SetActiveScene(newScene);
-        yield return 0;
-
+        yield return new WaitForSeconds(0.1f); // FIXME: Scene manager should finish by end of frame, but this doesn't appear to be the case, looks like a race condition in their code
+        
         // Clean up old scene
 
         SceneManager.UnloadScene(oldScene);
-        yield return 0;
-        
+        yield return new WaitForEndOfFrame();
+
         // Spawn player
 
         if (spawnPoint != null && spawnPoint.Length > 0) {
