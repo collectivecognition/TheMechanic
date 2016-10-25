@@ -27,7 +27,7 @@ public class Interactable : MonoBehaviour {
 
         col = GetComponent<Collider>();
 
-        id = SceneManager.GetActiveScene().name + "@" + name; // Scene name + interactable name
+        id = GameManager.Instance.currentSceneName + "@" + name; // Scene name + interactable name
 
         if (!GameManager.Instance.interactableTriggerCounts.ContainsKey(id)) {
             GameManager.Instance.interactableTriggerCounts.Add(id, 0);
@@ -40,14 +40,6 @@ public class Interactable : MonoBehaviour {
 	
 	void Update () {
         if (!GameManager.Instance.gameActive) return;
-
-        if (Input.GetKeyDown(KeyCode.P)) {
-            foreach (KeyValuePair<string, int> kvp in GameManager.Instance.interactableTriggerCounts) {
-                Debug.LogFormat("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
-            }
-
-            Debug.Log("-----");
-        }
 
         if (triggerOnInteract) {
             float angle = Vector3.Angle(GameManager.Instance.player.transform.forward, transform.position - GameManager.Instance.player.transform.position);

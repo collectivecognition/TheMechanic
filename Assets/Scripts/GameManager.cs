@@ -18,6 +18,7 @@ public class GameManager : Singleton<GameManager> {
 
     // State stuff
 
+    public string currentSceneName;
     public Dictionary<string, int> interactableTriggerCounts = new Dictionary<string, int>();
 
     // Refs
@@ -31,6 +32,7 @@ public class GameManager : Singleton<GameManager> {
         // Whenever a scene loads
 
         SceneManager.sceneLoaded += (Scene scene, LoadSceneMode loadSceneMode) => {
+            currentSceneName = scene.name;
 
             // Initiate fade animation
 
@@ -89,35 +91,26 @@ public class GameManager : Singleton<GameManager> {
         // Save reference to old scene
 
         Scene oldScene = SceneManager.GetActiveScene();
-
-        // Create a new, temporary scene
-
-        Scene tempScene = SceneManager.CreateScene(sceneName);
-        SceneManager.SetActiveScene(tempScene);
         
         // Load the requested scene, wait for async loading to complete
 
         AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        //async.allowSceneActivation = false;
+        async.allowSceneActivation = false;
 
         do {
             yield return 0;
-        } while (async.progress < 0.9f);
+        } while (async.progress < 0.9f); // What the actual fuck, Unity?
 
         async.allowSceneActivation = true;
         yield return 0; // Wait for one frame
-
-        // Merge the temporary scene and the new scene
-
+        
         Scene newScene = SceneManager.GetSceneByName(sceneName);
-        SceneManager.MergeScenes(tempScene, newScene);
         SceneManager.SetActiveScene(newScene);
         yield return 0;
 
-        // Clean up old scenes
+        // Clean up old scene
 
         SceneManager.UnloadScene(oldScene);
-        //SceneManager.UnloadScene(tempScene);
         yield return 0;
         
         // Spawn player
@@ -133,12 +126,5 @@ public class GameManager : Singleton<GameManager> {
         if (callback != null) {
             callback();
         }
-    }
-
-    public IEnumerator WaitForLoad(Scene scene) {
-        while (scene.isLoaded == false) {
-            yield return new WaitForEndOfFrame();
-        }
-        yield return new WaitForEndOfFrame();
     }
 }
