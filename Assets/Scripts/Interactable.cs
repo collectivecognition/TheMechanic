@@ -18,12 +18,11 @@ public class Interactable : MonoBehaviour {
     private float maxAngle = 90f;
     private bool triggered = false;
     private Color[] childEmissionColors;
+    private Renderer[] childRenderers;
 
     private Collider col;
     
     void Start() {
-        childEmissionColors = new Color[transform.childCount];
-
         col = GetComponent<Collider>();
 
         id = GameManager.Instance.currentSceneName + "@" + name; // Scene name + interactable name
@@ -31,6 +30,9 @@ public class Interactable : MonoBehaviour {
         if (!GameManager.Instance.interactableTriggerCounts.ContainsKey(id)) {
             GameManager.Instance.interactableTriggerCounts.Add(id, 0);
         }
+
+        childRenderers = transform.GetComponentsInChildren<Renderer>();
+        childEmissionColors = new Color[childRenderers.Length];
 
         if (triggerOnLoad) {
             TriggerInteraction();
@@ -40,7 +42,7 @@ public class Interactable : MonoBehaviour {
 	void Update () {
         if (!GameManager.Instance.gameActive) return;
 
-        // Highlight objects
+        // Handle manual interaction with objects
 
         if (triggerOnInteract) {
             float angle = Vector3.Angle(GameManager.Instance.player.transform.forward, transform.position - GameManager.Instance.player.transform.position);
@@ -49,8 +51,8 @@ public class Interactable : MonoBehaviour {
 
             if(angle < maxAngle && distance < maxDistance) {
                 if (!triggered) {
-                    for(int ii = 0; ii < transform.childCount; ii++) {
-                        Renderer childRenderer = transform.GetChild(ii).GetComponent<Renderer>();
+                    for (int ii = 0; ii < childRenderers.Length; ii++) {
+                        Renderer childRenderer = childRenderers[ii];
                         Color childColor = childRenderer.material.GetColor("_Color");
                         childEmissionColors[ii] = childColor;
                         childRenderer.material.SetColor("_Color", new Color(5f, 5f, 5f, 1f));
@@ -64,8 +66,8 @@ public class Interactable : MonoBehaviour {
             }else {
                 if (triggered) {
                     triggered = false;
-                    for (int ii = 0; ii < transform.childCount; ii++) {
-                        Renderer childRenderer = transform.GetChild(ii).GetComponent<Renderer>();
+                    for (int ii = 0; ii < childRenderers.Length; ii++) {
+                        Renderer childRenderer = childRenderers[ii];
                         childRenderer.material.SetColor("_Color", childEmissionColors[ii]);
                     }
                 }

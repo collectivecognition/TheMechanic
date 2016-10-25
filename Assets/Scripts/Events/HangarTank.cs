@@ -3,6 +3,6 @@ using System.Collections;
 
 public class HangarTank : MonoBehaviour {
     public void OnInteraction() {
-        Debug.Log("Interaction");
+        GameManager.Instance.LoadScene("Desert");
     }
 }
