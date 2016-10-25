@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Interactable : MonoBehaviour {
     public string[] sayText;
@@ -12,26 +14,40 @@ public class Interactable : MonoBehaviour {
     public bool triggerOnInteract = false;
     public bool startBattle = false;
 
+    private string id;
     private float maxDistance = 5f;
     private float maxAngle = 90f;
-    private int triggerCount = 0;
     private bool triggered = false;
     private Color[] childEmissionColors;
 
     private Collider col;
     
     void Start() {
-        if (triggerOnLoad) {
-            TriggerInteraction();
-        }
-
         childEmissionColors = new Color[transform.childCount];
 
         col = GetComponent<Collider>();
+
+        id = SceneManager.GetActiveScene().name + "@" + name; // Scene name + interactable name
+
+        if (!GameManager.Instance.interactableTriggerCounts.ContainsKey(id)) {
+            GameManager.Instance.interactableTriggerCounts.Add(id, 0);
+        }
+
+        if (triggerOnLoad) {
+            TriggerInteraction();
+        }
     }
 	
 	void Update () {
         if (!GameManager.Instance.gameActive) return;
+
+        if (Input.GetKeyDown(KeyCode.P)) {
+            foreach (KeyValuePair<string, int> kvp in GameManager.Instance.interactableTriggerCounts) {
+                Debug.LogFormat("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+            }
+
+            Debug.Log("-----");
+        }
 
         if (triggerOnInteract) {
             float angle = Vector3.Angle(GameManager.Instance.player.transform.forward, transform.position - GameManager.Instance.player.transform.position);
@@ -71,11 +87,12 @@ public class Interactable : MonoBehaviour {
     }
 
     private void TriggerInteraction() {
-        if (oneShot && triggerCount > 0) {
+        Debug.Log(GameManager.Instance.interactableTriggerCounts[id]);
+        if (oneShot && GameManager.Instance.interactableTriggerCounts[id] > 0) {
             return;
         }
 
-        triggerCount++;
+        GameManager.Instance.interactableTriggerCounts[id]++;
 
         if (sayText != null && sayText.Length > 0) {
             CutsceneEvent[] cutscene = new CutsceneEvent[sayText.Length];
