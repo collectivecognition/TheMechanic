@@ -40,6 +40,8 @@ public class Interactable : MonoBehaviour {
 	void Update () {
         if (!GameManager.Instance.gameActive) return;
 
+        // Highlight objects
+
         if (triggerOnInteract) {
             float angle = Vector3.Angle(GameManager.Instance.player.transform.forward, transform.position - GameManager.Instance.player.transform.position);
             Vector3 closestPoint = col.ClosestPointOnBounds(GameManager.Instance.player.transform.position);
@@ -84,6 +86,10 @@ public class Interactable : MonoBehaviour {
         if (oneShot && GameManager.Instance.interactableTriggerCounts[id] > 0) {
             return;
         }
+
+        // Fire off event so other scripts can respond
+
+        SendMessage("OnInteraction");
 
         // Create an empty list of cutscene events
 
