@@ -79,7 +79,6 @@ public class Interactable : MonoBehaviour {
     }
 
     private void TriggerInteraction() {
-        Debug.Log(GameManager.Instance.interactableTriggerCounts[id]);
         if (oneShot && GameManager.Instance.interactableTriggerCounts[id] > 0) {
             return;
         }

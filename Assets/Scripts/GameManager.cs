@@ -88,6 +88,10 @@ public class GameManager : Singleton<GameManager> {
 
         alpha = 1f;
 
+        // Pause the game
+
+        gameActive = false;
+
         // Save reference to old scene
 
         Scene oldScene = SceneManager.GetActiveScene();
@@ -120,6 +124,10 @@ public class GameManager : Singleton<GameManager> {
         } else {
             GameObject.FindObjectOfType<SpawnPoint>().Spawn(); // Use the first one by default
         }
+
+        // Resume the game
+
+        gameActive = true;
 
         // Handle callback
 
