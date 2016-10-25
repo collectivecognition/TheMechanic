@@ -9,6 +9,7 @@ public class InventoryItem {
 
     public Color color;
     public string name;
+    public string description;
     public Type type;
 
     public InventoryItem () {}

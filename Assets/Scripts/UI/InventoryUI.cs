@@ -53,6 +53,11 @@ public class InventoryUI : MonoBehaviour {
         // Update description text
 
         InventoryItem item = inventory.items[currentItem];
+
+        if(item.type == InventoryItem.Type.Misc) {
+            descriptionText.text = item.description;
+        }
+
         if (item.type == InventoryItem.Type.Gun) {
             GunItem gun = (GunItem)item;
             string text = "";
