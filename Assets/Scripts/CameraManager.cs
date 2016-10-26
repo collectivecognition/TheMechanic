@@ -8,21 +8,21 @@ public class CameraManager : Singleton<CameraManager> {
     
     public void ZoomIn(bool instant = false) {
         followDistance = closeDistance;
-        if (instant) {
-            GameManager.Instance.cam.transform.position = CalculateCameraPosition();
+        if (instant){ 
+            GameManager.Instance.cam.transform.parent.position = CalculateCameraPosition();
         }
     }
 
     public void ZoomOut(bool instant = false) {
         followDistance = farDistance;
         if (instant) {
-            GameManager.Instance.cam.transform.position = CalculateCameraPosition();
+            GameManager.Instance.cam.transform.parent.position = CalculateCameraPosition();
         }
     }
 
     public void Update () {
         if (GameManager.Instance.player != null) {
-            GameManager.Instance.cam.transform.position = Vector3.Lerp(GameManager.Instance.cam.transform.position, CalculateCameraPosition(), 3f * Time.deltaTime);
+            GameManager.Instance.cam.transform.parent.position = Vector3.Lerp(GameManager.Instance.cam.transform.parent.position, CalculateCameraPosition(), 3f * Time.deltaTime);
         }
     }
 
