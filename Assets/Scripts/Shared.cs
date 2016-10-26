@@ -43,7 +43,7 @@ public class Shared : Singleton<Shared> {
 
             // Set up some other references (FIXME: Maybe this goes into GameManager?)
 
-            GameManager.Instance.dialogue = camera.GetComponentInChildren<Dialogue>();
+            GameManager.Instance.dialogue = camera.GetComponentInChildren<DialogueUI>();
 
             // Spawn player
             // FIXME: What if there is more than one spawn point in a scene?

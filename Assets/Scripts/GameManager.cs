@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager> {
     // Refs
 
     public Camera cam;
-    public Dialogue dialogue;
+    public DialogueUI dialogue;
     public GameObject player;
 
     void Awake() {
