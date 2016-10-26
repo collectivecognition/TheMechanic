@@ -27,6 +27,7 @@ public class Shared : Singleton<Shared> {
 
             gameObject.AddComponent<PlayerManager>();
             gameObject.AddComponent<BattleManager>();
+            gameObject.AddComponent<CameraManager>();
             gameObject.AddComponent<CutsceneManager>();
             gameObject.AddComponent<EnemyManager>();
             gameObject.AddComponent<GameManager>();

@@ -4,6 +4,7 @@ using System.Collections;
 public class SpawnPoint : MonoBehaviour {
     public bool useRotation = false;
     public string playerPrefabName = "PlayerTank";
+    public bool instantZoom = true;
 
 	void Start() {
         
@@ -21,6 +22,12 @@ public class SpawnPoint : MonoBehaviour {
 
         if (useRotation) {
             player.transform.rotation = transform.rotation;
+        }
+
+        if (playerPrefabName == "PlayerTank") {
+            CameraManager.Instance.ZoomOut(instantZoom);
+        }else {
+            CameraManager.Instance.ZoomIn(instantZoom);
         }
     }
 }
