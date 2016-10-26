@@ -2,43 +2,48 @@
 using System.Collections;
 
 public class TankTurret : MonoBehaviour {
-    private float turnSpeed = 100f;
+    private float turnSpeed = 20f;
     private Transform turretTransform;
+    private Transform bodyTransform;
 
     private void Start() {
         turretTransform = transform.Find("Turret");
-    }
-
-    private void Update() {
-        if (!GameManager.Instance.gameActive) return;
-
-        if (tag == "Player") {
-            // turretTransform.Rotate(Vector3.up * Input.GetAxis("Right Stick Horizontal") * turnSpeed * Time.deltaTime);
-            //Vector3 mouseWorldPosition = camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, turretTransform.position.z));
-            //mouseWorldPosition.z = turretTransform.position.z;
-            //turretTransform.LookAt(Vector3.zero);
-            // turretTransform.position = mouseWorldPosition;
-            //turretTransform.eulerAngles = new Vector3(0, 0, Mathf.Atan2((mouseWorldPosition.y - turretTransform.position.y), (mouseWorldPosition.x - turretTransform.position.x)) * Mathf.Rad2Deg);
-        }
+        bodyTransform = transform.Find("TankBody");
     }
 
     private void FixedUpdate() {
         if (!GameManager.Instance.gameActive) return;
 
-        if (BattleManager.Instance.BattleActive && tag == "Player") {
-            Plane playerPlane = new Plane(Vector3.up, turretTransform.position);
-            Ray ray = GameManager.Instance.cam.ScreenPointToRay(Input.mousePosition);
-            float hitdist = 0.0f;
-            if (playerPlane.Raycast(ray, out hitdist)) {
-                Vector3 targetPoint = ray.GetPoint(hitdist);
-                AimAt(targetPoint);
-            }
+        Vector3 targetPoint = Vector3.zero;
+
+        if (Input.GetAxisRaw("TurretHorizontal") == -1) {
+            targetPoint += Vector3.left;
+        }
+
+        if (Input.GetAxisRaw("TurretHorizontal") == 1) {
+            targetPoint += Vector3.right;
+        }
+
+        if (Input.GetAxisRaw("TurretVertical") == -1) {
+            targetPoint += Vector3.back;
+        }
+
+        if (Input.GetAxisRaw("TurretVertical") == 1) {
+            targetPoint += Vector3.forward;
+        }
+
+        if(targetPoint == Vector3.zero) {
+            turretTransform.localRotation = Quaternion.Slerp(turretTransform.localRotation, bodyTransform.rotation * Quaternion.Euler(0, -270, 0), turnSpeed * Time.deltaTime);
+        } else {
+            AimAt(targetPoint);
         }
     }
 
     public void AimAt(Vector3 target) {
+        target = turretTransform.position + target;
         Quaternion targetRotation = Quaternion.LookRotation(target - turretTransform.position);
-        turretTransform.rotation = Quaternion.Slerp(turretTransform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+        targetRotation *= Quaternion.Euler(0, 135, 0);
+        turretTransform.localRotation = Quaternion.Slerp(turretTransform.localRotation, targetRotation, turnSpeed * Time.deltaTime);
     }
 
     public bool IsAimingAt(Vector3 target) {

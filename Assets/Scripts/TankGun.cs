@@ -22,7 +22,7 @@ public class TankGun : MonoBehaviour {
         if (!GameManager.Instance.gameActive) return;
 
         if (BattleManager.Instance.BattleActive && tag == "Player") {
-            if (Input.GetAxisRaw("Action") != 0) {
+            if (Input.GetAxisRaw("Action") != 0 || Input.GetAxisRaw("TurretVertical") != 0 || Input.GetAxisRaw("TurretHorizontal") != 0) {
                 Fire();
             }
         }

@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraManager : Singleton<CameraManager> {
     private float followDistance = 180f;
     private float closeDistance = 50f;
-    private float farDistance = 180f;
+    private float farDistance = 280f;
     
     public void ZoomIn(bool instant = false) {
         followDistance = closeDistance;

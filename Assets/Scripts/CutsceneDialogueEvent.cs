@@ -2,11 +2,11 @@
 using System;
 using System.Collections;
 
-public class CutsceneDialogEvent : CutsceneEvent {
+public class CutsceneDialogueEvent : CutsceneEvent {
     private string text;
     private string[] choices;
 
-    public CutsceneDialogEvent(string t, string[] c = null) {
+    public CutsceneDialogueEvent(string t, string[] c = null) {
         text = t;
         choices = c;
     }

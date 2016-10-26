@@ -3,16 +3,18 @@
 public class TankControls : MonoBehaviour {
     private Energy energy;
     private SpawnPoint humanSpawnPoint;
+    private Transform bodyTransform;
 
     private float boostEnergyPerSecond = 20f;
-    private float normalSpeed = 10f;
+    private float normalSpeed = 30f;
     private float turnSpeed = 360f; // Degrees per second
-    private float boostSpeed = 20f;
+    private float boostSpeed = 50f;
     private bool controlsEnabled = true;
     
     private void Awake() {
         energy = PlayerManager.Instance.energy;
         humanSpawnPoint = transform.Find("HumanSpawnPoint").GetComponent<SpawnPoint>();
+        bodyTransform = transform.Find("TankBody");
     }
 
     private void GetOut() {
@@ -61,10 +63,10 @@ public class TankControls : MonoBehaviour {
             Vector3 xzDirection = new Vector3(y, 0, -x);
             Quaternion targetRotation = Quaternion.LookRotation(xzDirection);
             targetRotation *= Quaternion.Euler(0, -45, 0);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+            bodyTransform.rotation = Quaternion.RotateTowards(bodyTransform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 
-            if (Quaternion.Angle(transform.rotation, targetRotation) < 1f) {
-                transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, speed * Time.deltaTime);
+            if (Quaternion.Angle(bodyTransform.rotation, targetRotation) < 1f) {
+                transform.position = Vector3.MoveTowards(transform.position, transform.position + bodyTransform.forward, speed * Time.deltaTime);
             }
         }
     }

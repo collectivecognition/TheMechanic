@@ -101,7 +101,7 @@ public class Interactable : MonoBehaviour {
 
         if (sayText != null && sayText.Count > 0) {
             for (int ii = 0; ii < sayText.Count; ii++) {
-                cutsceneEvents.Add(new CutsceneDialogEvent(sayText[ii]));
+                cutsceneEvents.Add(new CutsceneDialogueEvent(sayText[ii]));
             };
         }
 
@@ -113,7 +113,7 @@ public class Interactable : MonoBehaviour {
                 InventoryItem inventoryItem = InventoryManager.Instance.inventory.AddItemByName(itemName);
                 eventText += "\n " + inventoryItem.name;
             }
-            cutsceneEvents.Add(new CutsceneDialogEvent(eventText));
+            cutsceneEvents.Add(new CutsceneDialogueEvent(eventText));
         }
 
         // Increment trigger count

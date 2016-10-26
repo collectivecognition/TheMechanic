@@ -24,29 +24,34 @@ public class Projectile : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	public void Update () {
         if (!GameManager.Instance.gameActive) return;
 
         if (!dead) {
             transform.position += direction * speed * Time.deltaTime;
 
             if (Vector3.Distance(startPosition, transform.position) >= maxDistance) {
-                Die();
+                Remove();
             }
         }
 	}
 
-    void OnTriggerEnter(Collider collider) {
+    public void OnTriggerEnter(Collider collider) {
         if (!dead) {
             Debug.Log(collider.tag);
             if (collider.tag == "Enemy" || collider.tag == "Player") {
                 collider.transform.GetComponent<HealthBar>().Hit(Random.Range(minDamage, maxDamage));
             }
-            Die();
+            Explode();
         }
     }
 
-    void Die() {
+    public void Remove() {
+        iTween.FadeTo(gameObject, iTween.Hash("time", 1f));
+        GameObject.Destroy(gameObject, 1f);
+    }
+
+    private void Explode() {
         GetComponent<Renderer>().enabled = false;
         GetComponent<ParticleSystem>().Play();
         GameObject.Destroy(gameObject, 0.5f);

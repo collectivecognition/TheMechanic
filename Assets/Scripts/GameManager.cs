@@ -33,6 +33,10 @@ public class GameManager : Singleton<GameManager> {
         SceneManager.sceneLoaded += (Scene scene, LoadSceneMode loadSceneMode) => {
             currentSceneName = scene.name;
         };
+
+        // Hide mouse cursor
+
+        Cursor.visible = false;
     }
 
     void OnGUI() {

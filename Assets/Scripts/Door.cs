@@ -16,9 +16,9 @@ public class Door : MonoBehaviour {
 
                 if (InventoryManager.Instance.inventory.HasItem(keyItemName)) {
                     locked = false;
-                    cutscene[0] = new CutsceneDialogEvent(unlockMessage);
+                    cutscene[0] = new CutsceneDialogueEvent(unlockMessage);
                 }else {
-                    cutscene[0] = new CutsceneDialogEvent(lockMessage);
+                    cutscene[0] = new CutsceneDialogueEvent(lockMessage);
                 }
 
                 CutsceneManager.Instance.Play(cutscene, () => {
