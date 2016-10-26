@@ -47,8 +47,8 @@ public class Projectile : MonoBehaviour {
     }
 
     public void Remove() {
-        iTween.FadeTo(gameObject, iTween.Hash("time", 1f));
-        GameObject.Destroy(gameObject, 1f);
+        iTween.FadeTo(gameObject, iTween.Hash("alpha", 0f, "time", 0.5f));
+        GameObject.Destroy(gameObject, 0.5f);
     }
 
     private void Explode() {

@@ -26,12 +26,12 @@ public class TankShield : MonoBehaviour {
         if (energy.current < 1f) {
             Disable();
         } else {
-            if (Input.GetKeyDown(KeyCode.Space)) {
+            if (Input.GetAxisRaw("Action") != 0) {
                 Enable();
 
             }
 
-            if (Input.GetKeyUp(KeyCode.Space)) {
+            if (Input.GetAxisRaw("Action") == 0) {
                 Disable();
             }
 

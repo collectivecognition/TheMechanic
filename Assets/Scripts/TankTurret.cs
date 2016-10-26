@@ -16,23 +16,10 @@ public class TankTurret : MonoBehaviour {
 
         Vector3 targetPoint = Vector3.zero;
 
-        if (Input.GetAxisRaw("TurretHorizontal") == -1) {
-            targetPoint += Vector3.left;
-        }
+        targetPoint += Vector3.right * Input.GetAxis("TurretHorizontal");
+        targetPoint += Vector3.forward * Input.GetAxis("TurretVertical");
 
-        if (Input.GetAxisRaw("TurretHorizontal") == 1) {
-            targetPoint += Vector3.right;
-        }
-
-        if (Input.GetAxisRaw("TurretVertical") == -1) {
-            targetPoint += Vector3.back;
-        }
-
-        if (Input.GetAxisRaw("TurretVertical") == 1) {
-            targetPoint += Vector3.forward;
-        }
-
-        if(targetPoint == Vector3.zero) {
+        if (targetPoint == Vector3.zero) {
             turretTransform.localRotation = Quaternion.Slerp(turretTransform.localRotation, bodyTransform.rotation * Quaternion.Euler(0, -270, 0), turnSpeed * Time.deltaTime);
         } else {
             AimAt(targetPoint);
