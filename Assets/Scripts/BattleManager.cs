@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
-using System.Linq;
+
 using System;
+using System.Collections;
 
 public class BattleManager : Singleton<BattleManager> {
     public bool BattleActive { get { return battleActive; } }
@@ -46,9 +46,20 @@ public class BattleManager : Singleton<BattleManager> {
 
         InventoryManager.Instance.inventory.AddItemByName("MachineGunItem");
 
+        BattleShield[] battleShields = FindObjectsOfType<BattleShield>();
+        foreach(BattleShield battleShield in battleShields) {
+            battleShield.OnBattleEnd();
+        }
+
+
         Projectile[] projectiles = FindObjectsOfType<Projectile>();
         foreach(Projectile projectile in projectiles) {
             projectile.Remove();
         }
+    }
+
+    IEnumerator FinalizeBattleAfter(float seconds) {
+        yield return new WaitForSeconds(seconds);
+
     }
 }
