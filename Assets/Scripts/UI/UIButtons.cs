@@ -22,6 +22,12 @@ public class UIButtons : MonoBehaviour {
     private bool rightHeld = false;
     private bool actionHeld = false;
 
+    void OnApplicationFocus(bool focus) {
+        if (!focus) {
+            up = down = left = right = action = false;
+        }
+    }
+
     void Update() {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
