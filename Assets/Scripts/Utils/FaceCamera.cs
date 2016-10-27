@@ -5,6 +5,6 @@ public class FaceCamera : MonoBehaviour {
     Transform cameraTransform;
 
     void Update() {
-        transform.LookAt(GameManager.Instance.cam.transform);
+        transform.LookAt(GameManager.Instance.cameraObject.transform);
     }
 }

@@ -12,11 +12,11 @@ public class UIManager : Singleton<UIManager> {
     public Dictionary<string, Animator> uis = new Dictionary<string, Animator>();
 
     void Start() {
-        Instance.uis.Add("Dialogue", GameManager.Instance.cam.transform.parent.Find("UI/Dialogue").GetComponent<Animator>());
-        Instance.uis.Add("Inventory", GameManager.Instance.cam.transform.parent.Find("UI/Inventory").GetComponent<Animator>());
-        Instance.uis.Add("NameEntry", GameManager.Instance.cam.transform.parent.Find("UI/NameEntry").GetComponent<Animator>());
-        Instance.uis.Add("PostBattle", GameManager.Instance.cam.transform.parent.Find("UI/PostBattle").GetComponent<Animator>());
-        Instance.uis.Add("Computer", GameManager.Instance.cam.transform.parent.Find("UI/Computer").GetComponent<Animator>());
+        Instance.uis.Add("Dialogue", GameManager.Instance.cameraObject.transform.Find("UI/Dialogue").GetComponent<Animator>());
+        Instance.uis.Add("Inventory", GameManager.Instance.cameraObject.transform.Find("UI/Inventory").GetComponent<Animator>());
+        Instance.uis.Add("NameEntry", GameManager.Instance.cameraObject.transform.Find("UI/NameEntry").GetComponent<Animator>());
+        Instance.uis.Add("PostBattle", GameManager.Instance.cameraObject.transform.Find("UI/PostBattle").GetComponent<Animator>());
+        Instance.uis.Add("Computer", GameManager.Instance.cameraObject.transform.Find("UI/Computer").GetComponent<Animator>());
 
         // Disable all UIs at startup
 

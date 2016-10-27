@@ -7,7 +7,7 @@ public class PostBattleManager : Singleton<PostBattleManager> {
     private Text textObject;
 
     void Start() {
-        textObject = GameManager.Instance.cam.transform.parent.Find("UI/PostBattle/Canvas/Text").GetComponent<Text>();
+        textObject = GameManager.Instance.cameraObject.transform.Find("UI/PostBattle/Canvas/Text").GetComponent<Text>();
     }
 
     public void Do(int exp, InventoryItem[] loot, Action callback=null) {
