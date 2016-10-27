@@ -14,13 +14,13 @@ public class NameEntryUI : MonoBehaviour {
     private Text nameText;
 
     void Awake() {
-        nameText = transform.GetComponentInChildren<Text>();
+        nameText = transform.Find("Canvas/NameText").GetComponent<Text>();
     }
     
 	void Update () {
         nameText.text = text;
 
-        transform.Find("Canvas/" + buttons[currentRow, currentCol]).GetComponent<Text>().color = Color.white;
+        transform.Find("Canvas/Buttons/" + buttons[currentRow, currentCol]).GetComponent<Text>().color = Color.white;
 
         string currentButton = buttons[currentRow, currentCol];
 
@@ -85,6 +85,6 @@ public class NameEntryUI : MonoBehaviour {
 
         currentButton = buttons[currentRow, currentCol];
 
-        transform.Find("Canvas/" + currentButton).GetComponent<Text>().color = Color.yellow;
+        transform.Find("Canvas/Buttons/" + currentButton).GetComponent<Text>().color = Color.yellow;
     }
 }

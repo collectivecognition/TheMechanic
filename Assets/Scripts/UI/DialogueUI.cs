@@ -9,7 +9,7 @@ public class DialogueUI : MonoBehaviour {
     private AudioSource audio;
     private AudioClip sound;
 
-    private int charsPerLine = 20;
+    private int charsPerLine = 33;
     private string text;
     private bool done = false;
     private Action callback;

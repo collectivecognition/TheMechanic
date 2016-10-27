@@ -33,6 +33,10 @@ public class UIManager : Singleton<UIManager> {
         if (Input.GetKeyDown(KeyCode.C)) {
             UIManager.Instance.OpenUI(UIManager.Instance.uis["Computer"]);
         }
+
+        if (Input.GetKeyDown(KeyCode.N)) {
+            UIManager.Instance.OpenUI(UIManager.Instance.uis["NameEntry"]);
+        }
     }
 
     public void OpenUI(Animator anim, Action callback=null) {
