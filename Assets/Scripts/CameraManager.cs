@@ -14,7 +14,7 @@ public class CameraManager : Singleton<CameraManager> {
     
     public void ZoomIn(bool instant = false) {
         followDistance = closeDistance;
-        if (instant){ 
+        if (instant && cameraHarnessTransform != null) { 
             cameraHarnessTransform.position = CalculateCameraPosition();
         }
     }

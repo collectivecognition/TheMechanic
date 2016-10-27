@@ -4,7 +4,7 @@ using System.Collections;
 
 public class InventoryUI : MonoBehaviour {
     private int currentItem = 0;
-    private int numPerPage = 7;
+    private int numPerPage = 5;
     private Inventory inventory;
 
     private Transform[] items;
@@ -30,7 +30,7 @@ public class InventoryUI : MonoBehaviour {
 
         // Disable current selection
 
-        items[currentItem].GetComponent<Image>().enabled = false;
+        items[currentItem].transform.Find("Highlight").GetComponent<Image>().enabled = false;
 
         // Navigate up / down with buttons
 
@@ -78,7 +78,7 @@ public class InventoryUI : MonoBehaviour {
 
         // Set highlight on current item
 
-        items[currentItem].GetComponent<Image>().enabled = true;
+        items[currentItem].transform.Find("Highlight").GetComponent<Image>().enabled = true;
 
         // Select item
 
@@ -111,8 +111,9 @@ public class InventoryUI : MonoBehaviour {
         int extras = numPerPage - items.Length % numPerPage;
         for(int ii = 0; ii < extras; ii++) {
             GameObject o = (GameObject)Instantiate(inventoryItemPrefab, itemContainer, false);
+            o.GetComponent<Image>().enabled = false;
         }
 
-        items[currentItem].GetComponent<Image>().enabled = true;
+        items[currentItem].transform.Find("Highlight").GetComponent<Image>().enabled = true;
     }
 }
