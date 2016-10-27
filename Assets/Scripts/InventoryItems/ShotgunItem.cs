@@ -7,10 +7,10 @@ public class ShotgunItem : GunItem {
         energyUsePerShot = 15f;
         fireRate = 2f;
         name = "Shotgun";
-        minDamage = 25f;
-        maxDamage = 35f;
-        projectilesPerShot = 5;
-        scale = 1.5f;
+        minDamage = 15f;
+        maxDamage = 20f;
+        projectilesPerShot = 9;
+        scale = Vector3.one * 1.5f;
         speed = 80f;
         spread = true;
     }

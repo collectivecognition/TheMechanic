@@ -7,10 +7,10 @@ public class MachineGunItem : GunItem {
         energyUsePerShot = 2f;
         fireRate = 14f;
         name = "Machine Gun";
-        minDamage = 2f;
-        maxDamage = 4f;
-        projectilesPerShot = 1;
-        scale = 0.75f;
+        minDamage = 1f;
+        maxDamage = 2f;
+        projectilesPerShot = 0;
+        scale = new Vector3(0.3f, 0.3f, 0.3f);
         speed = 150f;
         spread = false;
     }

@@ -4,7 +4,7 @@ using System.Collections;
 public class TankShield : MonoBehaviour {
     private float animateTime = 0f;
     private float animateSpeed = 4f;
-    private float energyUsePerSecond = 50f;
+    private float energyUsePerSecond = 25f;
 
     private Material material;
     private Energy energy;
@@ -23,7 +23,7 @@ public class TankShield : MonoBehaviour {
         animateTime += Time.deltaTime * animateSpeed;
         material.SetFloat("_Offset", Mathf.Repeat(animateTime, 1f));
 
-        if (energy.current < 1f) {
+        if (energy.current < 1f || !BattleManager.Instance.BattleActive) {
             Disable();
         } else {
             if (Input.GetAxisRaw("Action") != 0) {

@@ -8,13 +8,13 @@ public class TankGun : MonoBehaviour {
 
     private Transform firingPoint;
     private GameObject projectilePrefab;
-    private Transform turret;
+    private Transform turretTransform;
     private Energy energy;
 
     void Awake () {
         firingPoint = transform.Find("Turret/FiringPoint");
         projectilePrefab = Resources.Load<GameObject>("Prefabs/Projectile");
-        turret = transform.Find("Turret");
+        turretTransform = transform.Find("Turret");
         energy = PlayerManager.Instance.energy;
     }
 
@@ -55,20 +55,21 @@ public class TankGun : MonoBehaviour {
 
                 if (gun.spread) {
                     float angle = (-projectileSpreadAngle * (gun.projectilesPerShot - 1) / 2 + ii * projectileSpreadAngle); // Space shots out evenly
-                    projectile.GetComponent<Projectile>().direction = Quaternion.AngleAxis(angle, Vector3.up) * turret.forward; // Aim based on calculated angle for each shot
+                    projectile.GetComponent<Projectile>().direction = Quaternion.AngleAxis(angle, Vector3.up) * turretTransform.forward; // Aim based on calculated angle for each shot
 
                 // Non-spread shots
 
                 } else {
-                    float projectileSpacing = gun.scale + 1f; // Space shots out evenly
-                    projectile.transform.position += turret.right * (-projectileSpacing * (gun.projectilesPerShot - 1) / 2 + ii * projectileSpacing); // Modify x coord to space out multiple shots
-                    projectile.GetComponent<Projectile>().direction = turret.forward; // Aim along turret
+                    float projectileSpacing = gun.scale.x * 2f; // Space shots out evenly
+                    projectile.transform.position += turretTransform.right * (-projectileSpacing * (gun.projectilesPerShot - 1) / 2 + ii * projectileSpacing); // Modify x coord to space out multiple shots
+                    projectile.GetComponent<Projectile>().direction = turretTransform.forward; // Aim along turret
                 }
 
                 // Set shot attributes
 
                 projectile.GetComponent<Renderer>().material.SetColor("_EmissionColor", gun.color);
-                projectile.transform.localScale *= gun.scale;
+                projectile.transform.localScale =  new Vector3(projectile.transform.localScale.x * gun.scale.x, projectile.transform.localScale.y * gun.scale.y, projectile.transform.localScale.z * gun.scale.z);
+                projectile.transform.localRotation = turretTransform.rotation;
                 projectile.GetComponent<Projectile>().speed = gun.speed; // FIXME: Only need one reference to <Projectile>
                 projectile.GetComponent<Projectile>().minDamage = gun.minDamage;
                 projectile.GetComponent<Projectile>().maxDamage = gun.maxDamage;

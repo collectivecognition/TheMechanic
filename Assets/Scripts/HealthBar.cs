@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 
 public class HealthBar : MonoBehaviour {
     private Health health; // A reference to the health object, either a player's or an enemy's
-
     private GameObject healthCanvas;
     private Image healthBar;
     private GameObject damageNumberPrefab;
 
+    private bool blinking = false;
+
     public delegate void OnDieEvent(GameObject gameObject);
     public event OnDieEvent OnDie;
+
 
     void Start() {
         healthCanvas = transform.Find("HealthCanvas").gameObject;
@@ -42,11 +45,27 @@ public class HealthBar : MonoBehaviour {
             OnDie(gameObject);
         }
 
-        iTween.FadeTo(gameObject, iTween.Hash("alpha", 0f, "time", 0.1f));
-        iTween.FadeTo(gameObject, iTween.Hash("alpha", 1f, "time", 0.1f, "delay", 0.1));
-        iTween.FadeTo(gameObject, iTween.Hash("alpha", 0f, "time", 0.1f, "delay", 0.2));
-        iTween.FadeTo(gameObject, iTween.Hash("alpha", 1f, "time", 0.1f, "delay", 0.3));
-        iTween.FadeTo(gameObject, iTween.Hash("alpha", 0f, "time", 0.1f, "delay", 0.4));
-        iTween.FadeTo(gameObject, iTween.Hash("alpha", 1f, "time", 0.1f, "delay", 0.5));
+        Color darker = gameObject.GetComponent<Renderer>().material.color;
+        Color brighter = darker + new Color(2f, 2f, 2f);
+        int blinks = 2;
+        float blinkSpeed = 0.075f;
+
+        if (!blinking) {
+            blinking = true;
+
+            for (int ii = 0; ii < blinks * 2; ii++) {
+                iTween.ColorTo(gameObject, iTween.Hash(
+                    "color", (ii % 2 == 0 ? brighter : darker),
+                    "time", blinkSpeed, 
+                    "delay", blinkSpeed * ii
+                ));
+            }
+            StartCoroutine(OnDoneBlinking(blinks * 2 * blinkSpeed));
+        }
+    }
+
+    IEnumerator OnDoneBlinking(float delay) {
+        yield return new WaitForSeconds(delay); 
+        blinking = false;
     }
 }

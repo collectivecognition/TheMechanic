@@ -10,7 +10,7 @@ public class PeaShooterItem : GunItem {
         minDamage = 10f;
         maxDamage = 14f;
         projectilesPerShot = 1;
-        scale = 0.5f;
+        scale = Vector3.one * 0.5f;
         speed = 80f;
         spread = false;
     }
