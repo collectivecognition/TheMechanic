@@ -40,7 +40,7 @@ public class Shared : Singleton<Shared> {
             GameObject camera = Instantiate((GameObject)Resources.Load("Prefabs/Camera"));
             camera.transform.SetParent(transform);
             GameManager.Instance.cameraObject = camera;
-            GameManager.Instance.pixelCamera = camera.transform.Find("PixelCamera").GetComponent<Camera>();
+            GameManager.Instance.renderCamera = camera.transform.Find("RenderCameraHarness/RenderCamera").GetComponent<Camera>();
 
             // Set up some other references (FIXME: Maybe this goes into GameManager?)
 

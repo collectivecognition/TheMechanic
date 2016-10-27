@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager> {
     // Refs
 
     public GameObject cameraObject;
-    public Camera pixelCamera;
+    public Camera renderCamera;
     public DialogueUI dialogue;
     public GameObject player;
 
@@ -70,13 +70,13 @@ public class GameManager : Singleton<GameManager> {
         int h = Screen.height;
 
         RenderTexture rt = new RenderTexture(w, h, 24);
-        pixelCamera.targetTexture = rt;
+        renderCamera.targetTexture = rt;
         transitionTexture = new Texture2D(w, h, TextureFormat.RGB24, false);
-        pixelCamera.Render();
+        renderCamera.Render();
         RenderTexture.active = rt;
         transitionTexture.ReadPixels(new Rect(0, 0, w, h), 0, 0);
         transitionTexture.Apply();
-        pixelCamera.targetTexture = null;
+        renderCamera.targetTexture = null;
         RenderTexture.active = null;
         Destroy(rt);
 
