@@ -29,14 +29,14 @@ public class TankTurret : MonoBehaviour {
             //    AimAt(targetPoint);
             //}
         }else {
-            Plane plane = new Plane(Vector3.up, new Vector3(0f, 15f, 0f));
+            Plane plane = new Plane(Vector3.up, new Vector3(0f, 15f, 0f)); // 15f is the turret height
             float hit;
             Ray ray = GameManager.Instance.renderCamera.ScreenPointToRay(Input.mousePosition);
 
             if (plane.Raycast(ray, out hit)) {
                 Vector3 target = ray.GetPoint(hit);
                 Vector3 current = turretTransform.position;
-                current.y = 5f;
+                current.y = 15f;
 
                 Quaternion targetRotation = Quaternion.LookRotation(target - current);
                 targetRotation *= Quaternion.Euler(0, 90, 0);

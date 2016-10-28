@@ -41,8 +41,9 @@ public class HealthBar : MonoBehaviour {
         damageNumber.transform.position = transform.position + Vector3.up * 5f;
 
         if (health.current <= 0f) {
-            GameObject explosion = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/Explosion"), transform, false);
-            GameObject.Destroy(gameObject, 1f);
+            GameObject explosion = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/Explosion"), null, true);
+            explosion.transform.position = transform.position;
+            GameObject.Destroy(gameObject);
             OnDie(gameObject);
         }
 

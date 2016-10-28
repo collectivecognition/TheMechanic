@@ -57,6 +57,7 @@ ModelImporter:
     2300026: Wheel 7
     2300028: Wheel 8
     2300030: Wheel 9
+    2300032: //RootNode
     3300000: Body
     3300002: Firing Point
     3300004: Nose
@@ -73,6 +74,7 @@ ModelImporter:
     3300026: Wheel 7
     3300028: Wheel 8
     3300030: Wheel 9
+    3300032: //RootNode
     4300000: Nose
     4300002: Firing Point
     4300004: Turret Barrel
