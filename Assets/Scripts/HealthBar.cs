@@ -46,7 +46,7 @@ public class HealthBar : MonoBehaviour {
             OnDie(gameObject);
         }
 
-        Color darker = gameObject.GetComponent<Renderer>().material.color;
+        Color darker = gameObject.GetComponentInChildren<Renderer>().material.color;
         Color brighter = darker + new Color(2f, 2f, 2f);
         int blinks = 2;
         float blinkSpeed = 0.075f;
