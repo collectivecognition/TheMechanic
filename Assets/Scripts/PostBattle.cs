@@ -10,6 +10,12 @@ public class PostBattleManager : Singleton<PostBattleManager> {
         textObject = GameManager.Instance.cameraObject.transform.Find("UI/PostBattle/Canvas/Text").GetComponent<Text>();
     }
 
+    void Update() {
+        if(Input.GetAxisRaw("Action") != 0) {
+            UIManager.Instance.CloseCurrentUI();
+        }
+    }
+
     public void Do(int exp, InventoryItem[] loot, Action callback=null) {
         textObject.text =  "BATTLE COMPLETE\n\n";
         textObject.text += "You got:\n";

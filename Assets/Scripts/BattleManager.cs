@@ -40,6 +40,7 @@ public class BattleManager : Singleton<BattleManager> {
         PostBattleManager.Instance.Do(100, new InventoryItem[] {
             new MachineGunItem()
         }, () => {
+            Debug.Log("callback");
             GameManager.Instance.gameActive = true;
             SceneManager.UnloadScene(scene);
         });
@@ -50,7 +51,6 @@ public class BattleManager : Singleton<BattleManager> {
         foreach(BattleShield battleShield in battleShields) {
             battleShield.OnBattleEnd();
         }
-
 
         Projectile[] projectiles = FindObjectsOfType<Projectile>();
         foreach(Projectile projectile in projectiles) {

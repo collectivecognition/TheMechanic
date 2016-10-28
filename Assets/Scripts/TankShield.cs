@@ -28,15 +28,11 @@ public class TankShield : MonoBehaviour {
         } else {
             if (Input.GetAxisRaw("Action") != 0) {
                 Enable();
-
+                energy.Use(energyUsePerSecond * Time.deltaTime);
             }
 
             if (Input.GetAxisRaw("Action") == 0) {
                 Disable();
-            }
-
-            if (Input.GetKey(KeyCode.Space)) {
-                energy.Use(energyUsePerSecond * Time.deltaTime);
             }
         }
     }

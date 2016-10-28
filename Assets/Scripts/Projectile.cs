@@ -38,7 +38,6 @@ public class Projectile : MonoBehaviour {
 
     public void OnTriggerEnter(Collider collider) {
         if (!dead) {
-            Debug.Log(collider.tag + ":" + collider.name);
             if (collider.tag == "Enemy" || collider.tag == "Player") {
                 collider.transform.GetComponent<HealthBar>().Hit(Random.Range(minDamage, maxDamage));
                 Explode();
