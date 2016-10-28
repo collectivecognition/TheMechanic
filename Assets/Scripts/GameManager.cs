@@ -37,7 +37,8 @@ public class GameManager : Singleton<GameManager> {
 
         // Hide mouse cursor
 
-        Cursor.visible = false;
+        //Cursor.visible = false;
+        //Cursor.SetCursor(Resources.Load<Texture2D>("Textures/Crosshair"), Vector2.one * 64f, CursorMode.Auto);
     }
 
     void OnGUI() {
