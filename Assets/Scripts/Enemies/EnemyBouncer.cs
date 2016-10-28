@@ -12,6 +12,8 @@ public class EnemyBouncer : Enemy {
     }
 
     void Update() {
+        if (!GameManager.Instance.gameActive) return;
+
         transform.position += direction * speed * Time.deltaTime;
     }
 

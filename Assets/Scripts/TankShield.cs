@@ -17,6 +17,7 @@ public class TankShield : MonoBehaviour {
     }
 
     void Update() {
+        if (!GameManager.Instance.gameActive) return;
 
         // Animate shield
 
