@@ -11,9 +11,11 @@ public class GunItem : InventoryItem {
     public float speed;
     public int projectilesPerShot;
     public string prefabName;
+    public string sound;
      
     public GunItem() {
         type = InventoryItem.Type.Gun;
         prefabName = "Projectile";
+        sound = "";
     }
 }

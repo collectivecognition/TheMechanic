@@ -13,5 +13,6 @@ public class MachineGunItem : GunItem {
         scale = Vector3.one * 0.3f;
         speed = 120f;
         spread = false;
+        sound = "MachineGun";
     }
 }

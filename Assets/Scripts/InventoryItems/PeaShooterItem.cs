@@ -13,5 +13,6 @@ public class PeaShooterItem : GunItem {
         scale = Vector3.one * 0.5f;
         speed = 80f;
         spread = false;
+        sound = "PeaShooter";
     }
 }

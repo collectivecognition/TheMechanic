@@ -13,5 +13,6 @@ public class ShotgunItem : GunItem {
         scale = Vector3.one * 1.5f;
         speed = 80f;
         spread = true;
+        sound = "Shotgun";
     }
 }

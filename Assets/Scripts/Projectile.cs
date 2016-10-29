@@ -6,21 +6,19 @@ public class Projectile : MonoBehaviour {
     private Vector3 startPosition;
     private float maxDistance = 150f;
 
-    [HideInInspector]
     public Vector3 direction;
-
-    [HideInInspector]
     public float speed;
-
-    [HideInInspector]
     public float minDamage;
-
-    [HideInInspector]
     public float maxDamage;
+
+    private AudioSource audioSource;
+    private AudioClip audioClip;
 
     // Use this for initialization
     void Start () {
         startPosition = transform.position;
+        audioSource = GetComponent<AudioSource>();
+        audioClip = Resources.Load<AudioClip>("Sounds/Hit"); // FIXME: Cache this once for all projectiles?
     }
 	
 	// Update is called once per frame
@@ -60,5 +58,6 @@ public class Projectile : MonoBehaviour {
         GetComponent<ParticleSystem>().Play();
         GameObject.Destroy(gameObject, 0.5f);
         dead = true;
+        audioSource.PlayOneShot(audioClip);
     }
 }

@@ -2,9 +2,13 @@
 using System.Collections;
 
 public class Explosion : MonoBehaviour {
-    
+    private AudioSource audioSource;
+
 	void Start () {
-	    
+        audioSource = GetComponent<AudioSource>();
+        AudioClip clip = Resources.Load<AudioClip>("Sounds/Explosion");
+        audioSource.PlayOneShot(clip);
+
         // Spawn shrapnel
 
         for(int ii = 0; ii < 20; ii++) {
