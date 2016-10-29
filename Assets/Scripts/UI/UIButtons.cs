@@ -33,8 +33,7 @@ public class UIButtons : MonoBehaviour {
         float y = Input.GetAxisRaw("Vertical");
 
         if(x == 0) {
-            leftHeld = false;
-            rightHeld = false;
+            left = right = leftHeld = rightHeld = false;
         }
 
         if(x == -1) { // Left
@@ -78,8 +77,7 @@ public class UIButtons : MonoBehaviour {
         }
 
         if (y == 0) {
-            downHeld = false;
-            upHeld = false;
+            up = down = upHeld = downHeld = false;
         }
 
         if (y == -1) { // Down
