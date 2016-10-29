@@ -5,6 +5,7 @@ public class TankTurret : MonoBehaviour {
     private float turnSpeed = 20f;
     private Transform turretTransform;
     private Transform bodyTransform;
+    private Vector3 oldMousePos = Vector3.zero;
 
     private void Start() {
         turretTransform = transform.Find("Turret");
@@ -13,22 +14,33 @@ public class TankTurret : MonoBehaviour {
 
     private void FixedUpdate() {
         if (!GameManager.Instance.gameActive) return;
+        if (!BattleManager.Instance.BattleActive) {
+            turretTransform.localRotation = bodyTransform.localRotation;
+            Cursor.visible = false;
+            return;
+        }
 
         float h = Input.GetAxis("TurretHorizontal");
         float v = Input.GetAxis("TurretVertical");
 
         if (h != 0 || v != 0) {
+            Cursor.visible = false;
             Vector3 targetPoint = Vector3.zero;
 
             targetPoint += Vector3.right * h;
             targetPoint += Vector3.forward * v;
 
-            //if (targetPoint == Vector3.zero) {
-            //    turretTransform.localRotation = Quaternion.Slerp(turretTransform.localRotation, bodyTransform.rotation * Quaternion.Euler(0, -270, 0), turnSpeed * Time.deltaTime);
-            //} else {
-            //    AimAt(targetPoint);
-            //}
-        }else {
+            if (targetPoint == Vector3.zero) {
+                turretTransform.localRotation = Quaternion.Slerp(turretTransform.localRotation, bodyTransform.rotation * Quaternion.Euler(0, -270, 0), turnSpeed * Time.deltaTime);
+            } else {
+                targetPoint = turretTransform.position + targetPoint;
+                Quaternion targetRotation = Quaternion.LookRotation(targetPoint - turretTransform.position);
+                targetRotation *= Quaternion.Euler(0, 135, 0);
+                turretTransform.localRotation = Quaternion.Slerp(turretTransform.localRotation, targetRotation, turnSpeed * Time.deltaTime);
+            }
+        } else if(oldMousePos != Input.mousePosition) { // Only rotate if player is actually using mouse
+            oldMousePos = Input.mousePosition;
+            Cursor.visible = true;
             Plane plane = new Plane(Vector3.up, new Vector3(0f, 15f, 0f)); // 15f is the turret height
             float hit;
             Ray ray = GameManager.Instance.renderCamera.ScreenPointToRay(Input.mousePosition);
@@ -43,17 +55,5 @@ public class TankTurret : MonoBehaviour {
                 turretTransform.localRotation = Quaternion.Slerp(turretTransform.localRotation, targetRotation, turnSpeed * Time.deltaTime);
             }
         }
-    }
-
-    public void AimAt(Vector3 target) {
-        //target = turretTransform.position + target;
-        Quaternion targetRotation = Quaternion.LookRotation(target - turretTransform.position);
-        // targetRotation *= Quaternion.Euler(0, 135, 0);
-        turretTransform.localRotation = Quaternion.Slerp(turretTransform.localRotation, targetRotation, turnSpeed * Time.deltaTime);
-    }
-
-    public bool IsAimingAt(Vector3 target) {
-        float angle = Vector3.Angle(turretTransform.transform.forward, turretTransform.position - target);
-        return angle > 180 - 10 && angle < 180 + 10;
     }
 }

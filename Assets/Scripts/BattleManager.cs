@@ -40,22 +40,31 @@ public class BattleManager : Singleton<BattleManager> {
         PostBattleManager.Instance.Do(100, new InventoryItem[] {
             new MachineGunItem()
         }, () => {
-            Debug.Log("callback");
             GameManager.Instance.gameActive = true;
             SceneManager.UnloadScene(scene);
+
+            // Give loot
+            // FIXME
+
+            InventoryManager.Instance.inventory.AddItemByName("MachineGunItem");
+
+            // Clean up
+
+            BattleShield[] battleShields = FindObjectsOfType<BattleShield>();
+            foreach (BattleShield battleShield in battleShields) {
+                battleShield.OnBattleEnd();
+            }
+
+            Projectile[] projectiles = FindObjectsOfType<Projectile>();
+            foreach (Projectile projectile in projectiles) {
+                projectile.Remove();
+            }
+
+            GameObject[] gibs = GameObject.FindGameObjectsWithTag("Gib");
+            foreach (GameObject gib in gibs) {
+                GameObject.Destroy(gib);
+            }
         });
-
-        InventoryManager.Instance.inventory.AddItemByName("MachineGunItem");
-
-        BattleShield[] battleShields = FindObjectsOfType<BattleShield>();
-        foreach(BattleShield battleShield in battleShields) {
-            battleShield.OnBattleEnd();
-        }
-
-        Projectile[] projectiles = FindObjectsOfType<Projectile>();
-        foreach(Projectile projectile in projectiles) {
-            projectile.Remove();
-        }
     }
 
     IEnumerator FinalizeBattleAfter(float seconds) {

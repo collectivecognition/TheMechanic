@@ -9,7 +9,7 @@ public class TankControls : MonoBehaviour {
     private float normalSpeed = 30f;
     private float turnSpeed = 360f; // Degrees per second
     private float boostSpeed = 50f;
-    private bool controlsEnabled = true;
+    public bool controlsEnabled = true;
     
     private void Awake() {
         energy = PlayerManager.Instance.energy;
