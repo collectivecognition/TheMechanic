@@ -6,6 +6,7 @@ public class TankShield : MonoBehaviour {
     private float animateSpeed = 4f;
     private float energyUsePerSecond = 25f;
     private bool enabled;
+    private bool charged = true;
 
     private Material material;
     private Energy energy;
@@ -31,14 +32,19 @@ public class TankShield : MonoBehaviour {
 
         if (energy.current < 1f || !BattleManager.Instance.BattleActive) {
             Disable();
+            charged = false;
         } else {
-            if (Input.GetAxisRaw("Action") != 0) {
+            if (Input.GetAxisRaw("Action") != 0 && charged) {
                 Enable();
                 energy.Use(energyUsePerSecond * Time.deltaTime);
             }
 
             if (Input.GetAxisRaw("Action") == 0) {
                 Disable();
+
+                if(energy.current > 1f) {
+                    charged = true;
+                }
             }
         }
     }
