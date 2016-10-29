@@ -40,8 +40,6 @@ public class BattleManager : Singleton<BattleManager> {
         PostBattleManager.Instance.Do(100, new InventoryItem[] {
             new MachineGunItem()
         }, () => {
-            GameManager.Instance.gameActive = true;
-            SceneManager.UnloadScene(scene);
 
             // Give loot
             // FIXME
@@ -62,13 +60,20 @@ public class BattleManager : Singleton<BattleManager> {
 
             GameObject[] gibs = GameObject.FindGameObjectsWithTag("Gib");
             foreach (GameObject gib in gibs) {
-                GameObject.Destroy(gib);
+                iTween.FadeTo(gib, iTween.Hash("alpha", 0f, "time", 0.5f));
+                GameObject.Destroy(gib, 0.5f);
             }
+
+            // Finalize
+
+            StartCoroutine(FinalizeBattleAfter(10f));
         });
     }
 
     IEnumerator FinalizeBattleAfter(float seconds) {
         yield return new WaitForSeconds(seconds);
 
+        GameManager.Instance.gameActive = true;
+        SceneManager.UnloadScene(scene);
     }
 }
