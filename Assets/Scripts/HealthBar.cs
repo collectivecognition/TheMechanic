@@ -29,7 +29,7 @@ public class HealthBar : MonoBehaviour {
         }
 
         darker = gameObject.GetComponentInChildren<Renderer>().material.color;
-        brighter = darker + new Color(2f, 2f, 2f);
+        brighter = darker + new Color(1f, 1f, 1f);
     }
 
     void Update() {

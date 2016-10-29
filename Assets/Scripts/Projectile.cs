@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour {
     private bool dead = false;
     private Vector3 startPosition;
 
-    public float maxDistance; // Provided by the gun
+    public float maxDistance = 150f; // Provided by the gun
     public Vector3 direction;
     public float speed;
     public float minDamage;
@@ -41,13 +41,13 @@ public class Projectile : MonoBehaviour {
                 Explode();
             } else if (collider.name == "Shield") {
                 Explode();
-            }else {
+            } else {
                 Remove();
             }
         }
     }
 
-    public void Remove() {
+    public void Remove() { 
         dead = true;
         iTween.FadeTo(gameObject, iTween.Hash("alpha", 0f, "time", 0.15f));
         GameObject.Destroy(gameObject, 0.15f);
