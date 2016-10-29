@@ -10,6 +10,8 @@ public class HealthBar : MonoBehaviour {
     private GameObject damageNumberPrefab;
 
     private bool blinking = false;
+    private Color brighter;
+    private Color darker;
 
     public delegate void OnDieEvent(GameObject gameObject);
     public event OnDieEvent OnDie;
@@ -25,6 +27,9 @@ public class HealthBar : MonoBehaviour {
         }else {
             health = new Health(50f);
         }
+
+        darker = gameObject.GetComponentInChildren<Renderer>().material.color;
+        brighter = darker + new Color(2f, 2f, 2f);
     }
 
     void Update() {
@@ -43,12 +48,11 @@ public class HealthBar : MonoBehaviour {
         if (health.current <= 0f) {
             GameObject explosion = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/Explosion"), null, true);
             explosion.transform.position = transform.position;
+            explosion.GetComponent<Explosion>().color = darker;
             GameObject.Destroy(gameObject);
             OnDie(gameObject);
         }
 
-        Color darker = gameObject.GetComponentInChildren<Renderer>().material.color;
-        Color brighter = darker + new Color(2f, 2f, 2f);
         int blinks = 2;
         float blinkSpeed = 0.075f;
 

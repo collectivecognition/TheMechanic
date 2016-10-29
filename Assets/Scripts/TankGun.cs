@@ -74,6 +74,7 @@ public class TankGun : MonoBehaviour {
                 projectile.GetComponent<Projectile>().speed = gun.speed; // FIXME: Only need one reference to <Projectile>
                 projectile.GetComponent<Projectile>().minDamage = gun.minDamage;
                 projectile.GetComponent<Projectile>().maxDamage = gun.maxDamage;
+                projectile.GetComponent<Projectile>().maxDistance = gun.range;
 
                 // Play sound
                 AudioClip clip = Resources.Load<AudioClip>("Sounds/" + gun.sound); // FIXME: Caching

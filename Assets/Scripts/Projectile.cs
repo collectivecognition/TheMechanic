@@ -4,8 +4,8 @@ using System.Collections;
 public class Projectile : MonoBehaviour {
     private bool dead = false;
     private Vector3 startPosition;
-    private float maxDistance = 150f;
 
+    public float maxDistance; // Provided by the gun
     public Vector3 direction;
     public float speed;
     public float minDamage;

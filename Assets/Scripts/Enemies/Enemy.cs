@@ -7,4 +7,10 @@ public class Enemy : MonoBehaviour {
 	protected void Start () {
         EnemyManager.Instance.ReactivateAfterDelay(gameObject, spawnDelay);
 	}
+
+    protected void OnTriggerStay(Collider collider) {
+        if(collider.tag == "Player") {
+            collider.transform.GetComponent<HealthBar>().Hit(40f * Time.deltaTime);
+        }
+    }
 }
