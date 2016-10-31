@@ -8,10 +8,11 @@ public class HealthBar : MonoBehaviour {
     private GameObject healthCanvas;
     private Image healthBar;
     private GameObject damageNumberPrefab;
+    private Renderer[] renderers;
 
     private bool blinking = false;
-    private Color brighter;
-    private Color darker;
+    private Color[] brighter;
+    private Color[] darker;
 
     public delegate void OnDieEvent(GameObject gameObject);
     public event OnDieEvent OnDie;
@@ -21,15 +22,20 @@ public class HealthBar : MonoBehaviour {
         healthCanvas = transform.Find("HealthCanvas").gameObject;
         healthBar = transform.Find("HealthCanvas/Health").GetComponent<Image>();
         damageNumberPrefab = Resources.Load<GameObject>("Prefabs/DamageNumber");
+        renderers = gameObject.GetComponentsInChildren<Renderer>();
+        darker = new Color[renderers.Length];
+        brighter = new Color[renderers.Length];
 
-        if(tag == "Player") {
+        for(int ii = 0; ii < renderers.Length; ii++) {
+            darker[ii] = renderers[ii].material.color;
+            brighter[ii] = darker[ii] + new Color(1f, 1f, 1f);
+        }
+
+        if (tag == "Player") {
             health = PlayerManager.Instance.health;
         }else {
             health = new Health(50f);
         }
-
-        darker = gameObject.GetComponentInChildren<Renderer>().material.color;
-        brighter = darker + new Color(1f, 1f, 1f);
     }
 
     void Update() {
@@ -48,7 +54,7 @@ public class HealthBar : MonoBehaviour {
         if (health.current <= 0f) {
             GameObject explosion = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/Explosion"), null, true);
             explosion.transform.position = transform.position;
-            explosion.GetComponent<Explosion>().color = darker;
+            explosion.GetComponent<Explosion>().color = darker[0]; // FIXME: Maybe make this configurable?
             GameObject.Destroy(gameObject);
             OnDie(gameObject);
         }
@@ -60,11 +66,14 @@ public class HealthBar : MonoBehaviour {
             blinking = true;
 
             for (int ii = 0; ii < blinks * 2; ii++) {
-                iTween.ColorTo(gameObject, iTween.Hash(
-                    "color", (ii % 2 == 0 ? brighter : darker),
-                    "time", blinkSpeed, 
-                    "delay", blinkSpeed * ii
-                ));
+                for (int jj = 0; jj < renderers.Length; jj++) {
+                    iTween.ColorTo(renderers[jj].gameObject, iTween.Hash(
+                        "color", (ii % 2 == 0 ? brighter[jj] : darker[jj]),
+                        "time", blinkSpeed,
+                        "delay", blinkSpeed * ii
+                    ));
+                }
+
             }
             StartCoroutine(OnDoneBlinking(blinks * 2 * blinkSpeed));
         }

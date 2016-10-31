@@ -4,7 +4,7 @@ using System.Collections;
 public class TankShield : MonoBehaviour {
     private float animateTime = 0f;
     private float animateSpeed = 4f;
-    private float energyUsePerSecond = 25f;
+    private float energyUsePerSecond = 20f;
     private bool enabled;
     private bool charged = true;
 

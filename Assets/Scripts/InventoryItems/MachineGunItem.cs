@@ -4,7 +4,7 @@ using System.Collections;
 public class MachineGunItem : GunItem {
     public MachineGunItem() : base() {
         color = new Color(0f, 5f, 0f, 1f);
-        energyUsePerShot = 2f;
+        energyUsePerShot = 1.5f;
         fireRate = 14f;
         name = "Machine Gun";
         minDamage = 2f;
