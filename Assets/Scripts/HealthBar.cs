@@ -45,6 +45,7 @@ public class HealthBar : MonoBehaviour {
     }
 
     public void Hit(float damage) {
+        damage = Mathf.Ceil(damage);
         health.current -= damage;
 
         GameObject damageNumber = GameObject.Instantiate(damageNumberPrefab);

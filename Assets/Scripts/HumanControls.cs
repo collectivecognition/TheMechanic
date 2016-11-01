@@ -34,9 +34,9 @@ public class HumanControls : MonoBehaviour {
                 animator.SetBool(Animator.StringToHash("isRunning"), true);
             }
 
-            Vector3 xzDirection = new Vector3(y, 0, -x);
+            Vector3 xzDirection = new Vector3(x, 0f, y);
             Quaternion targetRotation = Quaternion.LookRotation(xzDirection);
-            targetRotation *= Quaternion.Euler(0, -45, 0);
+            //targetRotation *= Quaternion.Euler(0, -45, 0);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 
             if (Quaternion.Angle(transform.rotation, targetRotation) < 1f) {

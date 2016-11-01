@@ -11,10 +11,12 @@ public class CameraManager : Singleton<CameraManager> {
 
     private Transform cameraHarnessTransform;
     private Transform renderCameraTransform;
+    private Transform uiCameraTransform;
 
     public void Start() {
         cameraHarnessTransform = GameManager.Instance.cameraObject.transform.Find("RenderCameraHarness").transform;
         renderCameraTransform = GameManager.Instance.cameraObject.transform.Find("RenderCameraHarness/RenderCamera");
+        uiCameraTransform = GameManager.Instance.cameraObject.transform.Find("RenderCameraHarness/UICamera");
     }
     
     public void ZoomIn(bool instant = false) {
@@ -36,6 +38,7 @@ public class CameraManager : Singleton<CameraManager> {
     public void Update () {
         if (GameManager.Instance.player != null) {
             renderCameraTransform.rotation = Quaternion.Lerp(renderCameraTransform.rotation, Quaternion.Euler(angle, 0f, 0f), 3f * Time.deltaTime);
+            uiCameraTransform.rotation = renderCameraTransform.rotation;
             cameraHarnessTransform.position = Vector3.Lerp(cameraHarnessTransform.position, CalculateCameraPosition(), 3f * Time.deltaTime);
         }
     }

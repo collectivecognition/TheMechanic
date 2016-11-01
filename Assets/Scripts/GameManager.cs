@@ -113,10 +113,12 @@ public class GameManager : Singleton<GameManager> {
 
         SceneManager.UnloadScene(oldScene);
         yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
 
         // Spawn player
 
         if (spawnPoint != null && spawnPoint.Length > 0) {
+            Debug.Log("SPAWINPOINT: " + spawnPoint);
             GameObject.Find(spawnPoint).GetComponent<SpawnPoint>().Spawn();
         } else {
             GameObject.FindObjectOfType<SpawnPoint>().Spawn(); // Use the first one by default
