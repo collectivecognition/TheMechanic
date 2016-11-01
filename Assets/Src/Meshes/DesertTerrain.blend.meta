@@ -13,6 +13,17 @@ ModelImporter:
     100010: WallB
     100012: InsideCorner
     100014: OutsideCorner
+    100016: WallA_001
+    100018: Cube_001
+    100020: Top_001
+    100022: Top_002
+    100024: Wall
+    100026: WallStraight
+    100028: Floor
+    100030: BezierCurve
+    100032: Cube_002
+    100034: Cube_003
+    100036: Cube_004
     400000: //RootNode
     400002: Corner
     400004: Cube
@@ -21,6 +32,17 @@ ModelImporter:
     400010: WallB
     400012: InsideCorner
     400014: OutsideCorner
+    400016: WallA_001
+    400018: Cube_001
+    400020: Top_001
+    400022: Top_002
+    400024: Wall
+    400026: WallStraight
+    400028: Floor
+    400030: BezierCurve
+    400032: Cube_002
+    400034: Cube_003
+    400036: Cube_004
     2300000: //RootNode
     2300002: Corner
     2300004: Cube
@@ -29,6 +51,17 @@ ModelImporter:
     2300010: WallB
     2300012: InsideCorner
     2300014: OutsideCorner
+    2300016: WallA_001
+    2300018: Cube_001
+    2300020: Top_001
+    2300022: Top_002
+    2300024: Wall
+    2300026: WallStraight
+    2300028: Floor
+    2300030: BezierCurve
+    2300032: Cube_002
+    2300034: Cube_003
+    2300036: Cube_004
     3300000: //RootNode
     3300002: Corner
     3300004: Cube
@@ -37,6 +70,17 @@ ModelImporter:
     3300010: WallB
     3300012: InsideCorner
     3300014: OutsideCorner
+    3300016: WallA_001
+    3300018: Cube_001
+    3300020: Top_001
+    3300022: Top_002
+    3300024: Wall
+    3300026: WallStraight
+    3300028: Floor
+    3300030: BezierCurve
+    3300032: Cube_002
+    3300034: Cube_003
+    3300036: Cube_004
     4300000: Cube
     4300002: Top
     4300004: WallB
@@ -44,6 +88,17 @@ ModelImporter:
     4300008: WallA
     4300010: InsideCorner
     4300012: OutsideCorner
+    4300014: WallA_001
+    4300016: Wall
+    4300018: Cube_001
+    4300020: Top_001
+    4300022: Top_002
+    4300024: WallStraight
+    4300026: Floor
+    4300028: Cube_003
+    4300030: BezierCurve
+    4300032: Cube_002
+    4300034: Cube_004
     7400000: Default Take
     9500000: //RootNode
   materials:

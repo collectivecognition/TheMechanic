@@ -7,7 +7,7 @@ public class CameraManager : Singleton<CameraManager> {
     private float closeDistance = 100f;
     private float closeAngle = 30f;
     private float farDistance = 600f;
-    private float farAngle = 60f;
+    private float farAngle = 70f;
 
     private Transform cameraHarnessTransform;
     private Transform renderCameraTransform;
