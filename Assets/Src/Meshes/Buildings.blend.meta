@@ -18,6 +18,9 @@ ModelImporter:
     100020: DoorRIght
     100022: Bklas
     100024: DoorRight
+    100026: Vent
+    100028: WallWithDoor
+    100030: asdas
     400000: //RootNode
     400002: Cube
     400004: Cube_001
@@ -31,6 +34,9 @@ ModelImporter:
     400020: DoorRIght
     400022: Bklas
     400024: DoorRight
+    400026: Vent
+    400028: WallWithDoor
+    400030: asdas
     2300000: Cube
     2300002: Cube_001
     2300004: Cube_002
@@ -43,6 +49,9 @@ ModelImporter:
     2300018: DoorRIght
     2300020: Bklas
     2300022: DoorRight
+    2300024: Vent
+    2300026: WallWithDoor
+    2300028: asdas
     3300000: Cube
     3300002: Cube_001
     3300004: Cube_002
@@ -55,6 +64,9 @@ ModelImporter:
     3300018: DoorRIght
     3300020: Bklas
     3300022: DoorRight
+    3300024: Vent
+    3300026: WallWithDoor
+    3300028: asdas
     4300000: Cube_004
     4300002: Cube_003
     4300004: Cube_002
@@ -67,6 +79,9 @@ ModelImporter:
     4300018: DoorFrame
     4300020: DoorRight
     4300022: Bklas
+    4300024: WallWithDoor
+    4300026: Vent
+    4300028: asdas
     7400000: Default Take
     9500000: //RootNode
   materials:

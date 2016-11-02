@@ -15,14 +15,14 @@ public class DoorPressurePlate : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider collider) {
-        iTween.MoveAdd(doorLeft, iTween.Hash("z", 4f, "time", 0.3f, "easeType", iTween.EaseType.easeInOutBack));
-        iTween.MoveAdd(doorRight, iTween.Hash("z", -4f, "time", 0.3f, "easeType", iTween.EaseType.easeInOutBack));
+        iTween.MoveAdd(doorLeft, iTween.Hash("z", 4f, "time", 0.3f, "easeType", iTween.EaseType.linear));
+        iTween.MoveAdd(doorRight, iTween.Hash("z", -4f, "time", 0.3f, "easeType", iTween.EaseType.linear));
         audioSource.PlayOneShot(audioClip);
     }
 
     void OnTriggerExit(Collider collider) {
-        iTween.MoveAdd(doorLeft, iTween.Hash("z", -4f, "time", 0.3f, "easeType", iTween.EaseType.easeInOutBack));
-        iTween.MoveAdd(doorRight, iTween.Hash("z", 4f, "time", 0.3f, "easeType", iTween.EaseType.easeInOutBack));
+        iTween.MoveAdd(doorLeft, iTween.Hash("z", -4f, "time", 0.3f, "easeType", iTween.EaseType.linear));
+        iTween.MoveAdd(doorRight, iTween.Hash("z", 4f, "time", 0.3f, "easeType", iTween.EaseType.linear));
         audioSource.PlayOneShot(audioClip);
     }
 }

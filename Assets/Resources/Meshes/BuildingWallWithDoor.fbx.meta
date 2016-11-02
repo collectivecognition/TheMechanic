@@ -1,42 +1,24 @@
 fileFormatVersion: 2
-guid: bfa46084af8a9714eb50dbd33ec86535
-timeCreated: 1478039551
+guid: 5b8a9d504b9094b44964f22da5d645be
+timeCreated: 1478097734
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Cube.001
-    100004: DoorLeft
-    100006: DoorRIght
-    100008: DoorFrame
-    100010: DoorRight
-    100012: Bklas
-    400000: //RootNode
-    400002: Cube.001
-    400004: DoorLeft
-    400006: DoorRIght
-    400008: DoorFrame
-    400010: DoorRight
-    400012: Bklas
-    2300000: Cube.001
-    2300002: DoorLeft
-    2300004: DoorRIght
-    2300006: DoorFrame
-    2300008: DoorRight
-    2300010: Bklas
-    3300000: Cube.001
-    3300002: DoorLeft
-    3300004: DoorRIght
-    3300006: DoorFrame
-    3300008: DoorRight
-    3300010: Bklas
-    4300000: DoorLeft
-    4300002: DoorRIght
-    4300004: Cube.001
-    4300006: DoorRight
-    4300008: DoorFrame
-    4300010: Bklas
+    100000: Bklas
+    100002: //RootNode
+    100004: WallWithDoor
+    400000: Bklas
+    400002: //RootNode
+    400004: WallWithDoor
+    2300000: Bklas
+    2300002: WallWithDoor
+    2300004: //RootNode
+    3300000: Bklas
+    3300002: WallWithDoor
+    3300004: //RootNode
+    4300000: WallWithDoor
+    4300002: Bklas
   materials:
     importMaterials: 1
     materialName: 0
