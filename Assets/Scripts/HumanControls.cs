@@ -4,6 +4,7 @@ public class HumanControls : MonoBehaviour {
     private float normalSpeed = 10f;
     private float turnSpeed = 360f; // Degrees per second
     private float boostSpeed = 20f;
+    public bool controlsEnabled = true;
 
     private Animator animator;
 
@@ -11,27 +12,39 @@ public class HumanControls : MonoBehaviour {
         animator = transform.Find("Model").GetComponent<Animator>();
     }
 
+    public void Walk() {
+        animator.SetBool(Animator.StringToHash("isWalking"), true);
+        animator.SetBool(Animator.StringToHash("isRunning"), false);
+    }
+
+    public void Run() {
+        animator.SetBool(Animator.StringToHash("isWalking"), false);
+        animator.SetBool(Animator.StringToHash("isRunning"), true);
+    }
+
+    public void Stop() {
+        animator.SetBool(Animator.StringToHash("isWalking"), false);
+        animator.SetBool(Animator.StringToHash("isRunning"), false);
+    }
+
     private void Update() {
         if (!GameManager.Instance.gameActive) {
-            animator.SetBool(Animator.StringToHash("isWalking"), false);
-            animator.SetBool(Animator.StringToHash("isRunning"), false);
-
+            Stop();
             return;
         }
+
+        if (!controlsEnabled) { return; }
         
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
 
         if (x != 0 || y != 0) {
             float speed = normalSpeed;
-
-            animator.SetBool(Animator.StringToHash("isWalking"), true);
-            animator.SetBool(Animator.StringToHash("isRunning"), false);
+            Walk();
 
             if (Input.GetKey(KeyCode.LeftShift)) {
                 speed = boostSpeed;
-                animator.SetBool(Animator.StringToHash("isWalking"), false);
-                animator.SetBool(Animator.StringToHash("isRunning"), true);
+                Run();
             }
 
             Vector3 xzDirection = new Vector3(x, 0f, y);
@@ -43,8 +56,7 @@ public class HumanControls : MonoBehaviour {
                 transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, speed * Time.deltaTime);
             }
         } else {
-            animator.SetBool(Animator.StringToHash("isWalking"), false);
-            animator.SetBool(Animator.StringToHash("isRunning"), false);
+            Stop();
         }
     }
 }

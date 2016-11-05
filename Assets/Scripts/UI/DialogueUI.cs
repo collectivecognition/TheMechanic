@@ -20,6 +20,8 @@ public class DialogueUI : MonoBehaviour {
         sound = Resources.Load<AudioClip>("Sounds/TextBeep");
 
         canvasObject = gameObject;
+
+        GameManager.Instance.dialogue = this;
     }
 
     public void Say(string what, Action cb=null) {

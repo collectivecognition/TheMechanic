@@ -118,7 +118,6 @@ public class GameManager : Singleton<GameManager> {
         // Spawn player
 
         if (spawnPoint != null && spawnPoint.Length > 0) {
-            Debug.Log("SPAWINPOINT: " + spawnPoint);
             GameObject.Find(spawnPoint).GetComponent<SpawnPoint>().Spawn();
         } else {
             GameObject.FindObjectOfType<SpawnPoint>().Spawn(); // Use the first one by default

@@ -26,7 +26,7 @@ public class TankControls : MonoBehaviour {
         backRightTireTransform = transform.Find("TankBody/WheelBackRight");
     }
 
-    private void GetOut() {
+    public void GetOut() {
         humanSpawnPoint.Spawn();
 
         controlsEnabled = false;
