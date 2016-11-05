@@ -12,13 +12,39 @@ public class Wireframe {
     private static void GenerateMesh() {
         GameObject selected = Selection.activeGameObject;
 
+        // Grab the first mesh we find and make a copy of it
+
         Transform parent = selected.GetComponentInChildren<MeshFilter>().transform;
         Mesh oldMesh = selected.GetComponentInChildren<MeshFilter>().mesh;
+
+        // Create a new mesh with the vertices / triangles from the original one
+
         Mesh newMesh = new Mesh();
-
         newMesh.vertices = oldMesh.vertices;
-
         int[] tris = oldMesh.triangles;
+
+        // Scale the vertices of the mesh based on their normals,
+        // which produces a scaled "shell" of the mesh so that our
+        // lines will sit nicely on the outside of the existing geometry 
+        // without overlapping
+
+        float scale = .01f;
+
+        Vector3[] vertices = newMesh.vertices;
+
+        for (int ii = 0; ii < vertices.Length; ii++) {
+            for (int jj = 0; jj < vertices.Length; jj++) {
+                if (newMesh.vertices[ii] == newMesh.vertices[jj]) {
+                    vertices[ii] += new Vector3(
+                        scale * oldMesh.normals[jj].x / parent.localScale.x,
+                        scale * oldMesh.normals[jj].y / parent.localScale.y,
+                        scale * oldMesh.normals[jj].z / parent.localScale.z
+                    );
+                }
+            }
+        }
+
+        newMesh.vertices = vertices;
 
         // Create a list of shared sides
 
@@ -88,12 +114,14 @@ public class Wireframe {
         newGo.transform.parent = parent;
         newGo.transform.position = parent.position;
         newGo.transform.localRotation = Quaternion.identity;
-        newGo.transform.localScale = Vector3.one * 1.01f; // Make slightly bigger than underlying geometry
+        newGo.transform.localScale = Vector3.one;
 
         MeshFilter newMeshFilter = newGo.AddComponent<MeshFilter>();
         newMeshFilter.mesh = newMesh;
         newGo.AddComponent<MeshRenderer>();
 
         newGo.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", color * intensity);
+
+        AssetDatabase.CreateAsset(newMesh, "Assets/Resources/Meshes/" + selected.name + "Wireframe.asset");
     }
 }
