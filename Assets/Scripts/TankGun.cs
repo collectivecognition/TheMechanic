@@ -26,7 +26,13 @@ public class TankGun : MonoBehaviour {
     }
 
 	void Update () {
-        if (!GameManager.Instance.gameActive) return;
+        if (!GameManager.Instance.gameActive) {
+            if (beamProjectiles.Count > 0) {
+                RemoveBeams();
+            }
+
+            return;
+        }
 
         if (BattleManager.Instance.BattleActive && tag == "Player") {
 
