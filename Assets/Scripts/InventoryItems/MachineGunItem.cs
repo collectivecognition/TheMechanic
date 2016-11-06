@@ -9,10 +9,12 @@ public class MachineGunItem : GunItem {
         name = "Machine Gun";
         minDamage = 2f;
         maxDamage = 3f;
-        projectilesPerShot = 1;
-        scale = Vector3.one * 0.3f;
+        projectilesPerShot = 2;
+        scale = Vector3.one * 0.7f;
         speed = 120f;
         spread = false;
         sound = "MachineGun";
+        projectileName = "Capsule";
+        projectileSpacing = 6f;
     }
 }

@@ -1,20 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class TankGun : MonoBehaviour {
     private float projectileSpreadAngle = 5f;
     private float lastShotTime = 0;
 
     private Transform firingPoint;
-    private GameObject projectilePrefab;
+    private Dictionary<string, GameObject> projectilePrefabs = new Dictionary<string, GameObject>();
     private Transform turretTransform;
     private Energy energy;
     private AudioSource audioSource;
 
     void Awake () {
         firingPoint = transform.Find("Turret/FiringPoint");
-        projectilePrefab = Resources.Load<GameObject>("Prefabs/Projectile");
+        projectilePrefabs.Add("Default", Resources.Load<GameObject>("Prefabs/Projectile"));
+        projectilePrefabs.Add("Capsule", Resources.Load<GameObject>("Prefabs/CapsuleProjectile"));
         turretTransform = transform.Find("Turret");
         energy = PlayerManager.Instance.energy;
         audioSource = GetComponent<AudioSource>();
@@ -48,7 +50,7 @@ public class TankGun : MonoBehaviour {
 
         if (energy.current >= gun.energyUsePerShot) {
             for(int ii = 0; ii < gun.projectilesPerShot; ii++) {
-                GameObject projectile = GameObject.Instantiate(projectilePrefab);
+                GameObject projectile = GameObject.Instantiate(projectilePrefabs[gun.projectileName]);
                 projectile.transform.position = firingPoint.position;
                 //projectile.transform.rotation = turret.rotation;
 
@@ -61,7 +63,7 @@ public class TankGun : MonoBehaviour {
                 // Non-spread shots
 
                 } else {
-                    float projectileSpacing = gun.scale.x * 2f; // Space shots out evenly
+                    float projectileSpacing = gun.projectileSpacing; // Space shots out evenly
                     projectile.transform.position += turretTransform.right * (-projectileSpacing * (gun.projectilesPerShot - 1) / 2 + ii * projectileSpacing); // Modify x coord to space out multiple shots
                     projectile.GetComponent<Projectile>().direction = turretTransform.forward; // Aim along turret
                 }
@@ -70,7 +72,7 @@ public class TankGun : MonoBehaviour {
 
                 projectile.GetComponent<Renderer>().material.SetColor("_EmissionColor", gun.color);
                 projectile.transform.localScale =  new Vector3(projectile.transform.localScale.x * gun.scale.x, projectile.transform.localScale.y * gun.scale.y, projectile.transform.localScale.z * gun.scale.z);
-                projectile.transform.localRotation = turretTransform.rotation;
+                projectile.transform.localRotation = Quaternion.Euler(projectile.transform.localRotation.eulerAngles.x, turretTransform.rotation.eulerAngles.y, projectile.transform.localRotation.eulerAngles.z);
                 projectile.GetComponent<Projectile>().speed = gun.speed; // FIXME: Only need one reference to <Projectile>
                 projectile.GetComponent<Projectile>().minDamage = gun.minDamage;
                 projectile.GetComponent<Projectile>().maxDamage = gun.maxDamage;

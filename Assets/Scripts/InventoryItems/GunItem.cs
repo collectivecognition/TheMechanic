@@ -11,12 +11,14 @@ public class GunItem : InventoryItem {
     public float energyUsePerShot;
     public float speed;
     public int projectilesPerShot;
-    public string prefabName;
+    public string projectileName;
+    public float projectileSpacing;
     public string sound;
      
     public GunItem() {
         type = InventoryItem.Type.Gun;
-        prefabName = "Projectile";
+        projectileName = "Default";
+        projectileSpacing = 0f;
         range = 150f;
         sound = "";
     }
