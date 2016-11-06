@@ -65,6 +65,7 @@ public class TankGun : MonoBehaviour {
 
         GameObject beam = GameObject.Instantiate(projectilePrefabs["Beam"]);
         beam.GetComponentInChildren<Renderer>().material.SetColor("_EmissionColor", gun.color);
+        beam.GetComponentInChildren<ParticleSystem>().startColor = gun.color;
 
         beamProjectiles.Add(beam);
     }

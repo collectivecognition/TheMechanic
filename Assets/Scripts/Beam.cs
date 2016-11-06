@@ -4,6 +4,8 @@ using System.Collections;
 public class Beam : MonoBehaviour {
     public LayerMask layerMask;
 
+    private float beamScale = 0f;
+
     private AudioSource audioSource;
     private AudioSource hitAudioSource;
     private Transform turretTransform;
@@ -31,7 +33,7 @@ public class Beam : MonoBehaviour {
         RaycastHit hit;
 
         if(Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) {
-            transform.parent.localScale = new Vector3(gun.scale.x, Vector3.Distance(firingPointTransform.position, hit.point) / 2, gun.scale.y);
+            transform.parent.localScale = new Vector3(beamScale, Vector3.Distance(firingPointTransform.position, hit.point) / 2, beamScale);
             sparksTransform.position = hit.point;
 
             if (!sparksParticleSystem.isPlaying) {
@@ -40,10 +42,14 @@ public class Beam : MonoBehaviour {
             }
 
         } else {
-            transform.parent.localScale = new Vector3(gun.scale.x, 1000f, gun.scale.y);
+            transform.parent.localScale = new Vector3(beamScale, 1000f, beamScale);
             sparksParticleSystem.Stop(true);
             hitAudioSource.Stop();
         }
+
+        // Scale up beam over time
+
+        beamScale = Mathf.Lerp(beamScale, gun.scale.x, 6f * Time.deltaTime);
     }
 
     public void OnTriggerStay(Collider collider) {
