@@ -34,7 +34,7 @@ public class HealthBar : MonoBehaviour {
         if (tag == "Player") {
             health = PlayerManager.Instance.health;
         }else {
-            health = new Health(50f);
+            health = new Health(GetComponent<Enemy>().totalHealth);
         }
     }
 

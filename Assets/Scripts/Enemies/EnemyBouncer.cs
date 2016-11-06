@@ -7,6 +7,7 @@ public class EnemyBouncer : Enemy {
 
     void Start() {
         base.Start();
+
         direction = transform.forward;
         iTween.RotateAdd(gameObject, iTween.Hash("y", 360f, "time", 1f, "delay", 0, "loopType", "loop", "easeType", iTween.EaseType.linear));
     }

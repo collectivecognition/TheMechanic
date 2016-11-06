@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour {
     public float spawnDelay = 0;
+    public float totalHealth;
     
 	protected void Start () {
         EnemyManager.Instance.ReactivateAfterDelay(gameObject, spawnDelay);
