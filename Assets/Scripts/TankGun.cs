@@ -6,20 +6,23 @@ using System.Collections.Generic;
 public class TankGun : MonoBehaviour {
     private float projectileSpreadAngle = 5f;
     private float lastShotTime = 0;
-
-    private Transform firingPoint;
+    private List<GameObject> beamProjectiles = new List<GameObject>();
     private Dictionary<string, GameObject> projectilePrefabs = new Dictionary<string, GameObject>();
+
+    private Transform firingPointTransform;
     private Transform turretTransform;
     private Energy energy;
     private AudioSource audioSource;
 
     void Awake () {
-        firingPoint = transform.Find("Turret/FiringPoint");
-        projectilePrefabs.Add("Default", Resources.Load<GameObject>("Prefabs/Projectile"));
-        projectilePrefabs.Add("Capsule", Resources.Load<GameObject>("Prefabs/CapsuleProjectile"));
+        firingPointTransform = transform.Find("Turret/FiringPoint");
         turretTransform = transform.Find("Turret");
         energy = PlayerManager.Instance.energy;
         audioSource = GetComponent<AudioSource>();
+
+        projectilePrefabs.Add("Default", Resources.Load<GameObject>("Prefabs/Projectile"));
+        projectilePrefabs.Add("Capsule", Resources.Load<GameObject>("Prefabs/CapsuleProjectile"));
+        projectilePrefabs.Add("Beam", Resources.Load<GameObject>("Prefabs/Beam"));
     }
 
 	void Update () {
@@ -29,14 +32,47 @@ public class TankGun : MonoBehaviour {
 
             // Keyboard and analog stick controls
 
-            if (Input.GetMouseButton(0) || Input.GetAxisRaw("TurretVertical") != 0 || Input.GetAxisRaw("TurretHorizontal") != 0) {
-                Fire();
+            InventoryItem gun = InventoryManager.Instance.inventory.currentGun;
+
+            switch (gun.type) {
+                case InventoryItem.Type.Gun:
+                    if (Input.GetMouseButton(0) || Input.GetAxisRaw("TurretVertical") != 0 || Input.GetAxisRaw("TurretHorizontal") != 0) {
+                        FireProjectiles();
+                    }
+                    break;
+
+                case InventoryItem.Type.BeamGun:
+                    if (Input.GetMouseButton(0) || Input.GetAxisRaw("TurretVertical") != 0 || Input.GetAxisRaw("TurretHorizontal") != 0) {
+                        if (beamProjectiles.Count == 0) {
+                            FireBeams();
+                        }
+                    }else {
+                        RemoveBeams();
+                    }
+                    break;
             }
         }
     }
 
-    public void Fire () {
-        GunItem gun = InventoryManager.Instance.inventory.currentGun;
+    public void FireBeams() {
+        BeamGunItem gun = (BeamGunItem)InventoryManager.Instance.inventory.currentGun;
+
+        GameObject beam = GameObject.Instantiate(projectilePrefabs["Beam"]);
+        beam.GetComponentInChildren<Renderer>().material.SetColor("_EmissionColor", gun.color);
+
+        beamProjectiles.Add(beam);
+    }
+
+    public void RemoveBeams() {
+        foreach(GameObject beam in beamProjectiles) {
+            Destroy(beam);
+        }
+
+        beamProjectiles.Clear();
+    }
+
+    public void FireProjectiles() {
+        GunItem gun =(GunItem)InventoryManager.Instance.inventory.currentGun;
 
         // Rate limit shots
 
@@ -51,8 +87,7 @@ public class TankGun : MonoBehaviour {
         if (energy.current >= gun.energyUsePerShot) {
             for(int ii = 0; ii < gun.projectilesPerShot; ii++) {
                 GameObject projectile = GameObject.Instantiate(projectilePrefabs[gun.projectileName]);
-                projectile.transform.position = firingPoint.position;
-                //projectile.transform.rotation = turret.rotation;
+                projectile.transform.position = firingPointTransform.position;
 
                 // Spread shots
 

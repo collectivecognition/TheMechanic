@@ -4,6 +4,7 @@ using System.Collections;
 public class InventoryItem {
     public enum Type {
         Gun,
+        BeamGun,
         Misc
     }
 

@@ -6,16 +6,17 @@ using System.Linq;
 
 public class Inventory {
     public List<InventoryItem> items = new List<InventoryItem>();
-    public GunItem currentGun;
+    public InventoryItem currentGun;
     public bool updated = false;
 
     public Inventory() {
         AddItemByName("PeaShooterItem"); // Add a default gun
-        currentGun = (GunItem)items[0];
+        AddItemByName("LaserGunItem"); // Add a default gun
+        currentGun = (InventoryItem)items[0];
     }
 
     public void NextGun() {
-        List<GunItem> guns = items.FindAll(i => i.type == InventoryItem.Type.Gun).Cast<GunItem>().ToList();
+        List<InventoryItem> guns = items.FindAll(i => (i.type == InventoryItem.Type.Gun || i.type == InventoryItem.Type.BeamGun)).Cast<InventoryItem>().ToList();
         int gunIndex = guns.FindIndex(i => UnityEngine.Object.ReferenceEquals(i, currentGun));
         gunIndex++;
         if (gunIndex >= guns.Count) {

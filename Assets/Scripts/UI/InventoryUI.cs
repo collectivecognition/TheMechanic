@@ -69,6 +69,15 @@ public class InventoryUI : MonoBehaviour {
             descriptionText.text = text;
         }
 
+        if (item.type == InventoryItem.Type.BeamGun) {
+            BeamGunItem gun = (BeamGunItem)item;
+            string text = "";
+            text += "MIN DMG:  " + gun.minDamagePerSecond + "\n";
+            text += "MAX DMG:  " + gun.maxDamagePerSecond + "\n";
+            text += " ENERGY:  " + gun.energyUsePerSecond + "\n";
+            descriptionText.text = text;
+        }
+
         // Handle pagination scrolling
 
         int page = Mathf.FloorToInt((float)currentItem / (float)numPerPage);
@@ -83,8 +92,8 @@ public class InventoryUI : MonoBehaviour {
         // Select item
 
         if (Input.GetAxisRaw("Action") != 0) {
-            if(inventory.items[currentItem].type == InventoryItem.Type.Gun) {
-                inventory.currentGun = (GunItem)inventory.items[currentItem];
+            if(inventory.items[currentItem].type == InventoryItem.Type.Gun || inventory.items[currentItem].type == InventoryItem.Type.BeamGun) {
+                inventory.currentGun = (InventoryItem)inventory.items[currentItem];
                 inventory.updated = true;
                 UIManager.Instance.CloseCurrentUI();
             }
