@@ -5,6 +5,7 @@ public class Beam : MonoBehaviour {
     public LayerMask layerMask;
 
     private AudioSource audioSource;
+    private AudioSource hitAudioSource;
     private Transform turretTransform;
     private Transform firingPointTransform;
     private Transform sparksTransform;
@@ -12,6 +13,8 @@ public class Beam : MonoBehaviour {
 
     void Start() {
         audioSource = transform.parent.Find("Audio").GetComponent<AudioSource>();
+        hitAudioSource = transform.parent.Find("HitAudio").GetComponent<AudioSource>();
+
         firingPointTransform = GameManager.Instance.player.transform.Find("Turret/FiringPoint");
         turretTransform = GameManager.Instance.player.transform.Find("Turret");
         sparksTransform = transform.parent.Find("Sparks");
@@ -33,14 +36,13 @@ public class Beam : MonoBehaviour {
 
             if (!sparksParticleSystem.isPlaying) {
                 sparksParticleSystem.Play();
-                audioSource.Play();
-
+                hitAudioSource.Play();
             }
 
         } else {
             transform.parent.localScale = new Vector3(gun.scale.x, 1000f, gun.scale.y);
             sparksParticleSystem.Stop(true);
-            audioSource.Stop();
+            hitAudioSource.Stop();
         }
     }
 
@@ -48,8 +50,11 @@ public class Beam : MonoBehaviour {
         BeamGunItem gun = (BeamGunItem)InventoryManager.Instance.inventory.currentGun;
 
         if (collider.tag == "Enemy" || collider.tag == "Player") {
-            audioSource.PlayOneShot(Resources.Load<AudioClip>("Sounds/Hit"));
             collider.GetComponent<HealthBar>().Hit(Random.Range(gun.minDamagePerSecond * Time.deltaTime, gun.maxDamagePerSecond * Time.deltaTime));
         }
+    }
+
+    public void OnTriggerLeave(Collider collider) {
+
     }
 }
