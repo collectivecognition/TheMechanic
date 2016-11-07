@@ -61,12 +61,13 @@ public class UIManager : Singleton<UIManager> {
         Animator anim = animators[name];
 
         anim.SetBool(openParameter, false);
-        StartCoroutine(DisablePanelDeleyed(anim));
+        StartCoroutine(DisablePanelDeleyed(name));
 
         GameManager.Instance.gameActive = true;
     }
 
-    IEnumerator DisablePanelDeleyed(Animator anim) {
+    IEnumerator DisablePanelDeleyed(string name) {
+        Animator anim = animators[name];
         bool closedStateReached = false;
         //bool wantToClose = true;
         while (!closedStateReached) {
@@ -79,6 +80,7 @@ public class UIManager : Singleton<UIManager> {
         }
         //if (wantToClose) { 
             anim.gameObject.SetActive(false);
+
             if (callbacks[name] != null) {
                 callbacks[name]();
             }
