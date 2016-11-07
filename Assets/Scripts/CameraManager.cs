@@ -68,7 +68,12 @@ public class CameraManager : Singleton<CameraManager> {
     private Vector3 CalculateCameraPosition(float followDistance, float angle) {
         float y = followDistance * Mathf.Cos((90f - angle) * Mathf.Deg2Rad);
         float z = y * Mathf.Tan((90f - angle) * Mathf.Deg2Rad);
-        return GameManager.Instance.player.transform.position + new Vector3(0f, y, -z);
+
+        if (GameManager.Instance.player != null) {
+            return GameManager.Instance.player.transform.position + new Vector3(0f, y, -z);
+        }
+
+        return Vector3.zero;
     }
 
     IEnumerator Finish(float t, Action callback = null) {

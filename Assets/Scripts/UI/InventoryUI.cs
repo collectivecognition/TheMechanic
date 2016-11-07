@@ -95,7 +95,7 @@ public class InventoryUI : MonoBehaviour {
             if(inventory.items[currentItem].type == InventoryItem.Type.Gun || inventory.items[currentItem].type == InventoryItem.Type.BeamGun) {
                 inventory.currentGun = (InventoryItem)inventory.items[currentItem];
                 inventory.updated = true;
-                UIManager.Instance.CloseCurrentUI();
+                UIManager.Instance.CloseUI("Inventory");
             }
         }
     }

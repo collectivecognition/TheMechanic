@@ -12,7 +12,7 @@ public class PostBattleManager : Singleton<PostBattleManager> {
 
     void Update() {
         if(Input.GetAxisRaw("Action") != 0) {
-            UIManager.Instance.CloseCurrentUI();
+            UIManager.Instance.CloseUI("PostBattle");
         }
     }
 
@@ -25,6 +25,6 @@ public class PostBattleManager : Singleton<PostBattleManager> {
             textObject.text += "1x " + i.name + "\n";
         }
 
-        UIManager.Instance.OpenUI(UIManager.Instance.uis["PostBattle"], callback);
+        UIManager.Instance.OpenUI("PostBattle", true, callback);
     }
 }

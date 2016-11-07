@@ -26,6 +26,7 @@ public class GameManager : Singleton<GameManager> {
     public Camera renderCamera;
     public DialogueUI dialogue;
     public GameObject player;
+    public NotificationUI notification;
 
     void Awake() {
 
@@ -114,6 +115,13 @@ public class GameManager : Singleton<GameManager> {
         SceneManager.UnloadScene(oldScene);
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame(); // FIXME: jesus fucking christ
 
         // Spawn player
 

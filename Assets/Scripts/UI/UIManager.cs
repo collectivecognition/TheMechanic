@@ -7,66 +7,62 @@ using System.Collections.Generic;
 public class UIManager : Singleton<UIManager> {
     private Animator currentUI;
     private Action currentCallback;
-    private int openParameter = Animator.StringToHash("Open");
 
-    public Dictionary<string, Animator> uis = new Dictionary<string, Animator>();
+    private int openParameter = Animator.StringToHash("Open");
+    private Dictionary<string, Animator> animators = new Dictionary<string, Animator>();
+    private Dictionary<string, Action> callbacks = new Dictionary<string, Action>();
 
     void Start() {
-        Instance.uis.Add("Dialogue", GameManager.Instance.cameraObject.transform.Find("UI/Dialogue").GetComponent<Animator>());
-        Instance.uis.Add("Inventory", GameManager.Instance.cameraObject.transform.Find("UI/Inventory").GetComponent<Animator>());
-        Instance.uis.Add("NameEntry", GameManager.Instance.cameraObject.transform.Find("UI/NameEntry").GetComponent<Animator>());
-        Instance.uis.Add("PostBattle", GameManager.Instance.cameraObject.transform.Find("UI/PostBattle").GetComponent<Animator>());
-        Instance.uis.Add("Computer", GameManager.Instance.cameraObject.transform.Find("UI/Computer").GetComponent<Animator>());
+        animators.Add("Dialogue", GameManager.Instance.cameraObject.transform.Find("UI/Dialogue").GetComponent<Animator>());
+        animators.Add("Inventory", GameManager.Instance.cameraObject.transform.Find("UI/Inventory").GetComponent<Animator>());
+        animators.Add("NameEntry", GameManager.Instance.cameraObject.transform.Find("UI/NameEntry").GetComponent<Animator>());
+        animators.Add("PostBattle", GameManager.Instance.cameraObject.transform.Find("UI/PostBattle").GetComponent<Animator>());
+        animators.Add("Computer", GameManager.Instance.cameraObject.transform.Find("UI/Computer").GetComponent<Animator>());
+        animators.Add("Notification", GameManager.Instance.cameraObject.transform.Find("UI/Notification").GetComponent<Animator>());
 
-        // Disable all UIs at startup
+        // Disable all UIs at startup and init callback dict
 
-        foreach (KeyValuePair<string, Animator> entry in uis) {
+        foreach (KeyValuePair<string, Animator> entry in animators) {
             entry.Value.gameObject.SetActive(false);
+            callbacks.Add(entry.Key, null);
         }
     }
 
     void Update() {
+
+        // FIXME: Test code
+
         if (Input.GetKeyDown(KeyCode.I)) {
-            UIManager.Instance.OpenUI(UIManager.Instance.uis["Inventory"]);
+            UIManager.Instance.OpenUI("Inventory");
         }
 
         if (Input.GetKeyDown(KeyCode.C)) {
-            UIManager.Instance.OpenUI(UIManager.Instance.uis["Computer"]);
+            UIManager.Instance.OpenUI("Computer");
         }
 
         if (Input.GetKeyDown(KeyCode.N)) {
-            UIManager.Instance.OpenUI(UIManager.Instance.uis["NameEntry"]);
+            UIManager.Instance.OpenUI("NameEntry");
         }
     }
 
-    public void OpenUI(Animator anim, Action callback=null) {
-        if(currentUI == anim) {
-            return;
+    public void OpenUI(string name, bool pause=true, Action callback=null) {
+        Animator anim = animators[name];
+
+        callbacks[name] = callback;
+        anim.gameObject.SetActive(true);
+        anim.SetBool(openParameter, true);
+
+        if(pause){
+            GameManager.Instance.gameActive = false;
         }
-
-        CloseCurrentUI();
-
-        currentUI = anim;
-        currentCallback = callback;
-        currentUI.gameObject.SetActive(true);
-        currentUI.SetBool(openParameter, true);
-
-        GameManager.Instance.gameActive = false;
     }
 
-    public void CloseCurrentUI() {
-        if(currentUI == null) {
-            return;
-        }
-        
-        if (currentCallback != null) {
-            currentCallback();
-        }
+    public void CloseUI(string name) {
+        Animator anim = animators[name];
 
-        currentUI.SetBool(openParameter, false);
-        StartCoroutine(DisablePanelDeleyed(currentUI));
-        currentUI = null;
-        currentCallback = null;
+        anim.SetBool(openParameter, false);
+        StartCoroutine(DisablePanelDeleyed(anim));
+
         GameManager.Instance.gameActive = true;
     }
 
@@ -83,6 +79,10 @@ public class UIManager : Singleton<UIManager> {
         }
         //if (wantToClose) { 
             anim.gameObject.SetActive(false);
+            if (callbacks[name] != null) {
+                callbacks[name]();
+            }
+            callbacks[name] = null;
         //}
     }
 }

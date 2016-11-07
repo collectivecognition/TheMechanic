@@ -16,7 +16,9 @@ public class Powerup : MonoBehaviour {
             GetComponent<Light>().intensity = 10f;
             GetComponent<Light>().range = 10f;
             GameObject.Destroy(gameObject, 0.3f);
-            
+
+            GameManager.Instance.notification.Notify("You got: " + inventoryItemName);
+                
             InventoryManager.Instance.inventory.AddItemByName(inventoryItemName);
         }
     }

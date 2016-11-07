@@ -28,7 +28,7 @@ public class NameEntryUI : MonoBehaviour {
             switch (currentButton) {
                 case "Done":
                     GameManager.Instance.playerName = text;
-                    UIManager.Instance.CloseCurrentUI();
+                    UIManager.Instance.CloseUI("NameEntry");
                     break;
 
                 case "Back":

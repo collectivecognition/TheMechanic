@@ -59,7 +59,7 @@ public class DialogueUI : MonoBehaviour {
 
         // Zoom in
 
-        UIManager.Instance.OpenUI(UIManager.Instance.uis["Dialogue"]);
+        UIManager.Instance.OpenUI("Dialogue");
         textObject.text = "";
         StartCoroutine(TypeText(text));
     }
@@ -73,7 +73,7 @@ public class DialogueUI : MonoBehaviour {
         // Finishing dialogue
 
         if (done && UIButtons.action) {
-            UIManager.Instance.CloseCurrentUI();
+            UIManager.Instance.CloseUI("Dialogue");
 
             if (callback != null) {
                 callback();

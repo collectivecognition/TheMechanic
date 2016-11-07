@@ -23,6 +23,7 @@ public class HealthBar : MonoBehaviour {
         healthBar = transform.Find("HealthCanvas/Health").GetComponent<Image>();
         damageNumberPrefab = Resources.Load<GameObject>("Prefabs/DamageNumber");
         renderers = gameObject.GetComponentsInChildren<Renderer>();
+
         darker = new Color[renderers.Length];
         brighter = new Color[renderers.Length];
 
@@ -52,11 +53,18 @@ public class HealthBar : MonoBehaviour {
         damageNumberPrefab.GetComponent<DamageNumber>().Init(damage);
         damageNumber.transform.position = transform.position + Vector3.up * 5f;
 
+        // DIE!!#!
+
         if (health.current <= 0f) {
             GameObject explosion = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/Explosion"), null, true);
             explosion.transform.position = transform.position;
             explosion.GetComponent<Explosion>().color = darker[0]; // FIXME: Maybe make this configurable?
+
+            GameObject loot = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/Powerup"));
+            loot.transform.position = transform.position;
+            loot.GetComponent<Powerup>().inventoryItemName = "PeaShooter";
             GameObject.Destroy(gameObject);
+
             OnDie(gameObject);
         }
 

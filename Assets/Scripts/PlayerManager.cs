@@ -9,6 +9,7 @@ public class PlayerManager : Singleton<PlayerManager> {
 
         // Instantiate default player
         // FIXME: What if there is more than one spawn point in a scene?
+        // NOTE: Might not need this
 
         GameObject.FindObjectOfType<SpawnPoint>().Spawn();
     }

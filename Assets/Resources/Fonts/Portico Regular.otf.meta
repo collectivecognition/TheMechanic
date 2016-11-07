@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: c5a04357f279f7a45a63fd366ca96f44
+timeCreated: 1478490503
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Portico
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 4d98eb8d0d03b57499d6ec67a86d2b8f, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
