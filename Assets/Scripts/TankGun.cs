@@ -119,6 +119,9 @@ public class TankGun : MonoBehaviour {
                 projectile.GetComponent<Projectile>().minDamage = gun.minDamage;
                 projectile.GetComponent<Projectile>().maxDamage = gun.maxDamage;
                 projectile.GetComponent<Projectile>().maxDistance = gun.range;
+                projectile.GetComponent<Projectile>().path = gun.projectilePath;
+                projectile.GetComponent<Projectile>().waveFrequency = gun.waveFrequency;
+                projectile.GetComponent<Projectile>().waveMagnitude = gun.waveMagnitude;
 
                 // Play sound
                 AudioClip clip = Resources.Load<AudioClip>("Sounds/" + gun.sound); // FIXME: Caching

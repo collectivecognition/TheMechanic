@@ -13,6 +13,9 @@ public class GunItem : InventoryItem {
     public int projectilesPerShot;
     public string projectileName;
     public float projectileSpacing;
+    public Vector3[] projectilePath;
+    public float waveFrequency;
+    public float waveMagnitude;
     public string sound;
      
     public GunItem() {
@@ -21,5 +24,6 @@ public class GunItem : InventoryItem {
         projectileSpacing = 0f;
         range = 150f;
         sound = "";
+        projectilePath = null;
     }
 }

@@ -32,6 +32,7 @@ public class EnemyRotator : Enemy {
             projectile.speed = projectileSpeed;
             projectile.minDamage = 20f;
             projectile.maxDamage = 50f;
+            projectile.path = null;
 
             lastProjectileTime = Time.fixedTime;
             projectileAngle += projectileAngleInterval;
