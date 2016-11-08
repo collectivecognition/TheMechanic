@@ -3,20 +3,25 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 
-public class PostBattleManager : Singleton<PostBattleManager> {
+public class PostBattleUI : MonoBehaviour {
     private Text textObject;
 
     void Start() {
-        textObject = GameManager.Instance.cameraObject.transform.Find("UI/PostBattle/Canvas/Text").GetComponent<Text>();
+        textObject = transform.Find("PostBattle/Canvas/Text").GetComponent<Text>();
+        GameManager.Instance.postBattleUI = this;
     }
 
     void Update() {
-        if(Input.GetAxisRaw("Action") != 0) {
+        if(!UIManager.Instance.IsOpen("PostBattle")) { return; }
+
+        if(UIButtons.back) {
             UIManager.Instance.CloseUI("PostBattle");
         }
     }
 
-    public void Do(int exp, InventoryItem[] loot, Action callback=null) {
+    public void Open(int exp, InventoryItem[] loot, Action callback=null) {
+        UIManager.Instance.OpenUI("PostBattle");
+
         textObject.text =  "BATTLE COMPLETE\n\n";
         textObject.text += "You got:\n";
         textObject.text += exp + " exp\n";

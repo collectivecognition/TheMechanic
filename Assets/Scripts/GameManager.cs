@@ -24,9 +24,12 @@ public class GameManager : Singleton<GameManager> {
 
     public GameObject cameraObject;
     public Camera renderCamera;
-    public DialogueUI dialogue;
     public GameObject player;
-    public NotificationUI notification;
+
+    public NotificationUI notificationUI;
+    public PostBattleUI postBattleUI;
+    public InventoryUI inventoryUI;
+    public DialogueUI dialogueUI;
 
     void Awake() {
 

@@ -17,12 +17,31 @@ public class InventoryUI : MonoBehaviour {
     void Awake() {
         inventoryItemPrefab = Resources.Load<GameObject>("Prefabs/InventoryItem");
         inventory = InventoryManager.Instance.inventory;
-        descriptionText = transform.Find("Canvas/Description").GetComponent<Text>();
-        scrollRect = transform.Find("Canvas/ScrollView").GetComponent<ScrollRect>();
-        itemContainer = transform.Find("Canvas/ScrollView/Viewport/Content");
+        descriptionText = transform.Find("Inventory/Canvas/Description").GetComponent<Text>();
+        scrollRect = transform.Find("Inventory/Canvas/ScrollView").GetComponent<ScrollRect>();
+        itemContainer = transform.Find("Inventory/Canvas/ScrollView/Viewport/Content");
+
+        GameManager.Instance.inventoryUI = this;
     }
 
     void Update() {
+
+        // Close UI
+
+        if(UIManager.Instance.IsOpen("Inventory") && UIButtons.back) {
+            UIManager.Instance.CloseUI("Inventory");
+        }
+
+        // Open UI
+
+        if(Input.GetKeyDown(KeyCode.I)) {
+            UIManager.Instance.OpenUI("Inventory");
+        }
+
+        // Return if not open
+
+        if(!UIManager.Instance.IsOpen("Inventory")) { return; }
+
         if (inventory.updated) {
             Refresh();
             inventory.updated = false;
@@ -50,37 +69,11 @@ public class InventoryUI : MonoBehaviour {
             }
         }
 
-        // Update description text
-
         InventoryItem item = inventory.items[currentItem];
 
-        switch(item.type) {
-            case InventoryItem.Type.Gun: { 
-                    GunItem gun = (GunItem)item;
-                    string text = "";
-                    text += "  SPEED:  " + gun.speed + "\n";
-                    text += "MIN DMG:  " + gun.minDamage + "\n";
-                    text += "MAX DMG:  " + gun.maxDamage + "\n";
-                    text += " ENERGY:  " + gun.energyUsePerShot + "\n";
-                    text += "   RATE:  " + gun.fireRate + "/s\n";
-                    descriptionText.text = text;
-                    break;
-                }
+        // Update description text
 
-            case InventoryItem.Type.BeamGun: {
-                    BeamGunItem gun = (BeamGunItem)item;
-                    string text = "";
-                    text += "MIN DMG:  " + gun.minDamagePerSecond + "\n";
-                    text += "MAX DMG:  " + gun.maxDamagePerSecond + "\n";
-                    text += " ENERGY:  " + gun.energyUsePerSecond + "\n";
-                    descriptionText.text = text;
-                    break;
-                }
-
-            default:
-                descriptionText.text = item.description;
-                break;
-        }
+        descriptionText.text = item.description;
 
         // Handle pagination scrolling
 
@@ -113,12 +106,6 @@ public class InventoryUI : MonoBehaviour {
                     RemoveItem(currentItem);
                     break;
             }
-        }
-
-        // Close UI
-
-        if(UIButtons.back) {
-            UIManager.Instance.CloseUI("Inventory");
         }
     }
 

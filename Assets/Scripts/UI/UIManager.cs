@@ -11,6 +11,8 @@ public class UIManager : Singleton<UIManager> {
     private int openParameter = Animator.StringToHash("Open");
     private Dictionary<string, Animator> animators = new Dictionary<string, Animator>();
     private Dictionary<string, Action> callbacks = new Dictionary<string, Action>();
+    private Dictionary<string, bool> pauseStatus = new Dictionary<string, bool>();
+    private Dictionary<string, bool> openStatus = new Dictionary<string, bool>();
 
     void Start() {
         animators.Add("Dialogue", GameManager.Instance.cameraObject.transform.Find("UI/Dialogue").GetComponent<Animator>());
@@ -25,45 +27,46 @@ public class UIManager : Singleton<UIManager> {
         foreach (KeyValuePair<string, Animator> entry in animators) {
             entry.Value.gameObject.SetActive(false);
             callbacks.Add(entry.Key, null);
+            openStatus[entry.Key] = false;
         }
     }
-
-    void Update() {
-
-        // FIXME: Test code
-
-        if (Input.GetKeyDown(KeyCode.I)) {
-            UIManager.Instance.OpenUI("Inventory");
-        }
-
-        if (Input.GetKeyDown(KeyCode.C)) {
-            UIManager.Instance.OpenUI("Computer");
-        }
-
-        if (Input.GetKeyDown(KeyCode.N)) {
-            UIManager.Instance.OpenUI("NameEntry");
-        }
-    }
-
+   
     public void OpenUI(string name, bool pause=true, Action callback=null) {
         Animator anim = animators[name];
 
         callbacks[name] = callback;
+        openStatus[name] = true;
         anim.gameObject.SetActive(true);
         anim.SetBool(openParameter, true);
 
         if(pause){
             GameManager.Instance.gameActive = false;
         }
+        pauseStatus[name] = pause;
     }
 
     public void CloseUI(string name) {
         Animator anim = animators[name];
 
+        Debug.Log("Close UI: " + name);
+
         anim.SetBool(openParameter, false);
         StartCoroutine(DisablePanelDeleyed(name));
+        openStatus[name] = false;
 
-        GameManager.Instance.gameActive = true;
+        // If no UI is open which requires the game to be paused
+
+        bool pause = true;
+        foreach(KeyValuePair<string, bool> entry in pauseStatus) {
+            if(openStatus[entry.Key] && entry.Value) {
+                pause = false;
+            }
+        }
+        GameManager.Instance.gameActive = pause;
+    }
+    
+    public bool IsOpen(string name) {
+        return openStatus[name];
     }
 
     IEnumerator DisablePanelDeleyed(string name) {

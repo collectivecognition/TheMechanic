@@ -12,7 +12,16 @@ public class InventoryItem {
 
     public Color color;
     public string name;
-    public string description;
+
+    private string _description;
+    public virtual string description {
+        get {
+            return _description;
+        }
+        set {
+            _description = value;
+        }
+    }
     public Type type;
 
     public InventoryItem () {}

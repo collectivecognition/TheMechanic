@@ -10,14 +10,15 @@ public class NotificationUI : MonoBehaviour {
     private IEnumerator coroutine = null;
 
     void Awake() {
-        GameManager.Instance.notification = this;
-        itemContainerTransform = transform.Find("Canvas");
+        GameManager.Instance.notificationUI = this;
+        itemContainerTransform = transform.Find("Notification/Canvas");
         itemPrefab = Resources.Load<GameObject>("Prefabs/Notification");
 
         ClearNotifications();
     }
 
     public void Notify(string message) {
+
         UIManager.Instance.OpenUI("Notification", false, () => {
             ClearNotifications();
         });

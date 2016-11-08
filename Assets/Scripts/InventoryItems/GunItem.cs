@@ -26,4 +26,16 @@ public class GunItem : InventoryItem {
         sound = "";
         projectilePath = null;
     }
+
+    override public string description {
+        get {
+            string text = "";
+            text += "SPEED:   " + speed + "\n";
+            text += "MIN DMG: " + minDamage + "\n";
+            text += "MAX DMG: " + maxDamage + "\n";
+            text += "ENERGY:  " + energyUsePerShot + "\n";
+            text += "RATE:    " + fireRate + "/s\n";
+            return text;
+        }
+    }
 }

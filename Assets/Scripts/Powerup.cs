@@ -46,7 +46,7 @@ public class Powerup : MonoBehaviour {
             GameObject.Destroy(gameObject, 0.3f);
 
             InventoryItem item = InventoryManager.Instance.inventory.AddItemByName(inventoryItemName);
-            GameManager.Instance.notification.Notify("You got: " + item.name);
+            GameManager.Instance.notificationUI.Notify("You got: " + item.name);
                 
             
         }

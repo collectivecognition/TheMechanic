@@ -9,22 +9,22 @@ public class DialogueUI : MonoBehaviour {
     private AudioSource audio;
     private AudioClip sound;
 
-    private int charsPerLine = 33;
+    private int charsPerLine = 19;
     private string text;
     private bool done = false;
     private Action callback;
 
     void Awake() {
-        textObject = transform.Find("Canvas/Text").GetComponent<Text>();
-        audio = GetComponent<AudioSource>();
+        textObject = transform.Find("Dialogue/Canvas/Text").GetComponent<Text>();
+        audio = transform.Find("Dialogue").GetComponent<AudioSource>();
         sound = Resources.Load<AudioClip>("Sounds/TextBeep");
 
         canvasObject = gameObject;
 
-        GameManager.Instance.dialogue = this;
+        GameManager.Instance.dialogueUI = this;
     }
 
-    public void Say(string what, Action cb=null) {
+    public void Say(string what, Action cb = null) {
         callback = cb;
         text = what;
         done = false;
@@ -45,7 +45,7 @@ public class DialogueUI : MonoBehaviour {
                     formattedText += currentLine;
                     currentLine = "";
                 }
-            }else {
+            } else {
                 formattedText += currentLine + "\n";
                 currentLine = word;
             }
@@ -69,6 +69,7 @@ public class DialogueUI : MonoBehaviour {
     }
 
     void Update() {
+        if(!UIManager.Instance.IsOpen("Dialogue")) { return; }
 
         // Finishing dialogue
 

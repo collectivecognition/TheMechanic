@@ -37,7 +37,7 @@ public class BattleManager : Singleton<BattleManager> {
 
     private void EndBattle() {
         battleActive = false;
-        PostBattleManager.Instance.Do(100, new InventoryItem[] {
+        GameManager.Instance.postBattleUI.Open(100, new InventoryItem[] {
             new MachineGunItem()
         }, () => {
 
