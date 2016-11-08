@@ -5,7 +5,9 @@ public class InventoryItem {
     public enum Type {
         Gun,
         BeamGun,
-        Misc
+        Misc,
+        HealthPotion,
+        EnergyPotion
     }
 
     public Color color;

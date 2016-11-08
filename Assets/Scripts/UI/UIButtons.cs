@@ -7,6 +7,7 @@ public class UIButtons : MonoBehaviour {
     public static bool left;
     public static bool right;
     public static bool action;
+    public static bool back;
 
     private float repeatRate = 0.1f;
     private float repeatRateHeld = 0.35f;
@@ -21,10 +22,11 @@ public class UIButtons : MonoBehaviour {
     private bool leftHeld = false;
     private bool rightHeld = false;
     private bool actionHeld = false;
+    private bool backHeld = false;
 
     void OnApplicationFocus(bool focus) {
         if (!focus) {
-            up = down = left = right = action = false;
+            up = down = left = right = action = back = false;
         }
     }
 
@@ -130,6 +132,18 @@ public class UIButtons : MonoBehaviour {
         if(Input.GetAxisRaw("Action") == 0) {
             actionHeld = false;
             action = false;
+        }
+
+        if(Input.GetAxisRaw("Back") != 0 && !backHeld) {
+            back = true;
+            backHeld = true;
+        } else {
+            back = false;
+        }
+
+        if(Input.GetAxisRaw("Back") == 0) {
+            backHeld = false;
+            back = false;
         }
     }
 }

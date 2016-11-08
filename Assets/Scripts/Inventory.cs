@@ -38,6 +38,10 @@ public class Inventory {
         return inventoryItem;
     }
 
+    public void RemoveItem(int index) {
+        items.RemoveAt(index);
+    }
+
     public bool HasItem(string itemName) {
         bool has = false;
         foreach (InventoryItem item in items) {

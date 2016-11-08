@@ -54,28 +54,32 @@ public class InventoryUI : MonoBehaviour {
 
         InventoryItem item = inventory.items[currentItem];
 
-        if(item.type == InventoryItem.Type.Misc) {
-            descriptionText.text = item.description;
-        }
+        switch(item.type) {
+            case InventoryItem.Type.Gun: { 
+                    GunItem gun = (GunItem)item;
+                    string text = "";
+                    text += "  SPEED:  " + gun.speed + "\n";
+                    text += "MIN DMG:  " + gun.minDamage + "\n";
+                    text += "MAX DMG:  " + gun.maxDamage + "\n";
+                    text += " ENERGY:  " + gun.energyUsePerShot + "\n";
+                    text += "   RATE:  " + gun.fireRate + "/s\n";
+                    descriptionText.text = text;
+                    break;
+                }
 
-        if (item.type == InventoryItem.Type.Gun) {
-            GunItem gun = (GunItem)item;
-            string text = "";
-            text += "  SPEED:  " + gun.speed + "\n";
-            text += "MIN DMG:  " + gun.minDamage + "\n";
-            text += "MAX DMG:  " + gun.maxDamage + "\n";
-            text += " ENERGY:  " + gun.energyUsePerShot + "\n";
-            text += "   RATE:  " + gun.fireRate + "/s\n";
-            descriptionText.text = text;
-        }
+            case InventoryItem.Type.BeamGun: {
+                    BeamGunItem gun = (BeamGunItem)item;
+                    string text = "";
+                    text += "MIN DMG:  " + gun.minDamagePerSecond + "\n";
+                    text += "MAX DMG:  " + gun.maxDamagePerSecond + "\n";
+                    text += " ENERGY:  " + gun.energyUsePerSecond + "\n";
+                    descriptionText.text = text;
+                    break;
+                }
 
-        if (item.type == InventoryItem.Type.BeamGun) {
-            BeamGunItem gun = (BeamGunItem)item;
-            string text = "";
-            text += "MIN DMG:  " + gun.minDamagePerSecond + "\n";
-            text += "MAX DMG:  " + gun.maxDamagePerSecond + "\n";
-            text += " ENERGY:  " + gun.energyUsePerSecond + "\n";
-            descriptionText.text = text;
+            default:
+                descriptionText.text = item.description;
+                break;
         }
 
         // Handle pagination scrolling
@@ -91,13 +95,37 @@ public class InventoryUI : MonoBehaviour {
 
         // Select item
 
-        if (Input.GetAxisRaw("Action") != 0) {
-            if(inventory.items[currentItem].type == InventoryItem.Type.Gun || inventory.items[currentItem].type == InventoryItem.Type.BeamGun) {
-                inventory.currentGun = (InventoryItem)inventory.items[currentItem];
-                inventory.updated = true;
-                UIManager.Instance.CloseUI("Inventory");
+        if (UIButtons.action) {
+            switch(item.type) {
+                case InventoryItem.Type.Gun:
+                case InventoryItem.Type.BeamGun:
+                    inventory.currentGun = (InventoryItem)inventory.items[currentItem];
+                    inventory.updated = true;
+                    break;
+
+                case InventoryItem.Type.HealthPotion:
+                    PlayerManager.Instance.health.current += ((HealthPotionItem)item).amount;
+                    RemoveItem(currentItem);
+                    break;
+
+                case InventoryItem.Type.EnergyPotion:
+                    PlayerManager.Instance.energy.current += ((EnergyPotionItem)item).amount;
+                    RemoveItem(currentItem);
+                    break;
             }
         }
+
+        // Close UI
+
+        if(UIButtons.back) {
+            UIManager.Instance.CloseUI("Inventory");
+        }
+    }
+
+    private void RemoveItem(int index) {
+        InventoryManager.Instance.inventory.RemoveItem(index);
+        currentItem = index > 0 ? index - 1 : inventory.items.Count - 1;
+        Refresh();
     }
 
     public void Refresh() {

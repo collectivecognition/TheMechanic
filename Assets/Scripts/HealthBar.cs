@@ -62,7 +62,6 @@ public class HealthBar : MonoBehaviour {
 
             GameObject loot = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/Powerup"));
             loot.transform.position = transform.position;
-            loot.GetComponent<Powerup>().inventoryItemName = "PeaShooter";
             GameObject.Destroy(gameObject);
 
             OnDie(gameObject);
