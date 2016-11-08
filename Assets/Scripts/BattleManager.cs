@@ -11,19 +11,11 @@ public class BattleManager : Singleton<BattleManager> {
 
     void Update() {
         CheckForEndOfBattle();
-
-        // FIXME: Test code
-
-        if (Input.GetKeyDown(KeyCode.Z)) { // Start battle
-            StartBattle();
-        }
     }
 
-    public void StartBattle() {
-        battleActive = true;
-       
-        SceneManager.LoadScene("DesertBattle", LoadSceneMode.Additive);
-        scene = SceneManager.GetSceneByName("DesertBattle");
+    public void StartBattle(string battleName) {
+        SceneManager.LoadScene(battleName, LoadSceneMode.Additive);
+        scene = SceneManager.GetSceneByName(battleName);
     }
 
     private void CheckForEndOfBattle() {

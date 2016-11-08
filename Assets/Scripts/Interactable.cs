@@ -11,7 +11,7 @@ public class Interactable : MonoBehaviour {
     public bool triggerOnCollide = false;
     public bool triggerOnLoad = false;
     public bool triggerOnInteract = false;
-    public bool startBattle = false;
+    public string startBattle;
 
     private string id;
     private float maxDistance = 5f;
@@ -129,8 +129,8 @@ public class Interactable : MonoBehaviour {
         // Start battle
         // FIXME: Battle name should be configurable
 
-        if (startBattle) {
-            BattleManager.Instance.StartBattle();
+        if (startBattle != null && startBattle.Length > 0) {
+            BattleManager.Instance.StartBattle(startBattle);
         }
     }
 }

@@ -29,7 +29,7 @@ public class DamageNumber : MonoBehaviour {
         yield return null;
     }
 
-    public void Update(float d) {
+    public void AddDamage(float d) {
         if(text == null) {
             text = GetComponentInChildren<Text>();
         }

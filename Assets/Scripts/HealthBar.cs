@@ -56,7 +56,7 @@ public class HealthBar : MonoBehaviour {
             damageObject.transform.position = transform.position + Vector3.up * 5f;
         }
 
-        damageNumber.Update(damage);
+        damageNumber.AddDamage(damage);
 
         // DIE!!#!
 
