@@ -3,17 +3,19 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class DamageNumber : MonoBehaviour {
-    private Text text;
+    private Text text = null;
     private CanvasGroup canvas;
     private Outline outline;
+
+    public float damage = 0;
 
     void Start() {
         canvas = GetComponent<CanvasGroup>();
         outline = GetComponentInChildren<Outline>();
 
         StartCoroutine(Animate());
-        Vector2 xy = Random.insideUnitCircle * 10f;
-        transform.position += new Vector3(xy.x, 0f, xy.y);
+        //Vector2 xy = Random.insideUnitCircle * 10f;
+        //transform.position += new Vector3(xy.x, 0f, xy.y);
     }
 
     IEnumerator Animate() {
@@ -27,8 +29,12 @@ public class DamageNumber : MonoBehaviour {
         yield return null;
     }
 
-    public void Init(float value) {
-        text = transform.Find("Text").GetComponent<Text>();
-        text.text = value.ToString();
+    public void Update(float d) {
+        if(text == null) {
+            text = GetComponentInChildren<Text>();
+        }
+        damage += d;
+        text.text = damage.ToString();
+        canvas.alpha = 1f;
     }
 }

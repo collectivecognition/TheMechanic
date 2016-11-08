@@ -9,6 +9,7 @@ public class HealthBar : MonoBehaviour {
     private Image healthBar;
     private GameObject damageNumberPrefab;
     private Renderer[] renderers;
+    private DamageNumber damageNumber;
 
     private bool blinking = false;
     private Color[] brighter;
@@ -49,9 +50,13 @@ public class HealthBar : MonoBehaviour {
         damage = Mathf.Ceil(damage);
         health.current -= damage;
 
-        GameObject damageNumber = GameObject.Instantiate(damageNumberPrefab);
-        damageNumberPrefab.GetComponent<DamageNumber>().Init(damage);
-        damageNumber.transform.position = transform.position + Vector3.up * 5f;
+        if(damageNumber == null) {
+            GameObject damageObject = GameObject.Instantiate(damageNumberPrefab);
+            damageNumber = damageObject.GetComponent<DamageNumber>();
+            damageObject.transform.position = transform.position + Vector3.up * 5f;
+        }
+
+        damageNumber.Update(damage);
 
         // DIE!!#!
 
