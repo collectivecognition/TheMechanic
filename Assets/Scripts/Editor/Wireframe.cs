@@ -32,7 +32,7 @@ public class Wireframe {
 
         Vector3[] vertices = newMesh.vertices;
 
-        for (int ii = 0; ii < vertices.Length; ii++) {
+        for (int ii = 1; ii < vertices.Length; ii++) {
             for (int jj = 0; jj < vertices.Length; jj++) {
                 if (newMesh.vertices[ii] == newMesh.vertices[jj]) {
                     vertices[ii] += new Vector3(

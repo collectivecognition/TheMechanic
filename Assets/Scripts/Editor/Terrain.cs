@@ -20,38 +20,63 @@ public class Terrain {
         float gridInterval = 5f;
         Vector3 previousPoint = path[0];
 
+        // Generate vertices based on intersections between path and a grid of the specified interval.
+        // Also, generate another set of vertices slightly higher up to give height to our object.
+
         for(float ii = 0; ii < 1f; ii += step) {
             Vector3 currentPoint = iTween.PointOnPath(path, ii);
 
             float currentXNormalized = Mathf.Floor(currentPoint.x / gridInterval) * gridInterval;
-            float currentZNormalized = Mathf.Floor(currentPoint.z / gridInterval) * gridInterval;
+            float currentYNormalized = Mathf.Floor(currentPoint.y / gridInterval) * gridInterval;
             float previousXNormalized = Mathf.Floor(previousPoint.x / gridInterval) * gridInterval;
-            float previousZNormalized = Mathf.Floor(previousPoint.z / gridInterval) * gridInterval;
+            float previousYNormalized = Mathf.Floor(previousPoint.y / gridInterval) * gridInterval;
 
             if(currentXNormalized != previousXNormalized) {
-                float averageZ = (currentZNormalized + previousZNormalized) / 2f;
+                float averageY = (currentYNormalized + previousYNormalized) / 2f;
                 float xNormalized = currentXNormalized > previousXNormalized ? currentXNormalized : previousXNormalized;
-                vertices.Add(new Vector3(xNormalized, currentPoint.y, averageZ)); // Largely ignores the y axis, shouldn't really need this
+                vertices.Add(new Vector3(xNormalized, averageY, currentPoint.z)); // We can ignore the z axis, shouldn't really need this
+                vertices.Add(new Vector3(xNormalized, averageY + gridInterval, currentPoint.z));
             }
 
-            if(currentZNormalized != previousZNormalized) {
+            if(currentYNormalized != previousYNormalized) {
                 float averageX = (currentXNormalized + previousXNormalized) / 2f;
-                float zNormalized = currentZNormalized > previousZNormalized ? currentZNormalized : previousZNormalized;
-                vertices.Add(new Vector3(averageX, currentPoint.y, currentZNormalized));
+                float yNormalized = currentYNormalized > previousYNormalized ? currentYNormalized : previousYNormalized;
+                vertices.Add(new Vector3(averageX, currentYNormalized, currentPoint.z));
+                vertices.Add(new Vector3(averageX, currentYNormalized + gridInterval, currentPoint.z));
             }
 
             previousPoint = currentPoint;
         }
 
-        int[] indexes = new int[vertices.Count * 2];
+        int[] indexes = new int[vertices.Count * 3 - 3];
 
-        for(int ii = 0, jj = 0; ii < vertices.Count; ii++) {
-            indexes[jj++] = ii;
-            indexes[jj++] = ii + 1;
+        // Create lines for each set of vertices
+
+        int jj = 0, kk = 0;
+        while(kk < vertices.Count - 2) {
+            indexes[jj++] = kk;
+            indexes[jj++] = kk + 2;
+            indexes[jj++] = kk + 1;
+            indexes[jj++] = kk + 3;
+            indexes[jj++] = kk;
+            indexes[jj++] = kk + 1;
+
+            kk += 2;
         }
 
-        indexes[indexes.Length - 2] = vertices.Count - 1;
-        indexes[indexes.Length - 1] = 0;
+        // Add final quad manually
+
+        //indexes[jj++] = kk;
+        //indexes[jj++] = 0;
+        //indexes[jj++] = kk + 1;
+        //indexes[jj++] = 1;
+        //indexes[jj++] = kk;
+        //indexes[jj++] = kk + 1;
+
+        //indexes[jj++] = kk - 50;   // Bottom right
+        //indexes[jj++] = 0;                    // Bottom left
+        //indexes[jj++] = 1;                    // Top left
+        //indexes[jj++] = kk - 51;   // Top right
 
         Mesh mesh = new Mesh();
         mesh.name = "Generated Terrain";
