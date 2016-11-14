@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class EnemyManager : Singleton<EnemyManager> {
     public List<GameObject> enemies = new List<GameObject>();
+    public bool loading = false;
 
     public void ReactivateAfterDelay(GameObject g, float delay) {
         enemies.Add(g);
@@ -11,6 +12,8 @@ public class EnemyManager : Singleton<EnemyManager> {
 
         g.SetActive(false);
         StartCoroutine(DoReactivate(g, delay));
+
+        loading = false; // Set flag after at least one enemy has loaded
     }
 
     private IEnumerator DoReactivate(GameObject g, float delay) {

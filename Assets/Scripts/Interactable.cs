@@ -81,6 +81,10 @@ public class Interactable : MonoBehaviour {
         }
     }
 
+    public void OnInteraction() {
+
+    }
+
     private void TriggerInteraction() {
 
         // Make sure one-shot interactions only happen once

@@ -16,10 +16,12 @@ public class BattleManager : Singleton<BattleManager> {
     public void StartBattle(string battleName) {
         SceneManager.LoadScene(battleName, LoadSceneMode.Additive);
         scene = SceneManager.GetSceneByName(battleName);
+        battleActive = true;
+        EnemyManager.Instance.loading = true;
     }
 
     private void CheckForEndOfBattle() {
-        if (battleActive) {
+        if (battleActive && !EnemyManager.Instance.loading) {
             int activeEnemies = EnemyManager.Instance.enemies.Count;
             if (activeEnemies == 0) {
                 EndBattle();
