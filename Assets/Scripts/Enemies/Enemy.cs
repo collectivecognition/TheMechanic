@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour {
 
     protected void OnTriggerStay(Collider collider) {
         if(collider.tag == "Player") {
-            collider.transform.GetComponent<HealthBar>().Hit(40f * Time.deltaTime); // FIXME: Make this value configurable
+            collider.transform.GetComponent<HealthBar>().Hit(4f * Time.deltaTime); // FIXME: Make this value configurable
         }
     }
 }

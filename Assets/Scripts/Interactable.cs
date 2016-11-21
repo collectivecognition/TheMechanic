@@ -55,7 +55,7 @@ public class Interactable : MonoBehaviour {
                         Renderer childRenderer = childRenderers[ii];
                         Color childColor = childRenderer.material.GetColor("_Color");
                         childEmissionColors[ii] = childColor;
-                        childRenderer.material.SetColor("_Color", new Color(5f, 5f, 5f, 1f));
+                        childRenderer.material.SetColor("_Color", new Color(0.5f, 0.5f, 0.5f, 1f));
                     }
                     triggered = true;
                 }

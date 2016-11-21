@@ -14,6 +14,7 @@ public class HealthBar : MonoBehaviour {
     private bool blinking = false;
     private Color[] brighter;
     private Color[] darker;
+    private Color mainColor;
 
     public delegate void OnDieEvent(GameObject gameObject);
     public event OnDieEvent OnDie;
@@ -29,8 +30,14 @@ public class HealthBar : MonoBehaviour {
         brighter = new Color[renderers.Length];
 
         for(int ii = 0; ii < renderers.Length; ii++) {
-            darker[ii] = renderers[ii].material.color;
-            brighter[ii] = darker[ii] + new Color(1f, 1f, 1f);
+            if(renderers[ii].material.HasProperty("_Color")) {
+                darker[ii] = renderers[ii].material.GetColor("_Color");
+                brighter[ii] = darker[ii] + new Color(1f, 1f, 1f);
+            }
+
+            if(renderers[ii].material.HasProperty("_EmissionColor")) {
+                mainColor = renderers[ii].material.GetColor("_EmissionColor");
+            }
         }
 
         if (tag == "Player") {
@@ -63,7 +70,7 @@ public class HealthBar : MonoBehaviour {
         if (health.current <= 0f) {
             GameObject explosion = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/Explosion"), null, true);
             explosion.transform.position = transform.position;
-            explosion.GetComponent<Explosion>().color = darker[0]; // FIXME: Maybe make this configurable?
+            explosion.GetComponent<Explosion>().color = mainColor; // FIXME: Maybe make this configurable?
 
             GameObject loot = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/Powerup"));
             loot.transform.position = transform.position;

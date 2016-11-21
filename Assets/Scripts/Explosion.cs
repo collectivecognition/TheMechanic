@@ -16,7 +16,7 @@ public class Explosion : MonoBehaviour {
         for(int ii = 0; ii < 20; ii++) {
             GameObject gib = GameObject.CreatePrimitive(PrimitiveType.Cube);
             gib.tag = "Gib";
-            gib.GetComponent<Renderer>().material.color = color;
+            gib.GetComponent<Renderer>().material.SetColor("_EmissionColor", color);
             gib.transform.localScale = new Vector3(Random.Range(1, 4), Random.Range(1, 4), Random.Range(1, 4));
             gib.transform.position = transform.position + Random.onUnitSphere * 10f;
             Rigidbody rigidbody = gib.AddComponent<Rigidbody>();
