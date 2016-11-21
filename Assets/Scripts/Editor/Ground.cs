@@ -10,7 +10,6 @@ public class Ground {
         List<Vector3> vertices = new List<Vector3>();
         List<int> indexes = new List<int>();
 
-        float gridInterval = 5f;
         float gridMinX = -500f;
         float gridMaxX = 500f;
         float gridMinZ = -500f;
@@ -18,17 +17,17 @@ public class Ground {
 
         float xx = 0, zz = 0;
         int ii = 0;
-        int colsPerRow = (int)(Mathf.Abs(gridMinZ - gridMaxZ) / gridInterval);
-        for(xx = gridMinX; xx < gridMaxX; xx += gridInterval) {
-            for(zz = gridMinZ; zz < gridMaxZ; zz += gridInterval) {
+        int colsPerRow = (int)(Mathf.Abs(gridMinZ - gridMaxZ) / Grid.size);
+        for(xx = gridMinX; xx < gridMaxX; xx += Grid.size) {
+            for(zz = gridMinZ; zz < gridMaxZ; zz += Grid.size) {
                 vertices.Add(new Vector3(xx, 0f, zz));
 
-                if(zz < gridMaxZ - gridInterval) {
+                if(zz < gridMaxZ - Grid.size) {
                     indexes.Add(ii);
                     indexes.Add(ii + 1);
                 }
 
-                if(xx < gridMaxX - gridInterval ) {
+                if(xx < gridMaxX - Grid.size ) {
                     indexes.Add(ii);
                     indexes.Add(ii + colsPerRow);
                 }

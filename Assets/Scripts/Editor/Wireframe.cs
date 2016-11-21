@@ -35,7 +35,7 @@ public class Wireframe {
         for (int ii = 1; ii < vertices.Length; ii++) {
             for (int jj = 0; jj < vertices.Length; jj++) {
                 if (newMesh.vertices[ii] == newMesh.vertices[jj]) {
-                    vertices[ii] += new Vector3(
+                    oldMesh.vertices[ii] += new Vector3(
                         scale * oldMesh.normals[jj].x / parent.localScale.x,
                         scale * oldMesh.normals[jj].y / parent.localScale.y,
                         scale * oldMesh.normals[jj].z / parent.localScale.z
