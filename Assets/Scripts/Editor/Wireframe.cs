@@ -28,23 +28,23 @@ public class Wireframe {
         // lines will sit nicely on the outside of the existing geometry 
         // without overlapping
 
-        float scale = .01f;
+        //float scale = .01f;
 
-        Vector3[] vertices = newMesh.vertices;
+        //Vector3[] vertices = newMesh.vertices;
 
-        for (int ii = 1; ii < vertices.Length; ii++) {
-            for (int jj = 0; jj < vertices.Length; jj++) {
-                if (newMesh.vertices[ii] == newMesh.vertices[jj]) {
-                    oldMesh.vertices[ii] += new Vector3(
-                        scale * oldMesh.normals[jj].x / parent.localScale.x,
-                        scale * oldMesh.normals[jj].y / parent.localScale.y,
-                        scale * oldMesh.normals[jj].z / parent.localScale.z
-                    );
-                }
-            }
-        }
+        //for (int ii = 1; ii < vertices.Length; ii++) {
+        //    for (int jj = 0; jj < vertices.Length; jj++) {
+        //        if (newMesh.vertices[ii] == newMesh.vertices[jj]) {
+        //            oldMesh.vertices[ii] += new Vector3(
+        //                scale * oldMesh.normals[jj].x / parent.localScale.x,
+        //                scale * oldMesh.normals[jj].y / parent.localScale.y,
+        //                scale * oldMesh.normals[jj].z / parent.localScale.z
+        //            );
+        //        }
+        //    }
+        //}
 
-        newMesh.vertices = vertices;
+        //newMesh.vertices = vertices;
 
         // Create a list of shared sides
 
