@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class EnemyDigger : Enemy {
-    void Start() {
+    public override void Start() {
         base.Start();
 
         transform.position += Vector3.down * 5f;
@@ -10,9 +10,10 @@ public class EnemyDigger : Enemy {
         PopUp();
     }
 
-    void Update() {
-        if (!GameManager.Instance.gameActive) return;
+    public override void Update() {
+        base.Update();
 
+        if(!GameManager.Instance.gameActive || !initialized) return;
     }
 
     void PopUp() {

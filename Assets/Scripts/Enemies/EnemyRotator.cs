@@ -10,10 +10,14 @@ public class EnemyRotator : Enemy {
     private float projectileAngleInterval = 30f;
     private float lastProjectileTime;
 
-    void Start() {
+    public override void Start() {
         base.Start();
 
         projectilePrefab = Resources.Load<GameObject>("Prefabs/Projectile");
+    }
+
+    public override void FinishInit() {
+        base.FinishInit();
 
         iTween.MoveAdd(gameObject, iTween.Hash("amount", gameObject.transform.up * 2f, "time", 1, "loopType", iTween.LoopType.pingPong, "delay", 0, "easetype", iTween.EaseType.easeInOutQuad));
         iTween.RotateAdd(gameObject, iTween.Hash("y", 360f, "time", (360f / projectileAngleInterval) * projectileInterval, "delay", 0, "loopType", "loop", "easeType", iTween.EaseType.linear));
@@ -21,8 +25,10 @@ public class EnemyRotator : Enemy {
         lastProjectileTime = Time.fixedTime;
     }
 
-    void Update() {
-        if (!GameManager.Instance.gameActive) return;
+    public override void Update() {
+        base.Update();
+
+        if(!GameManager.Instance.gameActive || !initialized) return;
 
         if (Time.fixedTime - lastProjectileTime >= projectileInterval) {
             GameObject projectileObject = (GameObject)Instantiate(projectilePrefab, transform.position, Quaternion.identity);
