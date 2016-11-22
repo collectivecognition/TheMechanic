@@ -20,7 +20,7 @@ public class DamageNumber : MonoBehaviour {
 
     IEnumerator Animate() {
         while (canvas.alpha > 0) {
-            canvas.alpha -= Time.deltaTime / 2f;
+            canvas.alpha -= Time.deltaTime * 1f;
             outline.effectColor = new Color(0f, 0f, 0f, canvas.alpha);
             transform.position += transform.up * Time.deltaTime * 10f;
             yield return null;

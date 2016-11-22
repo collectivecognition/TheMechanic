@@ -49,7 +49,11 @@ public class Beam : MonoBehaviour {
 
         // Scale up beam over time
 
-        beamScale = Mathf.Lerp(beamScale, gun.scale.x, 6f * Time.deltaTime);
+        beamScale = Mathf.Lerp(beamScale, gun.scale.x, 2f * Time.deltaTime);
+
+        // Use energy
+
+        PlayerManager.Instance.energy.Use(gun.energyUsePerSecond * Time.deltaTime); // Consume energy
     }
 
     public void OnTriggerStay(Collider collider) {

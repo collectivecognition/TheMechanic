@@ -12,6 +12,7 @@ public class Inventory {
     public Inventory() {
         AddItemByName("PeaShooterItem"); // Add a default gun
         AddItemByName("LaserGunItem");
+        AddItemByName("MachineGunItem");
         AddItemByName("WaveGunItem");
         currentGun = (InventoryItem)items[0];
     }

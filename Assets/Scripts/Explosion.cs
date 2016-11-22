@@ -13,10 +13,10 @@ public class Explosion : MonoBehaviour {
 
         // Spawn shrapnel
 
-        for(int ii = 0; ii < 20; ii++) {
+        for(int ii = 0; ii < 10; ii++) {
             GameObject gib = GameObject.CreatePrimitive(PrimitiveType.Cube);
             gib.tag = "Gib";
-            gib.GetComponent<Renderer>().material.SetColor("_EmissionColor", color);
+            gib.GetComponent<Renderer>().material.SetFloat("_Mode", 3f); // Use transparent rendering
             gib.transform.localScale = new Vector3(Random.Range(1, 4), Random.Range(1, 4), Random.Range(1, 4));
             gib.transform.position = transform.position + Random.onUnitSphere * 10f;
             Rigidbody rigidbody = gib.AddComponent<Rigidbody>();
@@ -25,6 +25,9 @@ public class Explosion : MonoBehaviour {
             rigidbody.AddRelativeTorque(Random.insideUnitSphere);
             gib.layer = LayerMask.NameToLayer("Gibs");
             GameObject.Instantiate(gib);
+
+            gib.GetComponent<Renderer>().material.SetColor("_EmissionColor", color);
+            gib.GetComponent<Renderer>().material.SetColor("_Color", color);
         }
 
         // Destroy after delay
